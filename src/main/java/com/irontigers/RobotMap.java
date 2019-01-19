@@ -49,11 +49,11 @@ public class RobotMap {
 
   public static class DriveTrain {
     // drive train motors
-    public static int LEFT_FRONT = 1;
-    public static int LEFT_BACK = 2;
+    public static int LEFT_FRONT = 4;
+    public static int LEFT_BACK = 1;
 
-    public static int RIGHT_FRONT = 6;
-    public static int RIGHT_BACK = 4;
+    public static int RIGHT_FRONT = 3;
+    public static int RIGHT_BACK = 2;
 
     //drive train rotational encoders
     // public static int LEFT_ENCODER_A = 2;
