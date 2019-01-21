@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 public class RobotMap {
 
   public static class Joystick {
-    public static int ID = 0;
+    public static int ID = 1;
 
     // Controller buttons - apply for both driver and elevator controllers
     // public static int BUTTON_A = 1;

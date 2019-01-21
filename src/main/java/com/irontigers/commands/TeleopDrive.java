@@ -33,6 +33,8 @@ public class TeleopDrive extends Command {
   @Override
   protected void execute() {
 
+    System.err.println("!!!!!! TeleopDrive.execute");
+
     DriverJoystick joystick = DriverJoystick.instance();
     DriveSystem.instance().drive(joystick.yScaledSpeed(), joystick.xScaledSpeed(), joystick.zScaledRotation());
     

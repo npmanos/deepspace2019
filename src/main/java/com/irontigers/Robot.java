@@ -13,6 +13,9 @@ import com.irontigers.subsystems.DriverJoystick;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import com.irontigers.subsystems.DriveSystem;
+
+import com.irontigers.subsystems.DriverJoystick;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,6 +25,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
  * project.
  */
 public class Robot extends TimedRobot {
+
+  // DriveSystem d = DriveSystem.instance();
 
   // private DriverStation.Alliance ourAlliance;
   // private Command automousCommand;
@@ -82,7 +87,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    
+    DriverJoystick joystick = DriverJoystick.instance();
+    DriveSystem.instance().drive(joystick.yScaledSpeed(), joystick.xScaledSpeed(), joystick.zScaledRotation());
   }
 
   /**

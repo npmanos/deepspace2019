@@ -38,6 +38,9 @@ public class DriveSystem extends Subsystem {
 
   private DriveSystem(){
 
+    
+    System.err.println("!!!!!! DriveSystem::constructor");
+
     // We're using WPI_TalonSRX because it is a wrapper around the CTRE provided TalonSRX
     // and implements the SpeedController interface. This allows us to create a TalonSRX
     // object and pass it directly into the MecanumDrive class.
