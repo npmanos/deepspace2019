@@ -49,6 +49,8 @@ public class RollingAverage {
     currentAverage = values.stream().collect(Collectors.averagingDouble(BigDecimal::doubleValue));
   }
 
+  // an edit that doesn't matter
+
   public boolean isFull(){
     return values.size() >= windowSize;
   }
