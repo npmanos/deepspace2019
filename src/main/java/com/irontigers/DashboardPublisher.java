@@ -2,6 +2,8 @@ package com.irontigers;
 
 import java.text.DecimalFormat;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -9,7 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DashboardPublisher {
 
-  // TODO: remove this
+  private Map<String, String> values = new HashMap<String, String>();
+
+  // TODO: make the put methos convert all inputs (booleans, integers, doubles, Strings) into strings, and put them into values
   private static DashboardPublisher instance;
   public static DashboardPublisher instance() {
     return instance;
@@ -46,6 +50,7 @@ public class DashboardPublisher {
   }
 
   private void publishState(String state){
+    //consider having publishState put the current state into the map instead of puString-ing it
     SmartDashboard.putString("Dashboard Data", state);
     SmartDashboard.updateValues();
   }
@@ -56,27 +61,29 @@ public class DashboardPublisher {
   private void publishToDashboard(){
     //System.out.println("I am about to print values");
 
-    // Navigation values
-    put("Example", "The example value");
+    for (String key:values.keySet())
+    {
+      SmartDashboard.putString(key, values.get(key));
+    }
 
     // Actually send the values
     SmartDashboard.updateValues();
   }
 
-  private void put(String key, double value){
+  public void put(String key, double value){
+    
+    values.put(key, df.format(value));
     // put a formatted version of the double value
-    // for example, will turn 1.2345678 into 1.234
-    SmartDashboard.putString(key, df.format(value));
   }
-  private void put(String key, String name){
-    SmartDashboard.putString(key, name);
+  public void put(String key, String value){
+    values.put(key, value);
   }
-  private void put(String key, Boolean state){
-    SmartDashboard.putString(key, state.toString());
+  public void put(String key, Boolean state){
+    values.put(key, state.toString());
   }
-  public void putR(String key, double value) {
-    put(key, value);
-    SmartDashboard.updateValues();
-  }
+  // public void putR(String key, double value) {
+  //   put(key, value);
+  //   SmartDashboard.updateValues();
+  // }
 
 }
