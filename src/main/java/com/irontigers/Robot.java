@@ -10,6 +10,7 @@ package com.irontigers;
 
 import com.irontigers.subsystems.AlignmentSystem;
 import com.irontigers.subsystems.DriverJoystick;
+import com.irontigers.subsystems.LidarSystem;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -20,7 +21,6 @@ import com.irontigers.subsystems.DriverJoystick;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.irontigers.pulsedLightLIDAR;
 //import com.irontigers.LidarLiteSensor;
-
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,22 +39,21 @@ public class Robot extends TimedRobot {
   // private Command automousCommand;
 
   /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
    */
-
 
   @Override
   public void robotInit() {
     DriverJoystick.instance();
     AlignmentSystem.instance();
-    pulsedLightLIDAR.pulsedLightLIDAR2();
 
-    talon = new WPI_TalonSRX(3);
+    LidarSystem.instance();
 
+    // pulsedLightLIDAR.pulsedLightLIDAR2();
+    // talon = new WPI_TalonSRX(3);
 
-
-   // private TalonSRX talon;
+    // private TalonSRX talon;
     // TODO: setup SmartDashboard options and choosers
 
     // We do not need to provide an option to select the TeleopDrive because it
@@ -62,47 +61,43 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This function is called every robot packet, no matter the mode. Use
-   * this for items like diagnostics that you want ran during disabled,
-   * autonomous, teleoperated and test.
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
+   * This function is called every robot packet, no matter the mode. Use this for
+   * items like diagnostics that you want ran during disabled, autonomous,
+   * teleoperated and test.
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
 
+    // // talon.set(.5);
+    // pulsedLightLIDAR.start();
+
+    // if (pulsedLightLIDAR.getDistanceIn() > 10){
+    // spark.setSpeed(.5);
+    // }
+    // else {
     // talon.set(.5);
-        pulsedLightLIDAR.start();
-
-       if (pulsedLightLIDAR.getDistanceIn() > 10){
-         spark.setSpeed(.5);
-       }
-       else {
-         talon.set(.5);
-      }
-     pulsedLightLIDAR.update();
-     }
-
-
-
-
-    
-  
+    // }
+    // pulsedLightLIDAR.update();
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable
-   * chooser code works with the Java SmartDashboard. If you prefer the
-   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-   * getString line to get the auto name from the text box below the Gyro
+   * between different autonomous modes using the dashboard. The sendable chooser
+   * code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
+   * remove all of the chooser code and uncomment the getString line to get the
+   * auto name from the text box below the Gyro
    *
-   * <p>You can add additional auto modes by adding additional comparisons to
-   * the switch structure below with additional strings. If using the
-   * SendableChooser make sure to add them to the chooser code above as well.
+   * <p>
+   * You can add additional auto modes by adding additional comparisons to the
+   * switch structure below with additional strings. If using the SendableChooser
+   * make sure to add them to the chooser code above as well.
    */
   @Override
   public void autonomousInit() {
-    
+
   }
 
   /**
@@ -118,9 +113,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //DriverJoystick joystick = DriverJoystick.instance();
-    //DriveSystem.instance().drive(joystick.yScaledSpeed(), joystick.xScaledSpeed(), joystick.zScaledRotation());
-  //  talon.set(0.2);
+    // DriverJoystick joystick = DriverJoystick.instance();
+    // DriveSystem.instance().drive(joystick.yScaledSpeed(),
+    // joystick.xScaledSpeed(), joystick.zScaledRotation());
+    // talon.set(0.2);
   }
 
   /**
@@ -128,8 +124,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    
-  }
 
+  }
 
 }

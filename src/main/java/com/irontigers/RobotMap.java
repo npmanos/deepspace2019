@@ -9,6 +9,7 @@ package com.irontigers;
 
 //import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
 
 /**
@@ -23,7 +24,7 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 public class RobotMap {
 
   public static class Joystick {
-    public static int ID = 1;
+    public static final int ID = 1;
 
     // Controller buttons - apply for both driver and elevator controllers
     // public static int BUTTON_A = 1;
@@ -49,15 +50,25 @@ public class RobotMap {
 
   public static class DriveTrain {
     // drive train motors
-    public static int LEFT_FRONT = 4;
-    public static int LEFT_BACK = 1;
+    public static final int LEFT_FRONT = 4;
+    public static final int LEFT_BACK = 1;
 
-    public static int RIGHT_FRONT = 3;
-    public static int RIGHT_BACK = 2;
+    public static final int RIGHT_FRONT = 3;
+    public static final int RIGHT_BACK = 2;
 
     //drive train rotational encoders
     // public static int LEFT_ENCODER_A = 2;
     // public static int LEFT_ENCODER_B = 3;
+  }
+
+  public static class Lidar {
+    public static final Port PORT = Port.kMXP;
+    public static final int ADDRESS = 0x62;
+
+    public static class Register {
+      public static final int CONFIG = 0x00;
+      public static final int DISTANCE = 0x8f;
+    }
   }
 
   public static class Navigation {
