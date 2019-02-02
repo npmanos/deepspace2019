@@ -62,7 +62,7 @@ public class RobotMap {
   }
 
   public static class Lidar {
-    public static final Port PORT = Port.kMXP;
+    public static final Port PORT = Port.kOnboard;
     public static final int ADDRESS = 0x62;
 
     public static class Register {

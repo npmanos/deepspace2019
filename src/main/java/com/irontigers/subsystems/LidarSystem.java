@@ -8,7 +8,7 @@
 package com.irontigers.subsystems;
 
 import java.time.Duration;
-
+import java.nio.ByteBuffer;
 import com.irontigers.RobotMap;
 import com.irontigers.RollingAverage;
 
@@ -33,7 +33,7 @@ public class LidarSystem extends PeriodicSystem {
   private LidarSystem() {
     // read the lidar location every 50 milliseconds
     // TODO: change based on lidar required delay
-    super(Duration.ofMillis(50));
+    super(Duration.ofMillis(500));
 
     i2c = new I2C(RobotMap.Lidar.PORT, RobotMap.Lidar.ADDRESS);
 
@@ -43,21 +43,33 @@ public class LidarSystem extends PeriodicSystem {
 
   protected void execute(){
 
+    // boolean isValid = i2c.addressOnly();
+    // System.out.println("Was addressable: " + isValid);
+
     // 0x04 is the value to tell the LIDAR we are about to read from it
     i2c.write(RobotMap.Lidar.Register.CONFIG, 0x04);
     delay(20);
+
     byte[] distanceBytes = new byte[2];
     i2c.read(RobotMap.Lidar.Register.DISTANCE, distanceBytes.length, distanceBytes);
 
-    double nativeValue = (distanceBytes[0] << 8) + distanceBytes[1];
+    printBytes(distanceBytes);
 
-    System.out.println(String.format("LIDAR Native: %d", nativeValue));
+    short nativeValue = ByteBuffer.wrap(distanceBytes).getShort();//(distanceBytes[0] << 8) + distanceBytes[1];
+    System.out.println("LIDAR Native: " + nativeValue);
+  }
+
+  private void printBytes(byte[] bytes){
+    for(byte b : bytes){
+      System.out.println(b + " " + (int)b + " " + (int)b);
+    }
   }
 
   private void delay(int milliseconds){
     try{
       Thread.sleep(milliseconds);
     }catch(InterruptedException ignored){
+      System.out.println("error during delay");
       // we don't care about this
     }
   }

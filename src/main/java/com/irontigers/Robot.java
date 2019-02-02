@@ -45,8 +45,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    DriverJoystick.instance();
-    AlignmentSystem.instance();
+    //DriverJoystick.instance();
+    //AlignmentSystem.instance();
 
     LidarSystem.instance();
 
