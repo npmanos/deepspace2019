@@ -8,6 +8,9 @@
 
 package com.irontigers;
 
+import com.irontigers.subsystems.AlignmentSystem;
+import com.irontigers.subsystems.DriverJoystick;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 
@@ -29,6 +32,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    DriverJoystick.instance();
+    AlignmentSystem.instance();
     
     // TODO: setup SmartDashboard options and choosers
 
