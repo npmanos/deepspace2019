@@ -14,8 +14,13 @@ import com.irontigers.subsystems.DriverJoystick;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import com.irontigers.subsystems.DriveSystem;
+import edu.wpi.first.wpilibj.Spark;
 
 import com.irontigers.subsystems.DriverJoystick;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.irontigers.pulsedLightLIDAR;
+//import com.irontigers.LidarLiteSensor;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,6 +30,8 @@ import com.irontigers.subsystems.DriverJoystick;
  * project.
  */
 public class Robot extends TimedRobot {
+  public WPI_TalonSRX talon;
+  public static Spark spark = new Spark(0);
 
   // DriveSystem d = DriveSystem.instance();
 
@@ -35,11 +42,19 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
+
+
   @Override
   public void robotInit() {
     DriverJoystick.instance();
     AlignmentSystem.instance();
-    
+    pulsedLightLIDAR.pulsedLightLIDAR2();
+
+    talon = new WPI_TalonSRX(3);
+
+
+
+   // private TalonSRX talon;
     // TODO: setup SmartDashboard options and choosers
 
     // We do not need to provide an option to select the TeleopDrive because it
@@ -50,13 +65,29 @@ public class Robot extends TimedRobot {
    * This function is called every robot packet, no matter the mode. Use
    * this for items like diagnostics that you want ran during disabled,
    * autonomous, teleoperated and test.
-   *
    * <p>This runs after the mode specific periodic functions, but before
    * LiveWindow and SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
-  }
+
+    // talon.set(.5);
+        pulsedLightLIDAR.start();
+
+       if (pulsedLightLIDAR.getDistanceIn() > 10){
+         spark.setSpeed(.5);
+       }
+       else {
+         talon.set(.5);
+      }
+     pulsedLightLIDAR.update();
+     }
+
+
+
+
+    
+  
 
   /**
    * This autonomous (along with the chooser code above) shows how to select
@@ -87,8 +118,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    DriverJoystick joystick = DriverJoystick.instance();
-    DriveSystem.instance().drive(joystick.yScaledSpeed(), joystick.xScaledSpeed(), joystick.zScaledRotation());
+    //DriverJoystick joystick = DriverJoystick.instance();
+    //DriveSystem.instance().drive(joystick.yScaledSpeed(), joystick.xScaledSpeed(), joystick.zScaledRotation());
+  //  talon.set(0.2);
   }
 
   /**
@@ -98,4 +130,6 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     
   }
+
+
 }
