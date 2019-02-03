@@ -29,6 +29,7 @@ public class LidarSystem extends PeriodicSystem {
   // These values are written by the periodic timer thread and read on the main
   // thread. By marking them volatile we ensure a write is seen by the read.
   private volatile double distanceLatest = 0.0;
+  private volatile boolean startNewRead = true;
 
   private LidarSystem() {
     // read the lidar location every 50 milliseconds
@@ -47,16 +48,24 @@ public class LidarSystem extends PeriodicSystem {
     // System.out.println("Was addressable: " + isValid);
 
     // 0x04 is the value to tell the LIDAR we are about to read from it
-    i2c.write(RobotMap.Lidar.Register.CONFIG, 0x04);
-    delay(20);
+    if(startNewRead){
+      i2c.write(RobotMap.Lidar.Register.CONFIG, 0x04);
+      startNewRead = false;
+    }
+    
 
-    byte[] distanceBytes = new byte[2];
-    i2c.read(RobotMap.Lidar.Register.DISTANCE, distanceBytes.length, distanceBytes);
+    byte[] statusByte = new byte[1];
+    i2c.read(RobotMap.Lidar.Register.STATUS, statusByte.length, statusByte);
 
-    printBytes(distanceBytes);
-
-    short nativeValue = ByteBuffer.wrap(distanceBytes).getShort();//(distanceBytes[0] << 8) + distanceBytes[1];
-    System.out.println("LIDAR Native: " + nativeValue);
+    //Waits until bit 0 of status byte (register 0x01) reads zero, then reads two bytes from 0x8f to obtain distance in cm
+    if(getBit(statusByte, 0) == 0){
+      byte[] distanceBytes = new byte[2];
+      i2c.read(RobotMap.Lidar.Register.DISTANCE, distanceBytes.length, distanceBytes);
+      printBytes(distanceBytes);
+      short nativeValue = ByteBuffer.wrap(distanceBytes).getShort();//(distanceBytes[0] << 8) + distanceBytes[1];
+      System.out.println("LIDAR Native: " + nativeValue);
+      startNewRead = true;
+    }
   }
 
   private void printBytes(byte[] bytes){
@@ -72,5 +81,13 @@ public class LidarSystem extends PeriodicSystem {
       System.out.println("error during delay");
       // we don't care about this
     }
+  }
+
+  private int getBit(byte[] byteArray, int pos){
+    int posByte = pos/8;
+    int posBit = pos%8;
+    byte valByte = byteArray[posByte];
+    int valInt = valByte >> (posBit + 1) & 1;
+    return valInt;
   }
 }

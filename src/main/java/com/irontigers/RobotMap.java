@@ -67,6 +67,7 @@ public class RobotMap {
 
     public static class Register {
       public static final int CONFIG = 0x00;
+      public static final int STATUS = 0x01;
       public static final int DISTANCE = 0x8f;
     }
   }
