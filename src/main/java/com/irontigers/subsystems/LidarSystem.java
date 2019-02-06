@@ -34,38 +34,40 @@ public class LidarSystem extends PeriodicSystem {
   private LidarSystem() {
     // read the lidar location every 50 milliseconds
     // TODO: change based on lidar required delay
-    super(Duration.ofMillis(500));
+    super(Duration.ofMillis(1000));
 
     i2c = new I2C(RobotMap.Lidar.PORT, RobotMap.Lidar.ADDRESS);
+
+    i2c.write(0x04, 0x08 | 32);
+    i2c.write(0x11, 0xff);
+    i2c.write(0x00, 0x04);
 
     // Start the periodic reading of the lidar
     start();
   }
 
   protected void execute(){
+    // System.out.println("I executed");
+    // i2c.write(0, (byte)0x04);
 
-    // boolean isValid = i2c.addressOnly();
-    // System.out.println("Was addressable: " + isValid);
+    // delay(20);
 
-    // 0x04 is the value to tell the LIDAR we are about to read from it
-    if(startNewRead){
-      i2c.write(RobotMap.Lidar.Register.CONFIG, 0x04);
-      startNewRead = false;
-    }
-    
+    // byte[] waitBuf = new byte[1];
+    // do{
+    //   System.out.println("I'm endless");
+    //   i2c.read((byte)0x01, 1, waitBuf);
+    // }while((waitBuf[0] & 1) > 0);
 
-    byte[] statusByte = new byte[1];
-    i2c.read(RobotMap.Lidar.Register.STATUS, statusByte.length, statusByte);
+    byte[] valueBytes = new byte[2];
+    i2c.read(0x8f, 2, valueBytes);
 
-    //Waits until bit 0 of status byte (register 0x01) reads zero, then reads two bytes from 0x8f to obtain distance in cm
-    if(getBit(statusByte, 0) == 0){
-      byte[] distanceBytes = new byte[2];
-      i2c.read(RobotMap.Lidar.Register.DISTANCE, distanceBytes.length, distanceBytes);
-      printBytes(distanceBytes);
-      short nativeValue = ByteBuffer.wrap(distanceBytes).getShort();//(distanceBytes[0] << 8) + distanceBytes[1];
-      System.out.println("LIDAR Native: " + nativeValue);
-      startNewRead = true;
-    }
+    ByteBuffer valueBuffer = ByteBuffer.wrap(valueBytes);
+    short distanceCentimeters = valueBuffer.getShort();
+
+    System.out.println("Native: " + distanceCentimeters);
+    // System.out.println("=============================");
+
+    // delay(10);
   }
 
   private void printBytes(byte[] bytes){
@@ -91,3 +93,6 @@ public class LidarSystem extends PeriodicSystem {
     return valInt;
   }
 }
+
+
+

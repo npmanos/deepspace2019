@@ -29,6 +29,10 @@ public class RollingAverage {
     values = new LinkedList<>();
   }
 
+  public void addValue(short value){
+    addValue(new BigDecimal(value));
+  }
+
   public void addValue(int value){
     addValue(new BigDecimal(value));
   }
