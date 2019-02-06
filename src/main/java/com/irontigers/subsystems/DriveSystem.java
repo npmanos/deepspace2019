@@ -79,7 +79,8 @@ public class DriveSystem extends Subsystem {
    * @param rotation rotation around the Z axis
    */
   public void drive(double ySpeed, double xSpeed, double rotation){
-    drive.driveCartesian(ySpeed, xSpeed, rotation);
+    System.out.println("driving " + ySpeed + ", " + xSpeed + ", " + rotation);
+    drive.driveCartesian(xSpeed, ySpeed, rotation);
   }
 
   /**

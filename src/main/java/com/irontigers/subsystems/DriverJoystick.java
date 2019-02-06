@@ -92,6 +92,8 @@ public class DriverJoystick extends PeriodicSystem {
     yLatest = y;
     xLatest = x;
     zLatest = z;
+
+    // System.out.println("y="+y + ", x="+x + ", z=" + z);
   }
 
   private double calculateAverage(RollingAverage averager, double value){

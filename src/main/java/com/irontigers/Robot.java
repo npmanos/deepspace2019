@@ -8,11 +8,13 @@
 
 package com.irontigers;
 
-import com.irontigers.subsystems.AlignmentSystem;
+import com.irontigers.subsystems.DriveSystem;
 import com.irontigers.subsystems.DriverJoystick;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
+
+//import com.irontigers.LidarLiteSensor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,10 +34,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    DriveSystem.instance();
     DriverJoystick.instance();
-    AlignmentSystem.instance();
-    
-    // TODO: setup SmartDashboard options and choosers
 
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
@@ -82,7 +82,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    
+    Scheduler.getInstance().run();
+    // DriverJoystick joystick = DriverJoystick.instance();
+    // DriveSystem.instance().drive(joystick.yScaledSpeed(),
+    // joystick.xScaledSpeed(), joystick.zScaledRotation());
+    // talon.set(0.2);
   }
 
   /**
