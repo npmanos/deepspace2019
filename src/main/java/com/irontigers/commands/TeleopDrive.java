@@ -1,7 +1,7 @@
 package com.irontigers.commands;
 
 import com.irontigers.subsystems.DriveSystem;
-import com.irontigers.subsystems.DriverJoystick;
+import com.irontigers.subsystems.XBoxController;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -32,12 +32,8 @@ public class TeleopDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    // System.out.println("!!!!!! TeleopDrive.execute");
-
-    DriverJoystick joystick = DriverJoystick.instance();
-    DriveSystem.instance().drive(joystick.yScaledSpeed(), joystick.xScaledSpeed(), joystick.zScaledRotation());
-    
+    XBoxController controller = XBoxController.instance();
+    DriveSystem.instance().drive(controller.forwardSpeed(),controller.strafeSpeed(), controller.rotationSpeed());
   }
 
   // Make this return true when this Command no longer needs to run execute()
