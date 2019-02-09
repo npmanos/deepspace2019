@@ -10,6 +10,7 @@ package com.irontigers;
 
 import com.irontigers.subsystems.DriveSystem;
 import com.irontigers.subsystems.DriverJoystick;
+import com.irontigers.subsystems.XBoxController;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -35,7 +36,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     DriveSystem.instance();
-    DriverJoystick.instance();
+    XBoxController.instance();
 
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
