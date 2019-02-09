@@ -9,7 +9,6 @@
 package com.irontigers;
 
 import com.irontigers.subsystems.DriveSystem;
-import com.irontigers.subsystems.DriverJoystick;
 import com.irontigers.subsystems.InvertibleSystem;
 import com.irontigers.subsystems.XBoxController;
 
