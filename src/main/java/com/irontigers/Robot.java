@@ -53,6 +53,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     instance = this;
 
+    enableStandardControl();
+
     DriveSystem.instance();
     XBoxController.instance();
 

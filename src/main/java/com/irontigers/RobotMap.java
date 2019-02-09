@@ -35,6 +35,7 @@ public class RobotMap {
     public static final int RIGHT_TRIGGER = 3;    
 
     public static final int X_BUTTON = 3;
+    public static final int B_BUTTON = 2;
     public static final int START_BUTTON = 8;
 
     // Controller buttons - apply for both driver and elevator controllers

@@ -11,6 +11,9 @@ import java.time.Duration;
 
 import com.irontigers.RobotMap;
 import com.irontigers.RollingAverage;
+import com.irontigers.commands.LimeAlign;
+import com.irontigers.commands.TeleopDrive;
+import com.irontigers.commands.ToggleControlState;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -59,6 +62,8 @@ public class XBoxController extends PeriodicSystem {
 
   private Joystick controller;
   private JoystickButton invertControlButton;
+  private JoystickButton autoAlignButton;
+  private JoystickButton stopAutoAlignButton;
 
   private XBoxController() {
     // read the joystick location every 5 milliseconds
@@ -68,6 +73,12 @@ public class XBoxController extends PeriodicSystem {
     invertControlButton = new JoystickButton(controller, RobotMap.XBoxController.START_BUTTON);
     invertControlButton.whenReleased(new ToggleControlState());
     
+    autoAlignButton = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
+    autoAlignButton.whenReleased(new LimeAlign());
+    
+    stopAutoAlignButton = new JoystickButton(controller, RobotMap.XBoxController.B_BUTTON);
+    stopAutoAlignButton.whenReleased(new TeleopDrive());
+
     // Start the periodic reading of the joystick
     start();
   }
