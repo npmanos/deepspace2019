@@ -13,6 +13,8 @@ import com.irontigers.RobotMap;
 import com.irontigers.RollingAverage;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * Basic Joystick for the robot. While technically this is not a Subsystem of
@@ -56,13 +58,15 @@ public class XBoxController extends PeriodicSystem {
   private volatile double rotationLatest = 0.0;
 
   private Joystick controller;
+  private JoystickButton invertControlButton;
 
   private XBoxController() {
     // read the joystick location every 5 milliseconds
     super(Duration.ofMillis(5));
 
     controller = new Joystick(RobotMap.XBoxController.ID);
-    // aButton = new JoystickButton(joystick, RobotMap.Joystick.BUTTON_A);
+    invertControlButton = new JoystickButton(controller, RobotMap.XBoxController.START_BUTTON);
+    invertControlButton.whenReleased(new ToggleControlState());
     
     // Start the periodic reading of the joystick
     start();
@@ -83,9 +87,10 @@ public class XBoxController extends PeriodicSystem {
   protected void execute(){
     double scalingFactor = scalingFactor();
     
-    double forward = deadify(FORWARD_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.LEFT_Y_AXIS));
+    // Forward is oposite so we can just negate the raw value
+    double forward = deadify(FORWARD_DEADZONE, -controller.getRawAxis(RobotMap.XBoxController.LEFT_Y_AXIS));
     double strafe = deadify(STRAFE_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.RIGHT_X_AXIS));
-    double leftRotation = deadify(ROTATION_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.LEFT_TRIGGER));
+    double leftRotation = deadify(ROTATION_DEADZONE, -controller.getRawAxis(RobotMap.XBoxController.LEFT_TRIGGER));
     double rightRotation = deadify(ROTATION_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.RIGHT_TRIGGER));
 
     double forwardAverage = scalingFactor * calculateAverage(forwardAverager, forward);
@@ -93,7 +98,7 @@ public class XBoxController extends PeriodicSystem {
     double leftRotationAverage = scalingFactor * calculateAverage(leftRotationAverager, leftRotation);
     double rightRotationAverage = scalingFactor * calculateAverage(rightRotationAverager, rightRotation);
 
-    double normalizedRotation = Math.max(leftRotationAverage, rightRotationAverage) - Math.min(leftRotationAverage, rightRotationAverage);
+    double normalizedRotation = rightRotationAverage + leftRotationAverage;// Math.max(leftRotationAverage, rightRotationAverage) - Math.min(leftRotationAverage, rightRotationAverage);
 
     // We calculate all then assign so there is as little time between assigning 
     // the y and z. Technically we could use a lock here but would gain little as

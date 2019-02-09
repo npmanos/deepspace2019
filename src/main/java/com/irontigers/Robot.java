@@ -8,14 +8,13 @@
 
 package com.irontigers;
 
+import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
 import com.irontigers.subsystems.InvertibleSystem;
 import com.irontigers.subsystems.XBoxController;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-
-//import com.irontigers.LidarLiteSensor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,11 +25,22 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class Robot extends TimedRobot {
 
+  public enum ControlState {
+    STANDARD,
+    INVERTED
+  }
+
   // Add to here any subsystems that should be inverted when the driver
   // decides to invert the robot controls
-  public static InvertibleSystem[] INVERTIBLE_SYSTEMS = new InvertibleSystem[]{
+  private ControlState controlState = ControlState.STANDARD;
+  private static InvertibleSystem[] INVERTIBLE_SYSTEMS = new InvertibleSystem[]{
     DriveSystem.instance()
   };
+
+  private static Robot instance;
+  public static Robot instance(){
+    return instance;
+  }
 
   // private DriverStation.Alliance ourAlliance;
   // private Command automousCommand;
@@ -41,6 +51,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    instance = this;
+
     DriveSystem.instance();
     XBoxController.instance();
 
@@ -102,5 +114,36 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     
+  }
+
+  public void toggleControlState(){
+    switch(controlState){
+      case STANDARD:
+        enableInvertedControl();
+        break;
+      case INVERTED:
+      default:
+        enableStandardControl();
+        break;
+    }
+  }
+
+  public void enableStandardControl(){
+    controlState = ControlState.STANDARD;
+    for(InvertibleSystem system : INVERTIBLE_SYSTEMS){
+      system.enableStandardControl();
+    }
+
+    DashboardPublisher.instance().put("Control State", controlState.toString());
+  }
+
+  public void enableInvertedControl(){
+    controlState = ControlState.INVERTED;
+    for(InvertibleSystem system : INVERTIBLE_SYSTEMS){
+      system.enableInvertedControl();
+    }
+
+    
+    DashboardPublisher.instance().put("Control State", controlState.toString());
   }
 }

@@ -4,8 +4,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.irontigers.RobotMap;
 import com.irontigers.commands.TeleopDrive;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-public class DriveSystem extends InvertibleSystem {
+public class DriveSystem extends Subsystem implements InvertibleSystem {
 
   public interface DriverMethod{
     public void drive(double ySpeed, double xSpeed, double rotation);
@@ -38,7 +39,6 @@ public class DriveSystem extends InvertibleSystem {
     rightBack = new WPI_TalonSRX(RobotMap.DriveTrain.RIGHT_BACK);
 
     drive = new MecanumDrive(leftFront, leftBack, rightFront, rightBack);
-    setStandardControl();
   }
 
   @Override
@@ -70,12 +70,6 @@ public class DriveSystem extends InvertibleSystem {
    * @param rotationSpeed rotation around the Z axis
    */
   public void drive(double forwardSpeed, double strafeSpeed, double rotationSpeed){
-
-    if(InvertedState.INVERTED == invertedState){
-      forwardSpeed *= -1.0;
-      strafeSpeed *= -1.0;
-      rotationSpeed *= -1.0;
-    }
 
     DashboardPublisher.instance().put("Forward", forwardSpeed);
     DashboardPublisher.instance().put("Strafe", strafeSpeed);
