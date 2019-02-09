@@ -39,8 +39,8 @@ public class RobotMap {
     // public static int BUTTON_B = 2;
      public static int BUTTON_X = 3;
     // public static int BUTTON_Y = 4;
-    // public static int LEFT_BUMPER = 5;
-    // public static int RIGHT_BUMPER = 6;
+     public static int LEFT_BUMPER = 5;
+     public static int RIGHT_BUMPER = 6;
     // public static int BACK = 7;
     // public static int START = 8;
     // public static int LEFT_JOYSTICK = 9;
@@ -55,7 +55,9 @@ public class RobotMap {
 
     //dpad is excluded as it is buggy to the point of being unable to be used
   }
-
+  public static class Manipulators{
+    public static int ELEVATOR = 5;
+  }
   public static class DriveTrain {
     // drive train motors
     public static int LEFT_FRONT = 4;

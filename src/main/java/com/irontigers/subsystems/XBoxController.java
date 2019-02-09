@@ -56,18 +56,22 @@ public class XBoxController extends PeriodicSystem {
   private volatile double rotationLatest = 0.0;
 
   private Joystick controller;
-  private JoystickButton xButton;
+  private JoystickButton rightBumper;
+  private JoystickButton leftBumper;
+  
   private XBoxController() {
     // read the joystick location every 5 milliseconds
     super(Duration.ofMillis(5));
     controller = new Joystick(RobotMap.XBoxController.ID);
     // aButton = new JoystickButton(joystick, RobotMap.Joystick.BUTTON_A);
-     xButton =  new JoystickButton(controller, RobotMap.XBoxController.BUTTON_X);
-     xButton.whenReleased(new ToggleDumpTruck());
+    rightBumper = new JoystickButton(RobotMap.XBoxController.RIGHT_BUMPER);
+    rightBumper.whenHeld(new MoveElevatorUp());
+    leftBumper = new JoystickButton(RobotMap.XBoxController.LEFT_BUMPER);
+    leftBumper.whenHeld(new MoveElevatorDown());
     // Start the periodic reading of the joystick
     start();
   }
-
+  
   public double forwardSpeed() {
     return forwardLatest;
   }
