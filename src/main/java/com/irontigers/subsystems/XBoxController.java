@@ -40,10 +40,8 @@ public class XBoxController extends PeriodicSystem {
   private final double FORWARD_DEADZONE = .1;
   private final double STRAFE_DEADZONE = .1;
   private final double ROTATION_DEADZONE = .1;
-
   private final double SCALING_FACTOR_STANDARD = 1;
   private final int AVERAGING_WINDOW_SIZE = 5;
-
   private RollingAverage forwardAverager = new RollingAverage(AVERAGING_WINDOW_SIZE);
   private RollingAverage strafeAverager = new RollingAverage(AVERAGING_WINDOW_SIZE);
   private RollingAverage leftRotationAverager = new RollingAverage(AVERAGING_WINDOW_SIZE);
@@ -56,14 +54,14 @@ public class XBoxController extends PeriodicSystem {
   private volatile double rotationLatest = 0.0;
 
   private Joystick controller;
-
+  private JoystickButton xButton;
   private XBoxController() {
     // read the joystick location every 5 milliseconds
     super(Duration.ofMillis(5));
-
     controller = new Joystick(RobotMap.XBoxController.ID);
     // aButton = new JoystickButton(joystick, RobotMap.Joystick.BUTTON_A);
-    
+     xButton =  new JoystickButton(controller, RobotMap.Controller.RIGHT_BUMPER);
+     xButton.whenReleased(new ToggleDumpTruck());
     // Start the periodic reading of the joystick
     start();
   }
