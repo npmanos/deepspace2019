@@ -10,6 +10,7 @@ package com.irontigers;
 
 import com.irontigers.subsystems.DriveSystem;
 import com.irontigers.subsystems.DriverJoystick;
+import com.irontigers.subsystems.InvertibleSystem;
 import com.irontigers.subsystems.XBoxController;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -25,6 +26,12 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+
+  // Add to here any subsystems that should be inverted when the driver
+  // decides to invert the robot controls
+  public static InvertibleSystem[] INVERTIBLE_SYSTEMS = new InvertibleSystem[]{
+    DriveSystem.instance()
+  };
 
   // private DriverStation.Alliance ourAlliance;
   // private Command automousCommand;

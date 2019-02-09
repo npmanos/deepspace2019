@@ -1,13 +1,15 @@
 package com.irontigers.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.irontigers.DashboardPublisher;
 import com.irontigers.RobotMap;
 import com.irontigers.commands.TeleopDrive;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-public class DriveSystem extends Subsystem {
+public class DriveSystem extends InvertibleSystem {
+
+  public interface DriverMethod{
+    public void drive(double ySpeed, double xSpeed, double rotation);
+  }
 
   private static DriveSystem instance = new DriveSystem();
   public static DriveSystem instance(){
@@ -22,6 +24,8 @@ public class DriveSystem extends Subsystem {
   private WPI_TalonSRX rightFront;
   private WPI_TalonSRX rightBack;
 
+  private DriverMethod driveMethod;
+
   private DriveSystem(){
 
     // We're using WPI_TalonSRX because it is a wrapper around the CTRE provided TalonSRX
@@ -34,6 +38,7 @@ public class DriveSystem extends Subsystem {
     rightBack = new WPI_TalonSRX(RobotMap.DriveTrain.RIGHT_BACK);
 
     drive = new MecanumDrive(leftFront, leftBack, rightFront, rightBack);
+    setStandardControl();
   }
 
   @Override
@@ -65,22 +70,35 @@ public class DriveSystem extends Subsystem {
    * @param rotationSpeed rotation around the Z axis
    */
   public void drive(double forwardSpeed, double strafeSpeed, double rotationSpeed){
+
+    if(InvertedState.INVERTED == invertedState){
+      forwardSpeed *= -1.0;
+      strafeSpeed *= -1.0;
+      rotationSpeed *= -1.0;
+    }
+
     DashboardPublisher.instance().put("Forward", forwardSpeed);
     DashboardPublisher.instance().put("Strafe", strafeSpeed);
     DashboardPublisher.instance().put("Rotation", rotationSpeed);
 
-    drive.driveCartesian(strafeSpeed, forwardSpeed, rotationSpeed);
+    driveMethod.drive(strafeSpeed, forwardSpeed, rotationSpeed);
   }
 
   /**
    * Complete stop driving
    */
   public void stop(){
-    DashboardPublisher.instance().put("Forward", 0.0);
-    DashboardPublisher.instance().put("Strafe", 0.0);
-    DashboardPublisher.instance().put("Rotation", 0.0);
-
     drive(0,0,0);
+  }
+
+  @Override
+  public void enableStandardControl() {
+    driveMethod = (ySpeed, xSpeed, rotation) -> drive.driveCartesian(ySpeed, xSpeed, rotation);    
+  }
+
+  @Override
+  public void enableInvertedControl() {
+    driveMethod = (ySpeed, xSpeed, rotation) -> drive.driveCartesian(-ySpeed, -xSpeed, -rotation);
   }
 
 }
