@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class PeriodicSystem {
 
   private ScheduledExecutorService periodicExecutor;
-  private Duration periodDuration;
+  protected Duration periodDuration;
   
   public PeriodicSystem(Duration periodDuration){
     periodicExecutor = Executors.newSingleThreadScheduledExecutor();

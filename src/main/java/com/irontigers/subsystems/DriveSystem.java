@@ -1,26 +1,12 @@
 package com.irontigers.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.irontigers.DashboardPublisher;
 import com.irontigers.RobotMap;
 import com.irontigers.commands.TeleopDrive;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-
-/**
- * Basic DriveTrain for the robot. Provides standard {@link DriveSystem#drive} method
- * allowing for forward/backward, left/right strafing, and rotation. Also uses a standard
- * wheel encoder to track travelled distance. The encoder can be reset via the
- * {@link DriveSystem#resetEncoder()} method.
- *
- * This class, along with all Subsystems, uses the Singleton pattern to ensure only a single
- * instance of this Subsystem exists during the lifetime of the Robot program. The instance
- * will be created statically (the first time this class is used) and can be accessed via
- * the static {@link DriveSystem#instance()} method from anywhere in the program. The use of
- * this coding pattern is useful in keeping the class self-contained and easy to use.
- */
 public class DriveSystem extends Subsystem {
 
   private static DriveSystem instance = new DriveSystem();
@@ -74,18 +60,26 @@ public class DriveSystem extends Subsystem {
 
   /**
    * Execute a drive action on the driveTrain.
-   * @param ySpeed speed for forward/backward movement
-   * @param xSpeed speed for left/right movement
-   * @param rotation rotation around the Z axis
+   * @param forwardSpeed speed for forward/backward movement
+   * @param strafeSpeed speed for left/right movement
+   * @param rotationSpeed rotation around the Z axis
    */
-  public void drive(double ySpeed, double xSpeed, double rotation){
-    drive.driveCartesian(ySpeed, xSpeed, rotation);
+  public void drive(double forwardSpeed, double strafeSpeed, double rotationSpeed){
+    DashboardPublisher.instance().put("Forward", forwardSpeed);
+    DashboardPublisher.instance().put("Strafe", strafeSpeed);
+    DashboardPublisher.instance().put("Rotation", rotationSpeed);
+
+    drive.driveCartesian(strafeSpeed, forwardSpeed, rotationSpeed);
   }
 
   /**
    * Complete stop driving
    */
   public void stop(){
+    DashboardPublisher.instance().put("Forward", 0.0);
+    DashboardPublisher.instance().put("Strafe", 0.0);
+    DashboardPublisher.instance().put("Rotation", 0.0);
+
     drive(0,0,0);
   }
 

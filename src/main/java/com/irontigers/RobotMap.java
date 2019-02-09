@@ -22,8 +22,17 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 / */
 public class RobotMap {
 
-  public static class Joystick {
-    public static int ID = 0;
+  public static class XBoxController {
+    public static final int ID = 0;
+
+    public static final int LEFT_X_AXIS = 0;
+    public static final int LEFT_Y_AXIS = 1;
+    
+    public static final int RIGHT_X_AXIS = 4;
+    public static final int RIGHT_Y_AXIS = 5;
+
+    public static final int LEFT_TRIGGER = 2;
+    public static final int RIGHT_TRIGGER = 3;    
 
     // Controller buttons - apply for both driver and elevator controllers
     // public static int BUTTON_A = 1;
