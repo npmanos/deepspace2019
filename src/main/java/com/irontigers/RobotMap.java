@@ -37,7 +37,7 @@ public class RobotMap {
     // Controller buttons - apply for both driver and elevator controllers
     // public static int BUTTON_A = 1;
     // public static int BUTTON_B = 2;
-    // public static int BUTTON_X = 3;
+     public static int BUTTON_X = 3;
     // public static int BUTTON_Y = 4;
     // public static int LEFT_BUMPER = 5;
     // public static int RIGHT_BUMPER = 6;
@@ -93,4 +93,8 @@ public class RobotMap {
 		// public static double D = 0;
 		// public static double TOL = .1;
 	}
+
+  public static class DumpTruck {
+     public static int Spark = 0;
+  }
 }
