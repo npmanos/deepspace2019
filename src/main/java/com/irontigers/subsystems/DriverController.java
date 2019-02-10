@@ -84,9 +84,18 @@ public class DriverController extends Subsystem {
     toggleDumptruckButton.whenReleased(new ToggleDumpTruck());
     resetRobotToDefaultsButton.whenReleased(new ResetRobotToDefaults());
 
-    rumbleButton.whenReleased(new Command(){
+    rumbleButton.whenPressed(new Command(){
       public void execute(){
         controller.setRumble(RumbleType.kLeftRumble, 1);
+      }
+      protected boolean isFinished() {
+        return true;
+      }
+    });
+    
+    rumbleButton.whenReleased(new Command(){
+      public void execute(){
+        controller.setRumble(RumbleType.kLeftRumble, 0);
       }
       protected boolean isFinished() {
         return true;
@@ -113,7 +122,7 @@ public class DriverController extends Subsystem {
     
     double forward = deadify(FORWARD_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.LEFT_Y_AXIS));
     double strafe = deadify(STRAFE_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.RIGHT_X_AXIS));
-    double leftRotation = deadify(ROTATION_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.LEFT_TRIGGER));
+    double leftRotation = deadify(ROTATION_DEADZONE, -controller.getRawAxis(RobotMap.XBoxController.LEFT_TRIGGER));
     double rightRotation = deadify(ROTATION_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.RIGHT_TRIGGER));
 
     double forwardAverage = scalingFactor * calculateAverage(forwardAverager, forward);
@@ -121,7 +130,7 @@ public class DriverController extends Subsystem {
     double leftRotationAverage = scalingFactor * calculateAverage(leftRotationAverager, leftRotation);
     double rightRotationAverage = scalingFactor * calculateAverage(rightRotationAverager, rightRotation);
 
-    double normalizedRotation = Math.max(leftRotationAverage, rightRotationAverage) - Math.min(leftRotationAverage, rightRotationAverage);
+    double normalizedRotation = leftRotationAverage + rightRotationAverage;
 
     // We calculate all then assign so there is as little time between assigning 
     // the y and z. Technically we could use a lock here but would gain little as

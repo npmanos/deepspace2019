@@ -25,7 +25,7 @@ public class ElevatorSystem extends Subsystem {
   private ElevatorSystem(){
     elevatorTalon = new WPI_TalonSRX(RobotMap.Manipulators.ELEVATOR);
 
-    periodicExecutor.start();
+    // periodicExecutor.start();
   }
 
   public int getRawPosition(){

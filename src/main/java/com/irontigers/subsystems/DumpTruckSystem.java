@@ -25,8 +25,6 @@ public class DumpTruckSystem extends Subsystem {
   public void initDefaultCommand(){
     // If there is no other ACTIVE command claiming a requirement on the DriveTrain then we will always
     // default to TelopDrive command
-
-    // setDefaultCommand(new TeleopDrive());
   }
 
   public void invert(){
