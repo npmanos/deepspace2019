@@ -82,7 +82,7 @@ public class DriverController extends Subsystem {
 
     invertControlButton.whenReleased(new ToggleInvertedControl());
     toggleDumptruckButton.whenReleased(new ToggleDumpTruck());
-    resetRobotToDefaultsButton.whenReleased(new SpearIn());
+    resetRobotToDefaultsButton.whenReleased(new ResetRobotToDefaults());
 
     rumbleButton.whenReleased(new Command(){
       public void execute(){
