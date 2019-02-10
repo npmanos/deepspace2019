@@ -87,12 +87,12 @@ public class DriveSystem extends Subsystem implements InvertibleSystem {
 
   @Override
   public void enableStandardControl() {
-    driveMethod = (ySpeed, xSpeed, rotation) -> drive.driveCartesian(ySpeed, xSpeed, rotation);    
+    driveMethod = (strafeSpeed, forwardSpeed, rotationSpeed) -> drive.driveCartesian(strafeSpeed, -forwardSpeed, rotationSpeed);    
   }
 
   @Override
   public void enableInvertedControl() {
-    driveMethod = (ySpeed, xSpeed, rotation) -> drive.driveCartesian(-ySpeed, -xSpeed, -rotation);
+    driveMethod = (strafeSpeed, forwardSpeed, rotationSpeed) -> drive.driveCartesian(-strafeSpeed, forwardSpeed, rotationSpeed);
   }
 
 }

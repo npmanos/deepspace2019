@@ -42,7 +42,7 @@ public class DumpTruckSystem extends Subsystem {
       
   }
 
-  private void unDump(){
+  public void unDump(){
       dumpTruck.setSpeed(-.5);
       isDumped = false;
   }

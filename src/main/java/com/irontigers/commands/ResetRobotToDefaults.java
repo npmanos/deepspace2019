@@ -1,17 +1,25 @@
 package com.irontigers.commands;
 
+import com.irontigers.subsystems.DriveSystem;
+import com.irontigers.subsystems.DumpTruckSystem;
+import com.irontigers.subsystems.ElevatorSystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ResetRobotToDefaults extends Command {
 
   public ResetRobotToDefaults(){
-    // TODO: add all systems this command will use
-    // requires(ElevatorSystem.instance());
+    requires(ElevatorSystem.instance());
+    requires(DumpTruckSystem.instance());
+    requires(DriveSystem.instance());
   }
 
   @Override
   protected void execute() {
-    // TODO: implement
+    DriveSystem.instance().enableStandardControl();
+    DumpTruckSystem.instance().dump();
+    ElevatorSystem.instance().resetElevator();
+    DumpTruckSystem.instance().unDump();
   }
 
   @Override

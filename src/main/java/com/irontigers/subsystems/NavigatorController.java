@@ -13,6 +13,8 @@ import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
 import com.irontigers.RobotMap.XBoxController;
 import com.irontigers.commands.AutoAlign;
+import com.irontigers.commands.ElevatorDown;
+import com.irontigers.commands.EnableDrivingCamera;
 import com.irontigers.commands.ElevatorLevel1Dropoff;
 import com.irontigers.commands.ElevatorLevel1Pickup;
 import com.irontigers.commands.ElevatorLevel2;
@@ -80,8 +82,8 @@ public class NavigatorController extends Subsystem {
     elevatorLevel3Button = new JoystickButton(controller, RobotMap.XBoxController.Y_BUTTON);
 
     // While held down
-    elevatorDownButton.whenActive(new SpearIn());
-    elevatorUpButton.whenActive(new ElevatorUp());
+    elevatorDownButton.whileActive(new ElevatorDown());
+    elevatorUpButton.whileActive(new ElevatorUp());
 
     // Singular press
     spearInButton.whenReleased(new SpearIn());

@@ -13,6 +13,7 @@ import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
 import com.irontigers.RobotMap.XBoxController;
 import com.irontigers.RollingAverage;
+import com.irontigers.commands.EnableDrivingCamera;
 import com.irontigers.commands.ResetRobotToDefaults;
 import com.irontigers.commands.ToggleDumpTruck;
 import com.irontigers.commands.ToggleInvertedControl;
@@ -45,9 +46,9 @@ public class DriverController extends Subsystem {
     return instance;
   }
 
-  private final double FORWARD_DEADZONE = .1;
-  private final double STRAFE_DEADZONE = .1;
-  private final double ROTATION_DEADZONE = .1;
+  private final double FORWARD_DEADZONE = .2;
+  private final double STRAFE_DEADZONE = .2;
+  private final double ROTATION_DEADZONE = .2;
   private final double SCALING_FACTOR_STANDARD = 1;
   private final int AVERAGING_WINDOW_SIZE = 5;
   private RollingAverage forwardAverager = new RollingAverage(AVERAGING_WINDOW_SIZE);
@@ -66,6 +67,7 @@ public class DriverController extends Subsystem {
   private JoystickButton toggleDumptruckButton;
   private JoystickButton resetRobotToDefaultsButton;
   private JoystickButton rumbleButton;
+  private JoystickButton driverCameraButton;
 
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("driver_controller", Duration.ofMillis(5), () -> {
@@ -79,10 +81,12 @@ public class DriverController extends Subsystem {
     toggleDumptruckButton = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
     resetRobotToDefaultsButton = new JoystickButton(controller, RobotMap.XBoxController.BACK);
     rumbleButton = new JoystickButton(controller, RobotMap.XBoxController.Y_BUTTON);
+    driverCameraButton = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
 
     invertControlButton.whenReleased(new ToggleInvertedControl());
     toggleDumptruckButton.whenReleased(new ToggleDumpTruck());
     resetRobotToDefaultsButton.whenReleased(new ResetRobotToDefaults());
+    driverCameraButton.whenReleased(new EnableDrivingCamera());
 
     rumbleButton.whenPressed(new Command(){
       public void execute(){
