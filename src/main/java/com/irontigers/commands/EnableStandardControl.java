@@ -10,9 +10,7 @@ public class EnableStandardControl extends Command {
   @Override
   protected void execute() {
     // Call invert on all invertible systems
-    for(InvertibleSystem system : Robot.INVERTIBLE_SYSTEMS){
-      system.setStandardControl();
-    }
+    Robot.instance().enableStandardControl();
   }
 
   @Override
