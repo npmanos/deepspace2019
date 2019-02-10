@@ -18,7 +18,7 @@ public class ElevatorDown extends Command {
   @Override
   protected boolean isFinished() {
     // This should execute exactly once
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

@@ -1,5 +1,7 @@
 package com.irontigers.commands;
 
+import com.irontigers.subsystems.ElevatorSystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ResetRobotToDefaults extends Command {
@@ -12,6 +14,8 @@ public class ResetRobotToDefaults extends Command {
   @Override
   protected void execute() {
     // TODO: implement
+
+    ElevatorSystem.instance().zeroEncoder();
   }
 
   @Override

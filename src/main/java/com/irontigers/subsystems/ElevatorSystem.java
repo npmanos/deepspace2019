@@ -25,7 +25,7 @@ public class ElevatorSystem extends Subsystem {
   private ElevatorSystem(){
     elevatorTalon = new WPI_TalonSRX(RobotMap.Manipulators.ELEVATOR);
 
-    // periodicExecutor.start();
+    periodicExecutor.start();
   }
 
   public int getRawPosition(){
@@ -36,7 +36,7 @@ public class ElevatorSystem extends Subsystem {
     elevatorTalon.set(speed);
   }
 
-  public void positionAtHome(){
+  public void zeroEncoder(){
     // TODO: slowly send to hard-stop then reset position to 0
     try{
       elevatorTalon.setSelectedSensorPosition(0);
