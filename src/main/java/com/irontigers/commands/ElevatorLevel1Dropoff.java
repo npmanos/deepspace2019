@@ -1,23 +1,26 @@
 package com.irontigers.commands;
 
+import com.irontigers.subsystems.ElevatorSystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ElevatorLevel1Dropoff extends Command {
 
+  private int goalPosition = 2500;
+
   public ElevatorLevel1Dropoff(){
-    // TODO: add all systems this command will use
- double dropOff1 = 123;
-    // TODO: add all systems this command will use
-    // requires(ElevatorSystem.instance());
+    requires(ElevatorSystem.instance());
   }
 
   @Override
   protected void execute() {
-    if(ElevatorSystem.instance().getRawPosition() > 1.05 * dropOff1){
-        ElevatorSystem.instance().move(-.5);
+    double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
+    
+    if(currentPosition > goalPosition * 1.05){
+      ElevatorSystem.instance().move(-.5);
     }
-    else if(ElevatorSystem.instance().getRawPosition() < .95 * dropOff1){
-       ElevatorSystem.instance().move(.5);
+    else if(currentPosition < goalPosition * .95){
+      ElevatorSystem.instance().move(.5);
     }
     else{
       ElevatorSystem.instance().stop();
@@ -26,10 +29,8 @@ public class ElevatorLevel1Dropoff extends Command {
 
   @Override
   protected boolean isFinished() {
-    if(.95 * dropOff1 < ElevatorSystem.instance().getRaw && 1.05 * dropOff1 > ElevatorSystem.instance().getRaw){
-        return true;
-    }
-    else{return false};
+    double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
+    return (currentPosition > goalPosition * .95) && (currentPosition < goalPosition * 1.05);
   }
 
   // Called once after isFinished returns true
@@ -45,3 +46,4 @@ public class ElevatorLevel1Dropoff extends Command {
   protected void interrupted() {
     end();
   }
+}

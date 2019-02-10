@@ -55,6 +55,17 @@ public class ElevatorSystem extends Subsystem {
     move(0);
   }
 
+  public void resetElevator(){
+    /* This assumes the bottom limit switch is the reverse limit switch
+    *  We need to test this assumption and adjust once wired
+    */
+    while(elevatorTalon.getSensorCollection().isRevLimitSwitchClosed() == false){
+      move(-.5);
+    }
+    stop();
+    zeroEncoder();
+  }
+
   @Override
   protected void initDefaultCommand() {
     // nothing

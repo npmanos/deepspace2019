@@ -1,35 +1,38 @@
 package com.irontigers.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import com.irontigers.subsystems.ElevatorSystem;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 public class ElevatorLevel1Pickup extends Command {
 
-  public ElevatorLevel1Pickup(){
-    double positionPickup = 123;
-    // TODO: add all systems this command will use
-    // requires(ElevatorSystem.instance());
+  private int goalPosition = 3500;
+
+  public ElevatorLevel1Pickup() {
+    requires(ElevatorSystem.instance());
   }
 
   @Override
   protected void execute() {
-    if(ElevatorSystem.instance().getRawPosition() > 1.05 * positionPickup){
-        ElevatorSystem.instance().move(-.5);
-    }
-    else if(ElevatorSystem.instance().getRawPosition() < .95 * positionPickup){
-       ElevatorSystem.instance().move(.5);
-    }
-    else{
+    double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
+
+    if (currentPosition > goalPosition * 1.05) {
+      System.out.println("down");
+      ElevatorSystem.instance().move(-.5);
+    } else if (currentPosition < goalPosition * .95) {
+      System.out.println("up");
+      ElevatorSystem.instance().move(.5);
+    } else {
+      System.out.println("stop");
       ElevatorSystem.instance().stop();
     }
   }
 
   @Override
   protected boolean isFinished() {
-    if(.95 * positionPickup < ElevatorSystem.instance().getRaw && 1.05 * positionPickup > ElevatorSystem.instance().getRaw){
-        return true;
-    }
-    else{return false};
+    System.out.println("finished");
+    double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
+    return (currentPosition > goalPosition * .95) && (currentPosition < goalPosition * 1.05);
   }
 
   // Called once after isFinished returns true

@@ -14,6 +14,7 @@ import com.irontigers.RobotMap;
 import com.irontigers.RobotMap.XBoxController;
 import com.irontigers.commands.AutoAlign;
 import com.irontigers.commands.ElevatorDown;
+import com.irontigers.commands.EnableDrivingCamera;
 import com.irontigers.commands.ElevatorLevel1Dropoff;
 import com.irontigers.commands.ElevatorLevel1Pickup;
 import com.irontigers.commands.ElevatorLevel2;
