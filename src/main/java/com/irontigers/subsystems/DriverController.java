@@ -13,7 +13,7 @@ import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
 import com.irontigers.RobotMap.XBoxController;
 import com.irontigers.RollingAverage;
-import com.irontigers.commands.SpearIn;
+import com.irontigers.commands.ResetRobotToDefaults;
 import com.irontigers.commands.ToggleDumpTruck;
 import com.irontigers.commands.ToggleInvertedControl;
 
