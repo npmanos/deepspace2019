@@ -19,8 +19,6 @@ import com.irontigers.subsystems.NavigatorController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
-//import com.irontigers.LidarLiteSensor;
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -30,11 +28,22 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class Robot extends TimedRobot {
 
+  public enum ControlState {
+    STANDARD,
+    INVERTED
+  }
+
   // Add to here any subsystems that should be inverted when the driver
   // decides to invert the robot controls
-  public static InvertibleSystem[] INVERTIBLE_SYSTEMS = new InvertibleSystem[]{
+  private ControlState controlState = ControlState.STANDARD;
+  private static InvertibleSystem[] INVERTIBLE_SYSTEMS = new InvertibleSystem[]{
     DriveSystem.instance()
   };
+
+  private static Robot instance;
+  public static Robot instance(){
+    return instance;
+  }
 
   // private DriverStation.Alliance ourAlliance;
   // private Command automousCommand;
@@ -45,12 +54,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    DriveSystem.instance();
-    ElevatorSystem.instance();
-    DumpTruckSystem.instance();
+    instance = this;
+
     DashboardPublisher.instance();
     DriverController.instance();
+    DriveSystem.instance();
+    DumpTruckSystem.instance();
+    ElevatorSystem.instance();
     NavigatorController.instance();
+    
+    enableStandardControl();
 
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
@@ -98,6 +111,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    // DriverJoystick joystick = DriverJoystick.instance();
+    // DriveSystem.instance().drive(joystick.yScaledSpeed(),
+    // joystick.xScaledSpeed(), joystick.zScaledRotation());
+    // talon.set(0.2);
   }
 
   /**
@@ -106,5 +123,36 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     
+  }
+
+  public void toggleControlState(){
+    switch(controlState){
+      case STANDARD:
+        enableInvertedControl();
+        break;
+      case INVERTED:
+      default:
+        enableStandardControl();
+        break;
+    }
+  }
+
+  public void enableStandardControl(){
+    controlState = ControlState.STANDARD;
+    for(InvertibleSystem system : INVERTIBLE_SYSTEMS){
+      system.enableStandardControl();
+    }
+
+    DashboardPublisher.instance().put("Control State", controlState.toString());
+  }
+
+  public void enableInvertedControl(){
+    controlState = ControlState.INVERTED;
+    for(InvertibleSystem system : INVERTIBLE_SYSTEMS){
+      system.enableInvertedControl();
+    }
+
+    
+    DashboardPublisher.instance().put("Control State", controlState.toString());
   }
 }
