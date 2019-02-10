@@ -95,6 +95,6 @@ public class RobotMap {
 	}
 
   public static class DumpTruck {
-     public static int Spark = -5;
+     public static int Spark = 0;
   }
 }

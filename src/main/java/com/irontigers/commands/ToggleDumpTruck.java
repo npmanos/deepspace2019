@@ -1,16 +1,19 @@
 package com.irontigers.commands;
 
-import com.irontigers.Robot;
 import com.irontigers.subsystems.DumpTruckSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class EnableStandardControl extends Command {
+public class ToggleDumpTruck extends Command {
+
+  public ToggleDumpTruck(){
+    requires(DumpTruckSystem.instance());
+  }
 
   @Override
   protected void execute() {
-    DumpTruckSystem.instance().changePos();
-    }
+    DumpTruckSystem.instance().invert();
+  }
 
   @Override
   protected boolean isFinished() {

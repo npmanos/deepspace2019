@@ -11,8 +11,10 @@ import java.time.Duration;
 
 import com.irontigers.RobotMap;
 import com.irontigers.RollingAverage;
+import com.irontigers.commands.ToggleDumpTruck;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * Basic Joystick for the robot. While technically this is not a Subsystem of
@@ -60,7 +62,7 @@ public class XBoxController extends PeriodicSystem {
     super(Duration.ofMillis(5));
     controller = new Joystick(RobotMap.XBoxController.ID);
     // aButton = new JoystickButton(joystick, RobotMap.Joystick.BUTTON_A);
-     xButton =  new JoystickButton(controller, RobotMap.Controller.RIGHT_BUMPER);
+     xButton =  new JoystickButton(controller, RobotMap.XBoxController.BUTTON_X);
      xButton.whenReleased(new ToggleDumpTruck());
     // Start the periodic reading of the joystick
     start();
