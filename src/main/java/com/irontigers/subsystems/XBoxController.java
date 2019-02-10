@@ -11,10 +11,20 @@ import java.time.Duration;
 
 import com.irontigers.RobotMap;
 import com.irontigers.RollingAverage;
+<<<<<<< HEAD
 import com.irontigers.commands.ToggleDumpTruck;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+=======
+import com.irontigers.commands.MoveElevatorDown;
+import com.irontigers.commands.MoveElevatorUp;
+import com.irontigers.commands.StopElevator;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
+>>>>>>> did a bunch of testing
 
 /**
  * Basic Joystick for the robot. While technically this is not a Subsystem of
@@ -58,16 +68,34 @@ public class XBoxController extends PeriodicSystem {
   private Joystick controller;
   private JoystickButton rightBumper;
   private JoystickButton leftBumper;
+  private JoystickButton cancel;
+  private JoystickButton reset;
   
   private XBoxController() {
     // read the joystick location every 5 milliseconds
     super(Duration.ofMillis(5));
     controller = new Joystick(RobotMap.XBoxController.ID);
     // aButton = new JoystickButton(joystick, RobotMap.Joystick.BUTTON_A);
-    rightBumper = new JoystickButton(RobotMap.XBoxController.RIGHT_BUMPER);
-    rightBumper.whenHeld(new MoveElevatorUp());
-    leftBumper = new JoystickButton(RobotMap.XBoxController.LEFT_BUMPER);
-    leftBumper.whenHeld(new MoveElevatorDown());
+    rightBumper = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_BUMPER);
+    rightBumper.whenActive(new MoveElevatorUp());
+    leftBumper = new JoystickButton(controller, RobotMap.XBoxController.LEFT_BUMPER);
+    leftBumper.whenActive(new MoveElevatorDown());
+
+    cancel = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
+    cancel.whenReleased(new StopElevator());
+    
+    reset = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
+    reset.whenReleased(new Command(){
+    
+      @Override
+      protected void execute(){
+        ElevatorSystem.instance().clearEncoderPosition();
+      }
+      @Override
+      protected boolean isFinished() {
+        return false;
+      }
+    });
     // Start the periodic reading of the joystick
     start();
   }
@@ -118,5 +146,10 @@ public class XBoxController extends PeriodicSystem {
 
   private double scalingFactor(){
     return SCALING_FACTOR_STANDARD;
+  }
+
+  @Override
+  protected void initDefaultCommand() {
+    // Nothing
   }
 }

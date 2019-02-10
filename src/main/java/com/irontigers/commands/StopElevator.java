@@ -6,22 +6,22 @@ import com.irontigers.subsystems.InvertibleSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MoveElevatorDown extends Command {
+public class StopElevator extends Command {
 
-  public MoveElevatorDown(){
+  public StopElevator() {
     requires(ElevatorSystem.instance());
   }
 
   @Override
   protected void execute() {
     // Call invert on all invertible systems
-    ElevatorSystem.instance().elevate(-.65);
+    ElevatorSystem.instance().stop();
   }
 
   @Override
   protected boolean isFinished() {
     // This should execute exactly once
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -36,4 +36,5 @@ public class MoveElevatorDown extends Command {
   protected void interrupted() {
     end();
   }
+
 }

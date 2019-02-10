@@ -66,5 +66,9 @@ public class DashboardPublisher extends PeriodicSystem {
   public void put(String key, Boolean state){
     values.put(key, state.toString());
   }
-
+  
+  @Override
+  protected void initDefaultCommand() {
+    // nothing
+  }
 }

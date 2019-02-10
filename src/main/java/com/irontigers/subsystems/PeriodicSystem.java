@@ -5,7 +5,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public abstract class PeriodicSystem {
+import edu.wpi.first.wpilibj.command.Subsystem;
+
+public abstract class PeriodicSystem extends Subsystem {
 
   private ScheduledExecutorService periodicExecutor;
   protected Duration periodDuration;

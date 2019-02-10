@@ -35,9 +35,13 @@ public class RobotMap {
     public static final int RIGHT_TRIGGER = 3;    
 
     // Controller buttons - apply for both driver and elevator controllers
-    // public static int BUTTON_A = 1;
+    public static int A_BUTTON = 1;
     // public static int BUTTON_B = 2;
+<<<<<<< HEAD
      public static int BUTTON_X = 3;
+=======
+    public static int X_BUTTON = 3;
+>>>>>>> did a bunch of testing
     // public static int BUTTON_Y = 4;
      public static int LEFT_BUMPER = 5;
      public static int RIGHT_BUMPER = 6;

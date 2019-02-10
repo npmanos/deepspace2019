@@ -34,7 +34,6 @@ public class TeleopDrive extends Command {
   protected void execute() {
     XBoxController controller = XBoxController.instance();
     DriveSystem.instance().drive(controller.forwardSpeed(),controller.strafeSpeed(), controller.rotationSpeed());
-    if(controller.)
   }
 
   // Make this return true when this Command no longer needs to run execute()

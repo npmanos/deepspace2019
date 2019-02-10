@@ -45,4 +45,9 @@ public class AlignmentSystem extends PeriodicSystem {
   public double scaledDistanceToCenter(){
     return scaledDistanceToCenter;
   }
+  
+  @Override
+  protected void initDefaultCommand() {
+    // nothing
+  }
 }

@@ -9,6 +9,7 @@
 package com.irontigers;
 
 import com.irontigers.subsystems.DriveSystem;
+import com.irontigers.subsystems.ElevatorSystem;
 import com.irontigers.subsystems.InvertibleSystem;
 import com.irontigers.subsystems.XBoxController;
 
@@ -43,7 +44,10 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     DriveSystem.instance();
     XBoxController.instance();
+    ElevatorSystem.instance();
 
+    // -26427
+    
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
   }
