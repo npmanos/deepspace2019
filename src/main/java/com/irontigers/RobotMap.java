@@ -93,4 +93,8 @@ public class RobotMap {
 		// public static double D = 0;
 		// public static double TOL = .1;
 	}
+
+  public static class HatchManip {
+    public static int Spark = 1;
+  }
 }
