@@ -5,9 +5,12 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.irontigers.PeriodicExecutor;
+
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DashboardPublisher extends PeriodicSystem {
+public class DashboardPublisher extends Subsystem {
 
   private static DashboardPublisher instance = new DashboardPublisher();
   public static DashboardPublisher instance(){
@@ -17,35 +20,19 @@ public class DashboardPublisher extends PeriodicSystem {
   private Map<String, String> values = new HashMap<String, String>();
   private static final DecimalFormat df = new DecimalFormat("#.###");
 
+  // Write elevator info every 5 milliseconds
+  private PeriodicExecutor periodicExecutor = new PeriodicExecutor("dashboard_publisher", Duration.ofMillis(50), () -> {
+    publishToDashboard();
+  });
+
   public DashboardPublisher(){
-    super(Duration.ofMillis(50));
     values.clear();
 
-    start();
-  }
-
-  @Override
-  public void start(){
-    super.start();
-
-    publishState(String.format("Every %dms", periodDuration.toMillis()));
+    periodicExecutor.start();
   }
 
   public void stop(){
-    super.stop();
-
-    publishState("Not Publishing");
-  }
-
-  private void publishState(String state){
-    //consider having publishState put the current state into the map instead of puString-ing it
-    SmartDashboard.putString("Dashboard Publisher", state);
-    SmartDashboard.updateValues();
-  }
-  
-  @Override
-  protected void execute() {
-    publishToDashboard();
+    
   }
 
   private void publishToDashboard(){

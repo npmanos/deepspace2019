@@ -1,21 +1,18 @@
 package com.irontigers.commands;
 
-import com.irontigers.Robot;
 import com.irontigers.subsystems.ElevatorSystem;
-import com.irontigers.subsystems.InvertibleSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MoveElevatorUp extends Command {
+public class ElevatorUp extends Command {
 
-  public MoveElevatorUp() {
+  public ElevatorUp() {
     requires(ElevatorSystem.instance());
   }
 
   @Override
   protected void execute() {
-    // Call invert on all invertible systems
-    ElevatorSystem.instance().elevate(.65);
+    ElevatorSystem.instance().move(.65);
   }
 
   @Override

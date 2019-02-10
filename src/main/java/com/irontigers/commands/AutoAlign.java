@@ -1,21 +1,17 @@
 package com.irontigers.commands;
 
-import com.irontigers.Robot;
-import com.irontigers.subsystems.ElevatorSystem;
-import com.irontigers.subsystems.InvertibleSystem;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MoveElevatorDown extends Command {
+public class AutoAlign extends Command {
 
-  public MoveElevatorDown(){
-    requires(ElevatorSystem.instance());
+  public AutoAlign(){
+    // TODO: add all systems this command will use
+    // requires(ElevatorSystem.instance());
   }
 
   @Override
   protected void execute() {
-    // Call invert on all invertible systems
-    ElevatorSystem.instance().elevate(-.65);
+    // TODO: implement
   }
 
   @Override
@@ -27,7 +23,7 @@ public class MoveElevatorDown extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    ElevatorSystem.instance().stop();
+    // TODO: if needs an end command, code it here
   }
 
   // Called when another command which requires one or more of the same

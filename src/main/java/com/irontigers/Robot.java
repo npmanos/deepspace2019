@@ -8,10 +8,14 @@
 
 package com.irontigers;
 
+import com.irontigers.RobotMap.XBoxController;
+import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
+import com.irontigers.subsystems.DriverController;
+import com.irontigers.subsystems.DumpTruckSystem;
 import com.irontigers.subsystems.ElevatorSystem;
 import com.irontigers.subsystems.InvertibleSystem;
-import com.irontigers.subsystems.XBoxController;
+import com.irontigers.subsystems.NavigatorController;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -43,11 +47,12 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     DriveSystem.instance();
-    XBoxController.instance();
     ElevatorSystem.instance();
+    DumpTruckSystem.instance();
+    DashboardPublisher.instance();
+    DriverController.instance();
+    NavigatorController.instance();
 
-    // -26427
-    
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
   }
@@ -94,10 +99,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    // DriverJoystick joystick = DriverJoystick.instance();
-    // DriveSystem.instance().drive(joystick.yScaledSpeed(),
-    // joystick.xScaledSpeed(), joystick.zScaledRotation());
-    // talon.set(0.2);
   }
 
   /**

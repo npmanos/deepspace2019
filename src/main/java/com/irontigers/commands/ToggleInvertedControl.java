@@ -5,7 +5,7 @@ import com.irontigers.subsystems.InvertibleSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class EnableInvertedControl extends Command {
+public class ToggleInvertedControl extends Command {
 
   @Override
   protected void execute() {

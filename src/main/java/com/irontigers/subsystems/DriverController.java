@@ -9,22 +9,19 @@ package com.irontigers.subsystems;
 
 import java.time.Duration;
 
+import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
+import com.irontigers.RobotMap.XBoxController;
 import com.irontigers.RollingAverage;
-<<<<<<< HEAD
+import com.irontigers.commands.SpearIn;
 import com.irontigers.commands.ToggleDumpTruck;
+import com.irontigers.commands.ToggleInvertedControl;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-=======
-import com.irontigers.commands.MoveElevatorDown;
-import com.irontigers.commands.MoveElevatorUp;
-import com.irontigers.commands.StopElevator;
-
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
->>>>>>> did a bunch of testing
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Basic Joystick for the robot. While technically this is not a Subsystem of
@@ -41,11 +38,10 @@ import edu.wpi.first.wpilibj.command.Command;
  * easy to use.
  */
 
-public class XBoxController extends PeriodicSystem {
+public class DriverController extends Subsystem {
 
-  private static XBoxController instance = new XBoxController();
-
-  public static XBoxController instance(){
+  private static DriverController instance = new DriverController();
+  public static DriverController instance(){
     return instance;
   }
 
@@ -66,38 +62,38 @@ public class XBoxController extends PeriodicSystem {
   private volatile double rotationLatest = 0.0;
 
   private Joystick controller;
-  private JoystickButton rightBumper;
-  private JoystickButton leftBumper;
-  private JoystickButton cancel;
-  private JoystickButton reset;
-  
-  private XBoxController() {
-    // read the joystick location every 5 milliseconds
-    super(Duration.ofMillis(5));
-    controller = new Joystick(RobotMap.XBoxController.ID);
-    // aButton = new JoystickButton(joystick, RobotMap.Joystick.BUTTON_A);
-    rightBumper = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_BUMPER);
-    rightBumper.whenActive(new MoveElevatorUp());
-    leftBumper = new JoystickButton(controller, RobotMap.XBoxController.LEFT_BUMPER);
-    leftBumper.whenActive(new MoveElevatorDown());
+  private JoystickButton invertControlButton;
+  private JoystickButton toggleDumptruckButton;
+  private JoystickButton resetRobotToDefaultsButton;
+  private JoystickButton rumbleButton;
 
-    cancel = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
-    cancel.whenReleased(new StopElevator());
-    
-    reset = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
-    reset.whenReleased(new Command(){
-    
-      @Override
-      protected void execute(){
-        ElevatorSystem.instance().clearEncoderPosition();
+  // Write elevator info every 5 milliseconds
+  private PeriodicExecutor periodicExecutor = new PeriodicExecutor("driver_controller", Duration.ofMillis(5), () -> {
+    readPeriodicControls();
+  });
+  
+  private DriverController() {
+    controller = new Joystick(RobotMap.XBoxController.DRIVER_ID);
+
+    invertControlButton = new JoystickButton(controller, RobotMap.XBoxController.START);
+    toggleDumptruckButton = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
+    resetRobotToDefaultsButton = new JoystickButton(controller, RobotMap.XBoxController.BACK);
+    rumbleButton = new JoystickButton(controller, RobotMap.XBoxController.Y_BUTTON);
+
+    invertControlButton.whenReleased(new ToggleInvertedControl());
+    toggleDumptruckButton.whenReleased(new ToggleDumpTruck());
+    resetRobotToDefaultsButton.whenReleased(new SpearIn());
+
+    rumbleButton.whenReleased(new Command(){
+      public void execute(){
+        controller.setRumble(RumbleType.kLeftRumble, 1);
       }
-      @Override
       protected boolean isFinished() {
-        return false;
+        return true;
       }
     });
-    // Start the periodic reading of the joystick
-    start();
+
+    periodicExecutor.start();
   }
   
   public double forwardSpeed() {
@@ -112,7 +108,7 @@ public class XBoxController extends PeriodicSystem {
     return rotationLatest;
   }
 
-  protected void execute(){
+  protected void readPeriodicControls(){
     double scalingFactor = scalingFactor();
     
     double forward = deadify(FORWARD_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.LEFT_Y_AXIS));
