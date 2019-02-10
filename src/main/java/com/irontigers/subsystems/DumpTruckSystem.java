@@ -15,7 +15,7 @@ public class DumpTruckSystem extends Subsystem {
   }
 
   private Spark dumpTruck = new Spark(RobotMap.DumpTruck.Spark);
-  private boolean isDumped = false;
+  public boolean isDumped = false;
 
   private DumpTruckSystem(){
       //don't forget to put stuff here

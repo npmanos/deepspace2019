@@ -24,7 +24,7 @@ public class ElevatorSystem extends Subsystem {
 
   private ElevatorSystem(){
     elevatorTalon = new WPI_TalonSRX(RobotMap.Manipulators.ELEVATOR);
-
+    double dumpTruckHeight = -500; //TODO: Change this to real value
     // periodicExecutor.start();
   }
 
@@ -33,6 +33,9 @@ public class ElevatorSystem extends Subsystem {
   }
 
   public void move(double speed){
+    if(getRawPosition() >= double dumpTruckHeight && !DumpTruckSystem.instance().isDumped){
+      DumpTruckSystem.instance().dump();
+    }
     elevatorTalon.set(speed);
   }
 
