@@ -3,20 +3,20 @@ package com.irontigers.subsystems;
 import java.time.Duration;
 
 import com.ctre.phoenix.ParamEnum;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.irontigers.subsystems.ITRT_TalonSRX;
 import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
-public class ElevatorSystem extends PIDSubsystem {
+public class ElevatorSystem extends Subsystem {
 
   private static ElevatorSystem instance = new ElevatorSystem();
   public static ElevatorSystem instance(){
     return instance;
   }
 
-  private WPI_TalonSRX elevatorTalon;
+  private ITRT_TalonSRX elevatorTalon;
 
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("elevator_position", Duration.ofMillis(5), () -> {
@@ -24,10 +24,7 @@ public class ElevatorSystem extends PIDSubsystem {
   });
 
   private ElevatorSystem(){
-    super("PID Elevator", 1, 0, 0);
-    setAbsoluteTolerance(100);
-    getPIDController().setContinuous(false);
-    elevatorTalon = new WPI_TalonSRX(RobotMap.Manipulators.ELEVATOR);
+    elevatorTalon = new ITRT_TalonSRX(RobotMap.Manipulators.ELEVATOR);
 
     periodicExecutor.start();
   }
@@ -38,17 +35,6 @@ public class ElevatorSystem extends PIDSubsystem {
 
   public void move(double speed){
     elevatorTalon.set(speed);
-  }
-
-  @Override
-  protected double returnPIDInput(){
-    double input = getRawPosition();
-    return input;
-  }
-
-  @Override
-  protected void usePIDOutput(double output){
-    elevatorTalon.set(output);
   }
 
   public void zeroEncoder(){
