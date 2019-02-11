@@ -7,6 +7,9 @@
 
 package com.irontigers;
 
+import edu.wpi.cscore.VideoSource;
+import edu.wpi.cscore.VideoSource.ConnectionStrategy;
+import edu.wpi.first.cameraserver.CameraServer;
 //import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
@@ -74,6 +77,13 @@ public class RobotMap {
 
   public static class Navigation {
     // public static SPI.Port NAVIGATION_BUS = SPI.Port.kMXP;
+  }
+
+  public static class Cameras{
+    public static int USB_CAMERA = 0;
+    public static String LIMELIGHT_URL = "limelight.local:5800";
+
+    public static ConnectionStrategy KEEP_OPEN = VideoSource.ConnectionStrategy.kKeepOpen;
   }
 
   public static class Constants {
