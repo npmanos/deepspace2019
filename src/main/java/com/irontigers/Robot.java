@@ -8,11 +8,13 @@
 
 package com.irontigers;
 
+import com.irontigers.subsystems.CameraSystem;
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
 import com.irontigers.subsystems.InvertibleSystem;
 import com.irontigers.subsystems.XBoxController;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -34,7 +36,8 @@ public class Robot extends TimedRobot {
   // decides to invert the robot controls
   private ControlState controlState = ControlState.STANDARD;
   private static InvertibleSystem[] INVERTIBLE_SYSTEMS = new InvertibleSystem[]{
-    DriveSystem.instance()
+    DriveSystem.instance(),
+    CameraSystem.instance()
   };
 
   private static Robot instance;
@@ -57,6 +60,7 @@ public class Robot extends TimedRobot {
 
     DriveSystem.instance();
     XBoxController.instance();
+    CameraSystem.instance();
 
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
@@ -72,6 +76,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    
   }
 
   /**
