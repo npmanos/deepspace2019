@@ -7,8 +7,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
 
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
-public class ElevatorSystem extends Subsystem {
+public class ElevatorSystem extends PIDSubsystem {
 
   private static ElevatorSystem instance = new ElevatorSystem();
   public static ElevatorSystem instance(){
@@ -23,6 +24,9 @@ public class ElevatorSystem extends Subsystem {
   });
 
   private ElevatorSystem(){
+    super("PID Elevator", 1, 0, 0);
+    setAbsoluteTolerance(100);
+    getPIDController().setContinuous(false);
     elevatorTalon = new WPI_TalonSRX(RobotMap.Manipulators.ELEVATOR);
 
     periodicExecutor.start();
@@ -34,6 +38,17 @@ public class ElevatorSystem extends Subsystem {
 
   public void move(double speed){
     elevatorTalon.set(speed);
+  }
+
+  @Override
+  protected double returnPIDInput(){
+    double input = getRawPosition();
+    return input;
+  }
+
+  @Override
+  protected void usePIDOutput(double output){
+    elevatorTalon.set(output);
   }
 
   public void zeroEncoder(){
