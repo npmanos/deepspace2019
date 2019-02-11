@@ -12,6 +12,7 @@ import java.time.Duration;
 import com.irontigers.RobotMap;
 import com.irontigers.RollingAverage;
 import com.irontigers.commands.LimeAlign;
+import com.irontigers.commands.PIDAlign;
 import com.irontigers.commands.TeleopDrive;
 import com.irontigers.commands.ToggleControlState;
 
@@ -74,7 +75,7 @@ public class XBoxController extends PeriodicSystem {
     invertControlButton.whenReleased(new ToggleControlState());
     
     autoAlignButton = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
-    autoAlignButton.whenReleased(new LimeAlign());
+    autoAlignButton.whenReleased(new PIDAlign());
     
     stopAutoAlignButton = new JoystickButton(controller, RobotMap.XBoxController.B_BUTTON);
     stopAutoAlignButton.whenReleased(new TeleopDrive());
