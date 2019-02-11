@@ -7,6 +7,7 @@ import com.irontigers.subsystems.ITRT_TalonSRX;
 import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 public class ElevatorSystem extends Subsystem {
@@ -17,6 +18,7 @@ public class ElevatorSystem extends Subsystem {
   }
 
   private ITRT_TalonSRX elevatorTalon;
+  private PIDController elevatorControl;
 
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("elevator_position", Duration.ofMillis(5), () -> {
@@ -25,6 +27,11 @@ public class ElevatorSystem extends Subsystem {
 
   private ElevatorSystem(){
     elevatorTalon = new ITRT_TalonSRX(RobotMap.Manipulators.ELEVATOR);
+
+    elevatorControl = new PIDController(1, 0, 0, elevatorTalon, elevatorTalon);
+    elevatorControl.setContinuous(false);
+    elevatorControl.setOutputRange(-.5, .5);
+    elevatorControl.setPercentTolerance(5);
 
     periodicExecutor.start();
   }
@@ -35,6 +42,20 @@ public class ElevatorSystem extends Subsystem {
 
   public void move(double speed){
     elevatorTalon.set(speed);
+  }
+
+  public void moveToPoint(double setpoint){
+    elevatorControl.reset();
+    elevatorControl.setSetpoint(setpoint);
+    elevatorControl.enable();
+  }
+
+  public boolean atPoint(){
+    return elevatorControl.onTarget();
+  }
+
+  public void stopPID(){
+    elevatorControl.disable();
   }
 
   public void zeroEncoder(){
