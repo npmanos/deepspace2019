@@ -8,13 +8,12 @@
 package com.irontigers.subsystems.vision;
 
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 /**
  * Add your docs here.
  */
-public class VisionDriveX implements PIDOutput {
+public class VisionDriveX implements PIDOutput { 
+
     public VisionDriveX(){}
 
     @Override

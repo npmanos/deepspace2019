@@ -35,21 +35,7 @@ public class PIDAlign extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    seeX = new VisionX();
-    driveAlignX = new PIDController(1, 0, 0, seeX, driveX);
-    driveAlignY = new PIDController(1, 0, 0, seeY, driveY);
-    driveAlignX.reset();
-    driveAlignY.reset();
-    driveAlignX.setContinuous(false);
-    driveAlignY.setContinuous(false);
-    driveAlignX.setOutputRange(-.35, .35);
-    driveAlignY.setOutputRange(-.35, .35);
-    driveAlignX.setPercentTolerance(1);
-    driveAlignY.setPercentTolerance(1);
-    driveAlignX.setSetpoint(0);
-    driveAlignY.setSetpoint(0);
-    driveAlignX.enable();
-    driveAlignY.enable();
+    VisionDriving.instance().initialize(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -61,16 +47,13 @@ public class PIDAlign extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return driveAlignX.onTarget() && driveAlignY.onTarget();
+    return VisionDriving.instance().isComplete();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    driveAlignX.disable();
-    VisionDriving.instance().setX(0);
-    driveAlignY.disable();
-    VisionDriving.instance().setY(0);
+    VisionDriving.instance().disable();
   }
 
   // Called when another command which requires one or more of the same
