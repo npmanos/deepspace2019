@@ -24,15 +24,10 @@ public class CameraSystem extends Subsystem implements InvertibleSystem {
     return instance;
   }
 
-  public interface CameraStreamer{
-    public void stream();
-  }
-
   public HttpCamera hatchCam = CameraServer.getInstance().addAxisCamera("Hatch Camera", RobotMap.Cameras.LIMELIGHT_URL);
   public UsbCamera ballCam = CameraServer.getInstance().startAutomaticCapture("Ball Camera", RobotMap.Cameras.USB_CAMERA);
   public VideoSink server = CameraServer.getInstance().getServer();
 
-  private CameraStreamer camStreamer;
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
@@ -44,11 +39,13 @@ public class CameraSystem extends Subsystem implements InvertibleSystem {
 
   @Override
   public void enableStandardControl(){
-    camStreamer = () -> server.setSource(hatchCam);
+    System.out.println("Hatch cam set");
+    CameraServer.getInstance().getServer().setSource(ballCam);
   }
 
   @Override
   public void enableInvertedControl(){
-    camStreamer = () -> server.setSource(ballCam);
+    System.out.println("Ball cam set");
+    server.setSource(hatchCam);
   }
 }
