@@ -81,7 +81,8 @@ public class RobotMap {
 
   public static class Cameras{
     public static int USB_CAMERA = 0;
-    public static String LIMELIGHT_URL = "limelight.local:5800";
+    public static String LIMELIGHT_DRIVE_URL = "limelight.local:5802";
+    public static String LIMELIGHT_TRACK_URL = "limelight.local:5800";
 
     public static ConnectionStrategy KEEP_OPEN = VideoSource.ConnectionStrategy.kKeepOpen;
   }
