@@ -62,8 +62,8 @@ public class Robot extends TimedRobot {
     XBoxController.instance();
     CameraSystem.instance();
 
-    CameraSystem.instance().hatchCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
-    CameraSystem.instance().ballCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
+    //CameraSystem.instance().driveCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
+    //CameraSystem.instance().ballCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
 
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem

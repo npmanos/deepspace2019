@@ -21,13 +21,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class CameraSystem extends Subsystem implements InvertibleSystem {
   private static CameraSystem instance = new CameraSystem();
   public static CameraSystem instance(){
+    hatchCam[0] = RobotMap.Cameras.LIMELIGHT_URL;
+    ballCam[0] = "http://roboRIO-4176-FRC.local:1181/?action=stream";
+    ballCam[1] = "http://10.41.76.2:1181/?action=stream";
     return instance;
   }
 
-  public HttpCamera hatchCam = CameraServer.getInstance().addAxisCamera("Hatch Camera", RobotMap.Cameras.LIMELIGHT_URL);
-  public UsbCamera ballCam = CameraServer.getInstance().startAutomaticCapture("Ball Camera", RobotMap.Cameras.USB_CAMERA);
+  public HttpCamera driveCam = CameraServer.getInstance().addAxisCamera("Hatch Camera", RobotMap.Cameras.LIMELIGHT_URL);
   public VideoSink server = CameraServer.getInstance().getServer();
 
+  private static String[] hatchCam = new String[1];
+  private static String[] ballCam = new String[2];
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
@@ -40,12 +44,12 @@ public class CameraSystem extends Subsystem implements InvertibleSystem {
   @Override
   public void enableStandardControl(){
     System.out.println("Hatch cam set");
-    CameraServer.getInstance().getServer().setSource(ballCam);
+    driveCam.setUrls(hatchCam);
   }
 
   @Override
   public void enableInvertedControl(){
     System.out.println("Ball cam set");
-    server.setSource(hatchCam);
+    driveCam.setUrls(ballCam);
   }
 }
