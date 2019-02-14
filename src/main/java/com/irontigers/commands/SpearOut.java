@@ -1,23 +1,25 @@
 package com.irontigers.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import com.irontigers.subsystems.*;
 
 public class SpearOut extends Command {
 
   public SpearOut(){
     // TODO: add all systems this command will use
-    // requires(ElevatorSystem.instance());
+     requires(HatchManipSystem.instance());
   }
 
   @Override
   protected void execute() {
-    // TODO: implement
+    HatchManipSystem.instance().extend();
+
   }
 
   @Override
   protected boolean isFinished() {
     // This should execute exactly once
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

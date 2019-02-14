@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package com.irontigers.subsystems;
+import com.irontigers.commands.SpearStop;
 
 import java.time.Duration;
 
@@ -27,6 +28,7 @@ import com.irontigers.commands.SpearOut;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.buttons.Button;
 
 /**
  * Basic Joystick for the robot. While technically this is not a Subsystem of
@@ -55,23 +57,22 @@ public class NavigatorController extends Subsystem {
   private JoystickButton spearOutButton;
   private JoystickButton elevatorDownButton;
   private JoystickButton elevatorUpButton;
+  private JoystickButton thing;
   private JoystickButton resetElevatorButton;
   private JoystickButton activateAutoAlignmentButton;
   private JoystickButton elevatorLevel1PickupButton;
   private JoystickButton elevatorLevel1DropoffButton;
   private JoystickButton elevatorLevel2Button;
   private JoystickButton elevatorLevel3Button;
-
+  
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("navigator_controller", Duration.ofMillis(5), () -> {
     readPeriodicControls();
   });
   
   private NavigatorController() {
+    
     controller = new Joystick(RobotMap.XBoxController.NAVIGATOR_ID);
-
-    spearInButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_TRIGGER);
-    spearOutButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_TRIGGER);
     elevatorDownButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_BUMPER);
     elevatorUpButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_BUMPER);
     resetElevatorButton = new JoystickButton(controller, RobotMap.XBoxController.START);
@@ -80,14 +81,15 @@ public class NavigatorController extends Subsystem {
     elevatorLevel1DropoffButton = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
     elevatorLevel2Button = new JoystickButton(controller, RobotMap.XBoxController.B_BUTTON);
     elevatorLevel3Button = new JoystickButton(controller, RobotMap.XBoxController.Y_BUTTON);
-
+    spearInButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_AXIS_BUTTON);
+    spearOutButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_AXIS_BUTTON);
+  
     // While held down
     elevatorDownButton.whileActive(new ElevatorDown());
     elevatorUpButton.whileActive(new ElevatorUp());
-
-    // Singular press
     spearInButton.whenReleased(new SpearIn());
     spearOutButton.whenReleased(new SpearOut());
+    // Singular press
     resetElevatorButton.whenReleased(new ResetElevatorToDefault());
     activateAutoAlignmentButton.whenReleased(new AutoAlign());
     elevatorLevel1PickupButton.whenReleased(new ElevatorLevel1Pickup());

@@ -1,23 +1,25 @@
 package com.irontigers.commands;
 
+import com.irontigers.subsystems.HatchManipSystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class SpearIn extends Command {
 
   public SpearIn(){
     // TODO: add all systems this command will use
-    // requires(ElevatorSystem.instance());
+     requires(HatchManipSystem.instance());
   }
 
   @Override
   protected void execute() {
-    // TODO: implement
+    HatchManipSystem.instance().retract();
   }
 
   @Override
   protected boolean isFinished() {
     // This should execute exactly once
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

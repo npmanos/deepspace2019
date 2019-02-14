@@ -44,7 +44,9 @@ public class RobotMap {
     public static int Y_BUTTON = 4;
     public static int BACK = 7;
     public static int START = 8;
-
+//    public static int LEFT_JOYSTICK = 9;
+    public static int RIGHT_AXIS_BUTTON = 10;
+    public static int LEFT_AXIS_BUTTON = 9;
     //dpad is excluded as it is buggy to the point of being unable to be used
   }
   public static class Manipulators{
@@ -87,7 +89,9 @@ public class RobotMap {
 		// public static double D = 0;
 		// public static double TOL = .1;
 	}
-
+  public static class HatchManip {
+    public static int Spark = 1;
+  }
   public static class DumpTruck {
      public static int Spark = 0;
   }
