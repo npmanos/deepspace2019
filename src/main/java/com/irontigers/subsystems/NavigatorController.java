@@ -57,7 +57,6 @@ public class NavigatorController extends Subsystem {
   private JoystickButton spearOutButton;
   private JoystickButton elevatorDownButton;
   private JoystickButton elevatorUpButton;
-  private JoystickButton thing;
   private JoystickButton resetElevatorButton;
   private JoystickButton activateAutoAlignmentButton;
   private JoystickButton elevatorLevel1PickupButton;
@@ -87,8 +86,10 @@ public class NavigatorController extends Subsystem {
     // While held down
     elevatorDownButton.whileActive(new ElevatorDown());
     elevatorUpButton.whileActive(new ElevatorUp());
-    spearInButton.whenReleased(new SpearIn());
-    spearOutButton.whenReleased(new SpearOut());
+    spearInButton.whileActive(new SpearIn());
+    spearOutButton.whileActive(new SpearOut());
+    spearInButton.whenReleased(new SpearStop());
+    spearOutButton.whenReleased(new SpearStop());
     // Singular press
     resetElevatorButton.whenReleased(new ResetElevatorToDefault());
     activateAutoAlignmentButton.whenReleased(new AutoAlign());
