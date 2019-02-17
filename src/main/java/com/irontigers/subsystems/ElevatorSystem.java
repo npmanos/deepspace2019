@@ -6,6 +6,7 @@ import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
+import com.irontigers.commands.ElevatorManualControl;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 public class ElevatorSystem extends Subsystem {
@@ -80,6 +81,6 @@ public class ElevatorSystem extends Subsystem {
 
   @Override
   protected void initDefaultCommand() {
-    // nothing
-  }
-}
+      setDefaultCommand(new ElevatorManualControl());
+    }  }
+

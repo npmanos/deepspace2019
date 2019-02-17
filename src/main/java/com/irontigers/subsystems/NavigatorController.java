@@ -14,7 +14,7 @@ import java.time.Duration;
 import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
 import com.irontigers.RobotMap.XBoxController;
-import com.irontigers.commands.AutoAlign;
+import com.irontigers.commands.BottomOutElevator;
 import com.irontigers.commands.ElevatorDown;
 import com.irontigers.commands.EnableDrivingCamera;
 import com.irontigers.commands.ElevatorLevel1;
@@ -26,6 +26,7 @@ import com.irontigers.commands.SpearIn;
 import com.irontigers.commands.SpearOut;
 import com.irontigers.commands.SpearOutAndDrop;
 import com.irontigers.commands.ZeroEncoders;
+import com.irontigers.commands.ToggleDumpTruck;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -65,11 +66,15 @@ public class NavigatorController extends Subsystem {
   private JoystickButton elevatorLevel2Button;
   private JoystickButton elevatorLevel3Button;
   private JoystickButton zeroEncoderButton;
-  
+  private JoystickButton toggleDumpTruckButton;
+  private Double ELEVATOR_DEADZONE;
+  private JoystickButton bottomOutElevator;
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("navigator_controller", Duration.ofMillis(5), () -> {
     readPeriodicControls();
   });
+  double elevatorDown = deadify(ELEVATOR_DEADZONE, -controller.getRawAxis(RobotMap.XBoxController.LEFT_TRIGGER));
+  double elevatorUp = deadify(ELEVATOR_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.RIGHT_TRIGGER));
   
   private NavigatorController() {
     
@@ -77,22 +82,23 @@ public class NavigatorController extends Subsystem {
     elevatorDownButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_BUMPER);
     elevatorUpButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_BUMPER);
     resetElevatorButton = new JoystickButton(controller, RobotMap.XBoxController.START);
-    activateAutoAlignmentButton = new JoystickButton(controller, RobotMap.XBoxController.BACK);
     elevatorLevel1Button = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
     elevatorLevel2Button = new JoystickButton(controller, RobotMap.XBoxController.B_BUTTON);
     elevatorLevel3Button = new JoystickButton(controller, RobotMap.XBoxController.Y_BUTTON);
-    spearInButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_AXIS_BUTTON);
-    spearOutAndDropButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_AXIS_BUTTON);
-    zeroEncoderButton = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
-  
+    spearInButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_BUMPER);
+    spearOutAndDropButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_BUMPER);
+    zeroEncoderButton = new JoystickButton(controller, RobotMap.XBoxController.START);
+    toggleDumpTruckButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_AXIS_BUTTON);
+    bottomOutElevator = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
     // While held down
     elevatorDownButton.whileActive(new ElevatorDown());
     elevatorUpButton.whileActive(new ElevatorUp());
     spearInButton.whenPressed(new SpearIn());
     spearOutAndDropButton.whenPressed(new SpearOutAndDrop());
+    toggleDumpTruckButton.whenReleased(new ToggleDumpTruck());
+    bottomOutElevator.whenReleased(new BottomOutElevator());
     // Singular press
     resetElevatorButton.whenReleased(new ResetElevatorToDefault());
-    activateAutoAlignmentButton.whenReleased(new AutoAlign());
     elevatorLevel1Button.whenReleased(new ElevatorLevel1());
     elevatorLevel2Button.whenReleased(new ElevatorLevel2());
     elevatorLevel3Button.whenReleased(new ElevatorLevel3());
@@ -107,5 +113,11 @@ public class NavigatorController extends Subsystem {
   @Override
   protected void initDefaultCommand() {
     // Nothing
+  }
+  public double elevatorSpeed(){ 
+      return elevatorUp + elevatorDown;
+  }
+  private double deadify(double zone, double input){
+    return Math.abs(input) < zone ? 0 : input;
   }
 }

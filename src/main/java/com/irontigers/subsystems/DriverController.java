@@ -71,6 +71,8 @@ public class DriverController extends Subsystem {
   private JoystickButton resetRobotToDefaultsButton;
   private JoystickButton rumbleButton;
   private JoystickButton driverCameraButton;
+  private JoystickButton visionAlignButton;
+  private JoystickButton cancelVision;
 
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("driver_controller", Duration.ofMillis(5), () -> {
@@ -80,34 +82,41 @@ public class DriverController extends Subsystem {
   private DriverController() {
     controller = new Joystick(RobotMap.XBoxController.DRIVER_ID);
 
-    invertControlButton = new JoystickButton(controller, RobotMap.XBoxController.START);
-    toggleDumptruckButton = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
-    resetRobotToDefaultsButton = new JoystickButton(controller, RobotMap.XBoxController.BACK);
-    rumbleButton = new JoystickButton(controller, RobotMap.XBoxController.Y_BUTTON);
-    driverCameraButton = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
+    invertControlButton = new JoystickButton(controller, RobotMap.XBoxController.Y_BUTTON);
+    // toggleDumptruckButton = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
+    // resetRobotToDefaultsButton = new JoystickButton(controller, RobotMap.XBoxController.BACK);
+    // = new JoystickButton(controller, RobotMap.XBoxController.Y_BUTTON);
+    // driverCameraButton = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
+    visionAlignButton = new JoystickButton(controller, RobotMap.XBoxController.START);
+    cancelVision = new JoystickButton(controller, RobotMap.XBoxController.BACK);
+    
 
     invertControlButton.whenReleased(new ToggleInvertedControl());
-    toggleDumptruckButton.whenReleased(new ToggleDumpTruck());
+    //toggleDumptruckButton.whenReleased(new ToggleDumpTruck());
     resetRobotToDefaultsButton.whenReleased(new ResetRobotToDefaults());
-    driverCameraButton.whenReleased(new EnableDrivingCamera());
-
-    rumbleButton.whenPressed(new Command(){
-      public void execute(){
-        controller.setRumble(RumbleType.kLeftRumble, 1);
-      }
-      protected boolean isFinished() {
-        return true;
-      }
-    });
+    // driverCameraButton.whenReleased(new EnableDrivingCamera());
+    visionAlignButton.whenPressed(new LimeAlign());
+    cancelVision.cancelWhenPressed(new LimeAlign());
     
-    rumbleButton.whenReleased(new Command(){
-      public void execute(){
-        controller.setRumble(RumbleType.kLeftRumble, 0);
-      }
-      protected boolean isFinished() {
-        return true;
-      }
-    });
+
+
+    // rumbleButton.whenPressed(new Command(){
+    //   public void execute(){
+    //     controller.setRumble(RumbleType.kLeftRumble, 1);
+    //   }
+    //   protected boolean isFinished() {
+    //     return true;
+    //   }
+    // });
+    
+    // rumbleButton.whenReleased(new Command(){
+    //   public void execute(){
+    //     controller.setRumble(RumbleType.kLeftRumble, 0);
+    //   }
+    //   protected boolean isFinished() {
+    //     return true;
+    //   }
+    // });
 
     periodicExecutor.start();
   }
