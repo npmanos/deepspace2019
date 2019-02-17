@@ -8,6 +8,7 @@
 
 package com.irontigers;
 
+import com.irontigers.commands.SpearOut;
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
 import com.irontigers.subsystems.DriverController;
@@ -15,7 +16,9 @@ import com.irontigers.subsystems.DumpTruckSystem;
 import com.irontigers.subsystems.ElevatorSystem;
 import com.irontigers.subsystems.InvertibleSystem;
 import com.irontigers.subsystems.NavigatorController;
+import com.irontigers.subsystems.HatchManipSystem;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -32,6 +35,7 @@ public class Robot extends TimedRobot {
     STANDARD,
     INVERTED
   }
+  public PowerDistributionPanel pdp = new PowerDistributionPanel(0);
 
   // Add to here any subsystems that should be inverted when the driver
   // decides to invert the robot controls
@@ -44,6 +48,7 @@ public class Robot extends TimedRobot {
   public static Robot instance(){
     return instance;
   }
+
 
   // private DriverStation.Alliance ourAlliance;
   // private Command automousCommand;
@@ -115,6 +120,7 @@ public class Robot extends TimedRobot {
     // DriveSystem.instance().drive(joystick.yScaledSpeed(),
     // joystick.xScaledSpeed(), joystick.zScaledRotation());
     // talon.set(0.2);
+    
   }
 
   /**

@@ -7,6 +7,8 @@ import javax.swing.Timer;
 public class SpearOut extends Command {
   Timer timer;
   public double i2;
+
+
   public SpearOut(){
     // TODO: add all systems this command will use
      requires(HatchManipSystem.instance());
@@ -14,17 +16,21 @@ public class SpearOut extends Command {
   }
   @Override
   protected void initialize() {
+    super.setTimeout(.5);
   }
 
   @Override
   protected void execute() {
     HatchManipSystem.instance().extend();
-
   }
 
   @Override
   protected boolean isFinished() {
-    return true;
+    if(super.isTimedOut()){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   // Called once after isFinished returns true

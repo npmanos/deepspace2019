@@ -1,25 +1,38 @@
 package com.irontigers.commands;
 
 import com.irontigers.subsystems.ElevatorSystem;
-import com.irontigers.subsystems.HatchManipSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ElevatorUp extends Command {
+public class SpearDrop extends Command {
+  public double i2;
 
-  public ElevatorUp() {
+  private int dropAmount = 2393;
+  private double leeway = .005;
+  double startPos;
+
+  public SpearDrop(){
     requires(ElevatorSystem.instance());
   }
 
   @Override
+  protected void initialize() {
+    startPos = Math.abs(ElevatorSystem.instance().getRawPosition());
+  }
+
+  @Override
   protected void execute() {
-    ElevatorSystem.instance().move(.65);
+    ElevatorSystem.instance().move(-.5);
+    
   }
 
   @Override
   protected boolean isFinished() {
-    // This should execute exactly once
-    return false;
+    if(Math.abs(ElevatorSystem.instance().getRawPosition()) > (startPos - dropAmount) * (1 + leeway)) {
+        return false;
+    }else{
+        return true;
+    }
   }
 
   // Called once after isFinished returns true
@@ -34,5 +47,4 @@ public class ElevatorUp extends Command {
   protected void interrupted() {
     end();
   }
-
 }

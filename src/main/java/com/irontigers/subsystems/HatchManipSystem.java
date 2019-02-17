@@ -1,8 +1,6 @@
 package com.irontigers.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.irontigers.RobotMap;
-import com.irontigers.commands.TeleopDrive;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -11,13 +9,12 @@ public class HatchManipSystem extends Subsystem {
   private static HatchManipSystem instance = new HatchManipSystem();
 //   private static HatchManipSystem instance = new PlaceMethod();
   public static Spark hatchSpark = new Spark(RobotMap.HatchManip.Spark);
- 
   public static HatchManipSystem instance(){
     return instance;
   }
-
+  
   // Drive and controllers
-
+  
   @Override
   public void initDefaultCommand(){
     // If there is no other ACTIVE command claiming a requirement on the DriveTrain then we will always

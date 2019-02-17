@@ -5,7 +5,6 @@ import com.irontigers.subsystems.HatchManipSystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class SpearIn extends Command {
-  private double i;
   public SpearIn(){
     // TODO: add all systems this command will use
      requires(HatchManipSystem.instance());

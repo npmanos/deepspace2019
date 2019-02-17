@@ -4,11 +4,12 @@ import com.irontigers.subsystems.ElevatorSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ElevatorLevel1Dropoff extends Command {
+public class ElevatorLevel1 extends Command {
 
-  private int goalPosition = 2500;
+  private int goalPosition = 1879;
+  private double leeway = .02;
 
-  public ElevatorLevel1Dropoff(){
+  public ElevatorLevel1(){
     requires(ElevatorSystem.instance());
   }
 
@@ -16,11 +17,11 @@ public class ElevatorLevel1Dropoff extends Command {
   protected void execute() {
     double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
     
-    if(currentPosition > goalPosition * 1.05){
-      ElevatorSystem.instance().move(-.5);
+    if(currentPosition > goalPosition * (1 + leeway)){
+      ElevatorSystem.instance().move(-.85);
     }
-    else if(currentPosition < goalPosition * .95){
-      ElevatorSystem.instance().move(.5);
+    else if(currentPosition < goalPosition * (1 - leeway)){
+      ElevatorSystem.instance().move(.85);
     }
     else{
       ElevatorSystem.instance().stop();
@@ -30,7 +31,7 @@ public class ElevatorLevel1Dropoff extends Command {
   @Override
   protected boolean isFinished() {
     double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
-    return (currentPosition > goalPosition * .95) && (currentPosition < goalPosition * 1.05);
+    return (currentPosition > goalPosition * (1 - leeway)) && (currentPosition < goalPosition * (1 + leeway));
   }
 
   // Called once after isFinished returns true

@@ -34,25 +34,37 @@ public class ElevatorSystem extends Subsystem {
 
   public void move(double speed){
     elevatorTalon.set(speed);
+    if(Math.abs(getRawPosition()) > 10000) { 
+      DumpTruckSystem.instance().unDump();
+    }
   }
 
   public void zeroEncoder(){
-    // TODO: slowly send to hard-stop then reset position to 0
+    while(!elevatorTalon.getSensorCollection().isRevLimitSwitchClosed()){
+      move(-.5);
+    }
+    move(0); 
+
     try{
       elevatorTalon.setSelectedSensorPosition(0);
       Thread.sleep(10);
       elevatorTalon.setSelectedSensorPosition(0);
+      System.out.println("Zeroed");
     }
     catch(Throwable e){
-      
+      System.out.println(e);
     }
-  }
+    }
+  
 
   /**
    * Complete stop driving
    */
   public void stop(){
     move(0);
+  }
+  public boolean isLowerLimitSwitch() { 
+    return elevatorTalon.getSensorCollection().isRevLimitSwitchClosed();
   }
 
   public void resetElevator(){
