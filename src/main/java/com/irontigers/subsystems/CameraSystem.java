@@ -27,8 +27,7 @@ public class CameraSystem extends Subsystem implements InvertibleSystem {
     return instance;
   }
 
-  public HttpCamera hatchCam = CameraServer.getInstance().addAxisCamera("Hatch Camera", RobotMap.Cameras.LIMELIGHT_DRIVE_URL);
-  public HttpCamera trackCam = CameraServer.getInstance().addAxisCamera("Track Camera", RobotMap.Cameras.LIMELIGHT_TRACK_URL);
+  public HttpCamera hatchCam = CameraServer.getInstance().addAxisCamera("Hatch Camera", RobotMap.Cameras.LIMELIGHT_URL);
   public UsbCamera ballCam = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 0);
   public VideoSink server = CameraServer.getInstance().getServer();
 
@@ -52,9 +51,5 @@ public class CameraSystem extends Subsystem implements InvertibleSystem {
   @Override
   public void enableInvertedControl(){
     server.setSource(ballCam);
-  }
-
-  public void enableTrackCam(){
-    server.setSource(trackCam);
   }
 }

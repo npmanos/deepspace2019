@@ -15,7 +15,6 @@ import com.irontigers.subsystems.InvertibleSystem;
 import com.irontigers.subsystems.XBoxController;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -55,8 +54,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
-
     instance = this;
 
     enableStandardControl();
@@ -66,7 +63,6 @@ public class Robot extends TimedRobot {
     CameraSystem.instance();
 
     CameraSystem.instance().hatchCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
-    CameraSystem.instance().trackCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
     CameraSystem.instance().ballCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
 
     // We do not need to provide an option to select the TeleopDrive because it
