@@ -9,12 +9,18 @@
 package com.irontigers;
 
 import com.irontigers.subsystems.CameraSystem;
+import com.irontigers.commands.SpearOut;
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
+import com.irontigers.subsystems.DriverController;
+import com.irontigers.subsystems.DumpTruckSystem;
+import com.irontigers.subsystems.ElevatorSystem;
 import com.irontigers.subsystems.InvertibleSystem;
-import com.irontigers.subsystems.XBoxController;
+import com.irontigers.subsystems.NavigatorController;
+import com.irontigers.subsystems.HatchManipSystem;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -56,14 +62,20 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     instance = this;
 
-    enableStandardControl();
 
     DriveSystem.instance();
-    XBoxController.instance();
     CameraSystem.instance();
 
     CameraSystem.instance().hatchCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
     CameraSystem.instance().ballCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
+    DashboardPublisher.instance();
+    DriverController.instance();
+    DriveSystem.instance();
+    DumpTruckSystem.instance();
+    ElevatorSystem.instance();
+    NavigatorController.instance();
+    
+    enableStandardControl();
 
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
@@ -115,6 +127,7 @@ public class Robot extends TimedRobot {
     // DriveSystem.instance().drive(joystick.yScaledSpeed(),
     // joystick.xScaledSpeed(), joystick.zScaledRotation());
     // talon.set(0.2);
+    
   }
 
   /**

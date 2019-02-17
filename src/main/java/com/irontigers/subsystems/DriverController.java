@@ -9,15 +9,23 @@ package com.irontigers.subsystems;
 
 import java.time.Duration;
 
+import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
+import com.irontigers.RobotMap.XBoxController;
 import com.irontigers.RollingAverage;
 import com.irontigers.commands.LimeAlign;
 import com.irontigers.commands.TeleopDrive;
 import com.irontigers.commands.ToggleControlState;
+import com.irontigers.commands.EnableDrivingCamera;
+import com.irontigers.commands.ResetRobotToDefaults;
+import com.irontigers.commands.ToggleDumpTruck;
+import com.irontigers.commands.ToggleInvertedControl;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Basic Joystick for the robot. While technically this is not a Subsystem of
@@ -34,21 +42,18 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * easy to use.
  */
 
-public class XBoxController extends PeriodicSystem {
+public class DriverController extends Subsystem {
 
-  private static XBoxController instance = new XBoxController();
-
-  public static XBoxController instance(){
+  private static DriverController instance = new DriverController();
+  public static DriverController instance(){
     return instance;
   }
 
-  private final double FORWARD_DEADZONE = .1;
-  private final double STRAFE_DEADZONE = .1;
-  private final double ROTATION_DEADZONE = .1;
-
+  private final double FORWARD_DEADZONE = .2;
+  private final double STRAFE_DEADZONE = .2;
+  private final double ROTATION_DEADZONE = .2;
   private final double SCALING_FACTOR_STANDARD = 1;
   private final int AVERAGING_WINDOW_SIZE = 5;
-
   private RollingAverage forwardAverager = new RollingAverage(AVERAGING_WINDOW_SIZE);
   private RollingAverage strafeAverager = new RollingAverage(AVERAGING_WINDOW_SIZE);
   private RollingAverage leftRotationAverager = new RollingAverage(AVERAGING_WINDOW_SIZE);
@@ -62,27 +67,51 @@ public class XBoxController extends PeriodicSystem {
 
   private Joystick controller;
   private JoystickButton invertControlButton;
-  private JoystickButton autoAlignButton;
-  private JoystickButton stopAutoAlignButton;
+  private JoystickButton toggleDumptruckButton;
+  private JoystickButton resetRobotToDefaultsButton;
+  private JoystickButton rumbleButton;
+  private JoystickButton driverCameraButton;
 
-  private XBoxController() {
-    // read the joystick location every 5 milliseconds
-    super(Duration.ofMillis(5));
+  // Write elevator info every 5 milliseconds
+  private PeriodicExecutor periodicExecutor = new PeriodicExecutor("driver_controller", Duration.ofMillis(5), () -> {
+    readPeriodicControls();
+  });
+  
+  private DriverController() {
+    controller = new Joystick(RobotMap.XBoxController.DRIVER_ID);
 
-    controller = new Joystick(RobotMap.XBoxController.ID);
-    invertControlButton = new JoystickButton(controller, RobotMap.XBoxController.START_BUTTON);
-    invertControlButton.whenReleased(new ToggleControlState());
+    invertControlButton = new JoystickButton(controller, RobotMap.XBoxController.START);
+    toggleDumptruckButton = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
+    resetRobotToDefaultsButton = new JoystickButton(controller, RobotMap.XBoxController.BACK);
+    rumbleButton = new JoystickButton(controller, RobotMap.XBoxController.Y_BUTTON);
+    driverCameraButton = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
+
+    invertControlButton.whenReleased(new ToggleInvertedControl());
+    toggleDumptruckButton.whenReleased(new ToggleDumpTruck());
+    resetRobotToDefaultsButton.whenReleased(new ResetRobotToDefaults());
+    driverCameraButton.whenReleased(new EnableDrivingCamera());
+
+    rumbleButton.whenPressed(new Command(){
+      public void execute(){
+        controller.setRumble(RumbleType.kLeftRumble, 1);
+      }
+      protected boolean isFinished() {
+        return true;
+      }
+    });
     
-    autoAlignButton = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
-    autoAlignButton.whenReleased(new LimeAlign());
-    
-    stopAutoAlignButton = new JoystickButton(controller, RobotMap.XBoxController.B_BUTTON);
-    stopAutoAlignButton.whenReleased(new TeleopDrive());
+    rumbleButton.whenReleased(new Command(){
+      public void execute(){
+        controller.setRumble(RumbleType.kLeftRumble, 0);
+      }
+      protected boolean isFinished() {
+        return true;
+      }
+    });
 
-    // Start the periodic reading of the joystick
-    start();
+    periodicExecutor.start();
   }
-
+  
   public double forwardSpeed() {
     return forwardLatest;
   }
@@ -95,7 +124,7 @@ public class XBoxController extends PeriodicSystem {
     return rotationLatest;
   }
 
-  protected void execute(){
+  protected void readPeriodicControls(){
     double scalingFactor = scalingFactor();
     
     // Forward is oposite so we can just negate the raw value
@@ -109,7 +138,7 @@ public class XBoxController extends PeriodicSystem {
     double leftRotationAverage = scalingFactor * calculateAverage(leftRotationAverager, leftRotation);
     double rightRotationAverage = scalingFactor * calculateAverage(rightRotationAverager, rightRotation);
 
-    double normalizedRotation = rightRotationAverage + leftRotationAverage;// Math.max(leftRotationAverage, rightRotationAverage) - Math.min(leftRotationAverage, rightRotationAverage);
+    double normalizedRotation = leftRotationAverage + rightRotationAverage;
 
     // We calculate all then assign so there is as little time between assigning 
     // the y and z. Technically we could use a lock here but would gain little as
@@ -130,5 +159,10 @@ public class XBoxController extends PeriodicSystem {
 
   private double scalingFactor(){
     return SCALING_FACTOR_STANDARD;
+  }
+
+  @Override
+  protected void initDefaultCommand() {
+    // Nothing
   }
 }

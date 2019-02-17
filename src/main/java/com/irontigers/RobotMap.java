@@ -26,7 +26,8 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 public class RobotMap {
 
   public static class XBoxController {
-    public static final int ID = 0;
+    public static final int DRIVER_ID = 0;
+    public static final int NAVIGATOR_ID = 1;
 
     public static final int LEFT_X_AXIS = 0;
     public static final int LEFT_Y_AXIS = 1;
@@ -37,31 +38,23 @@ public class RobotMap {
     public static final int LEFT_TRIGGER = 2;
     public static final int RIGHT_TRIGGER = 3;    
 
-    public static final int X_BUTTON = 3;
-    public static final int B_BUTTON = 2;
-    public static final int START_BUTTON = 8;
-
-    // Controller buttons - apply for both driver and elevator controllers
-    // public static int BUTTON_A = 1;
-    // public static int BUTTON_B = 2;
-    // public static int BUTTON_Y = 4;
-    // public static int LEFT_BUMPER = 5;
-    // public static int RIGHT_BUMPER = 6;
-    // public static int BACK = 7;
-    // public static int START = 8;
-    // public static int LEFT_JOYSTICK = 9;
-    // public static int RIGHT_JOYSTICK = 10;
-
-    // public static int LEFT_JOYSTICK_X = 0;
-    // public static int LEFT_JOYSTICK_Y = 1;
-    // public static int RIGHT_JOYSTICK_X = 4;
-    // public static int RIGHT_JOYSTICK_Y = 5;
-    // public static int LEFT_TRIGGER = 2;
-    // public static int RIGHT_TRIGGER = 3;
-
+    public static int LEFT_BUMPER = 5;
+    public static int RIGHT_BUMPER = 6;
+    
+    public static int A_BUTTON = 1;
+    public static int B_BUTTON = 2;
+    public static int X_BUTTON = 3;
+    public static int Y_BUTTON = 4;
+    public static int BACK = 7;
+    public static int START = 8;
+//    public static int LEFT_JOYSTICK = 9;
+    public static int RIGHT_AXIS_BUTTON = 10;
+    public static int LEFT_AXIS_BUTTON = 9;
     //dpad is excluded as it is buggy to the point of being unable to be used
   }
-
+  public static class Manipulators{
+    public static int ELEVATOR = 5;
+  }
   public static class DriveTrain {
     // drive train motors
     public static int LEFT_FRONT = 4;
@@ -106,4 +99,10 @@ public class RobotMap {
 		// public static double D = 0;
 		// public static double TOL = .1;
 	}
+  public static class HatchManip {
+    public static int Spark = 1;
+  }
+  public static class DumpTruck {
+     public static int Spark = 0;
+  }
 }
