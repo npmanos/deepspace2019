@@ -15,7 +15,6 @@ public class LimeAlign extends Command {
   private double dist;
   private double yaw;
   private double[] threeDeeOut;
-  private double[] emptyArray;
 
   public LimeAlign() {
     requires(DriveSystem.instance());
@@ -29,9 +28,7 @@ public class LimeAlign extends Command {
   @Override
   protected void execute() {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-    emptyArray = new double[6];
-    Arrays.fill(emptyArray, 0.0);
-    threeDeeOut = table.getEntry("camtran").getDoubleArray(emptyArray);
+    threeDeeOut = table.getEntry("camtran").getDoubleArray(new double[6]);
     x = threeDeeOut[0];
     dist = threeDeeOut[2];
     yaw = threeDeeOut[4];
