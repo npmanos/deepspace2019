@@ -15,23 +15,12 @@ public class BottomOutElevator extends Command {
 
   @Override
   protected void execute() {
-    double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
-    
-    if((currentPosition > goalPosition + leeway)){
-      ElevatorSystem.instance().move(-.7);
-    }
-    else if(currentPosition < goalPosition + leeway){
-      ElevatorSystem.instance().move(.7);
-    }
-    else{
-      ElevatorSystem.instance().stop();
-    }
+    ElevatorSystem.instance().move(-.5);
   }
 
   @Override
   protected boolean isFinished() {
-    double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
-    return (currentPosition > goalPosition + leeway) && (currentPosition < goalPosition + leeway);
+    return ElevatorSystem.instance().bottomedOut();
   }
 
   // Called once after isFinished returns true

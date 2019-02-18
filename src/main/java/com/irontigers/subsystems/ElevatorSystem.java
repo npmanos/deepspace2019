@@ -56,8 +56,9 @@ public class ElevatorSystem extends Subsystem {
       System.out.println(e);
     }
     }
-  
-
+    public Boolean bottomedOut(){
+      return elevatorTalon.getSensorCollection().isRevLimitSwitchClosed();
+    }
   /**
    * Complete stop driving
    */

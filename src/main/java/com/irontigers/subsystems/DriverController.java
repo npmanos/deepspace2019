@@ -89,14 +89,13 @@ public class DriverController extends Subsystem {
     // driverCameraButton = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
     visionAlignButton = new JoystickButton(controller, RobotMap.XBoxController.START);
     cancelVision = new JoystickButton(controller, RobotMap.XBoxController.BACK);
-    
 
     invertControlButton.whenReleased(new ToggleInvertedControl());
     //toggleDumptruckButton.whenReleased(new ToggleDumpTruck());
-    resetRobotToDefaultsButton.whenReleased(new ResetRobotToDefaults());
+   // resetRobotToDefaultsButton.whenReleased(new ResetRobotToDefaults());
     // driverCameraButton.whenReleased(new EnableDrivingCamera());
     visionAlignButton.whenPressed(new LimeAlign());
-    cancelVision.cancelWhenPressed(new LimeAlign());
+    cancelVision.whenPressed(new TeleopDrive());
     
 
 

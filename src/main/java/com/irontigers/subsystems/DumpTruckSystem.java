@@ -42,9 +42,7 @@ public class DumpTruckSystem extends Subsystem {
   }
 
   public void unDump(){
-    if(Math.abs(ElevatorSystem.instance().getRawPosition()) < 1200){
       dumpTruck.setSpeed(-.5);
       isDumped = false;
-    }
   }
 }
