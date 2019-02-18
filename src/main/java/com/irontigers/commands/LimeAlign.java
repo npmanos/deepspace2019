@@ -1,10 +1,7 @@
 package com.irontigers.commands;
 
-import java.util.Arrays;
-
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
-import com.irontigers.subsystems.DriverController;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
