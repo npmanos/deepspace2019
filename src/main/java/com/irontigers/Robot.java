@@ -20,6 +20,8 @@ import com.irontigers.subsystems.NavigatorController;
 import com.irontigers.subsystems.HatchManipSystem;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -76,6 +78,10 @@ public class Robot extends TimedRobot {
     NavigatorController.instance();
     
     enableStandardControl();
+
+    NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
+    limelight.getEntry("camMode").setNumber(1);
+    limelight.getEntry("ledMode").setNumber(1);
 
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
