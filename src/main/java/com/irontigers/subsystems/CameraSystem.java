@@ -14,6 +14,8 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 /**
  * Add your docs here.
@@ -30,6 +32,7 @@ public class CameraSystem extends Subsystem implements InvertibleSystem {
   public HttpCamera hatchCam = CameraServer.getInstance().addAxisCamera("Hatch Camera", RobotMap.Cameras.LIMELIGHT_URL);
   public UsbCamera ballCam = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 0);
   public VideoSink server = CameraServer.getInstance().getServer();
+  private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
   // private static String[] hatchCam = new String[1];
   // private static String[] ballCam = new String[2];
@@ -41,6 +44,14 @@ public class CameraSystem extends Subsystem implements InvertibleSystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+  }
+
+  public double getDistance(){
+    if(table.getEntry("ty").getDouble(0.0) != 0){
+      return (28.125 - 29.5) / Math.tan(Math.toRadians(table.getEntry("ty").getDouble(0.0)));
+    }else{
+      return 0;
+    }
   }
 
   @Override

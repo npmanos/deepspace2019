@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.irontigers.RollingAverage;
+import com.irontigers.subsystems.CameraSystem;
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
 
@@ -20,6 +21,7 @@ public class LimeAlign extends Command {
   private double areaRight;
   private RollingAverage averageLeftArea = new RollingAverage(5);
   private RollingAverage averageRightArea = new RollingAverage(5);
+  private double disP = 0.1;
 
   public LimeAlign() {
     requires(DriveSystem.instance());
@@ -38,40 +40,9 @@ public class LimeAlign extends Command {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     // threeDeeOut = table.getEntry("camtran").getDoubleArray(new double[6]);
 
-    leftArea.add(deadify(.1,table.getEntry("ta0").getDouble(0.0)));
-    rightArea.add(deadify(.1, table.getEntry("ta1").getDouble(0.0)));
-
-    if(leftArea.size() > 3){ leftArea.remove(3); }
-    if(rightArea.size() > 3){ rightArea.remove(3); }
-
-    boolean leftSeen = leftArea.stream().allMatch(item -> item > 0);
-    boolean rightSeen = rightArea.stream().allMatch(item -> item > 0);
-
-    double forwardSpeed = 0;
-    double strafeSpeed = 0;
-    double rotateSpeed = 0;
-
-    if(leftSeen && rightSeen){
-      int[] directions = new int[]{0,0,0};
-      for(int idx = 0; idx < leftArea.size(); ++idx){
-        directions[idx] = (leftArea.get(idx) < rightArea.get(idx)) ? -1 : (leftArea.get(idx) > rightArea.get(idx)) ? 1 : 0;
-      }
-
-      if(directions[0] == directions[1] && directions[0] == directions[2]){
-        if(directions[0] < 0){
-          rotateSpeed = .25;
-        }
-        else if(directions[0] > 0){
-          rotateSpeed = -.25;
-        }
-      }
-    }
-    else if(leftSeen){
-      rotateSpeed = .25;
-    }
-    else if(rightSeen){
-      rotateSpeed = -.25;
-    }
+    double forwardSpeed = (0 - CameraSystem.instance().getDistance()) * disP;
+    double strafeSpeed = 0.0;
+    double rotateSpeed = 0.0;
 
     // x = table.getEntry("tx").getDouble(0.0);
     // y = table.getEntry("ty").getDouble(0.0);
