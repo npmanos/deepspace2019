@@ -22,6 +22,7 @@ import com.irontigers.commands.ElevatorLevel2;
 import com.irontigers.commands.ElevatorLevel3;
 import com.irontigers.commands.ElevatorUp;
 import com.irontigers.commands.ResetElevatorToDefault;
+import com.irontigers.commands.ReturnNavigatorControl;
 import com.irontigers.commands.SpearIn;
 import com.irontigers.commands.SpearOut;
 import com.irontigers.commands.SpearOutAndDrop;
@@ -71,6 +72,7 @@ public class NavigatorController extends Subsystem {
   private JoystickButton bottomOutElevator;
   private double elevatorDown;
   private double elevatorUp;
+  private JoystickButton cancelCommandsButton;
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("navigator_controller", Duration.ofMillis(5), () -> {
     readPeriodicControls();
@@ -92,6 +94,7 @@ public class NavigatorController extends Subsystem {
     bottomOutElevator = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
     elevatorDown = deadify(ELEVATOR_DEADZONE, -controller.getRawAxis(RobotMap.XBoxController.LEFT_TRIGGER));
     elevatorUp = deadify(ELEVATOR_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.RIGHT_TRIGGER));
+    cancelCommandsButton = new JoystickButton(controller, RobotMap.XBoxController.BACK);
     // While held down
     // elevatorDownButton.whileActive(new ElevatorDown());
     // elevatorUpButton.whileActive(new ElevatorUp());
@@ -100,11 +103,11 @@ public class NavigatorController extends Subsystem {
     toggleDumpTruckButton.whenReleased(new ToggleDumpTruck());
     bottomOutElevator.whenReleased(new BottomOutElevator());
     // Singular press
-    resetElevatorButton.whenReleased(new ResetElevatorToDefault());
     elevatorLevel1Button.whenReleased(new ElevatorLevel1());
     elevatorLevel2Button.whenReleased(new ElevatorLevel2());
     elevatorLevel3Button.whenReleased(new ElevatorLevel3());
     zeroEncoderButton.whenReleased(new ZeroEncoders());
+    cancelCommandsButton.whenPressed(new ReturnNavigatorControl());
     periodicExecutor.start();
   }
   
