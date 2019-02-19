@@ -21,7 +21,8 @@ public class LimeAlign extends Command {
   private double areaRight;
   private RollingAverage averageLeftArea = new RollingAverage(5);
   private RollingAverage averageRightArea = new RollingAverage(5);
-  private double disP = 0.1;
+  private double disP = -0.01;
+  private double rotP = 0.02;
 
   public LimeAlign() {
     requires(DriveSystem.instance());
@@ -29,6 +30,9 @@ public class LimeAlign extends Command {
 
   @Override
   protected void initialize() {
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    table.getEntry("ledMode").setNumber(0);
+    table.getEntry("camMode").setNumber(0);
   }
 
   private List<Double> leftArea = new ArrayList<Double>();
@@ -40,9 +44,10 @@ public class LimeAlign extends Command {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     // threeDeeOut = table.getEntry("camtran").getDoubleArray(new double[6]);
 
-    double forwardSpeed = (0 - CameraSystem.instance().getDistance()) * disP;
+    double forwardSpeed = (18 - CameraSystem.instance().getDistance()) * disP;
+    DashboardPublisher.instance().put("Forward Speed", forwardSpeed);
     double strafeSpeed = 0.0;
-    double rotateSpeed = 0.0;
+    double rotateSpeed = rotP * table.getEntry("tx").getDouble(0.0);
 
     // x = table.getEntry("tx").getDouble(0.0);
     // y = table.getEntry("ty").getDouble(0.0);
