@@ -38,53 +38,37 @@ public class LimeAlign extends Command {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     // threeDeeOut = table.getEntry("camtran").getDoubleArray(new double[6]);
 
-    leftArea.add(deadify(.1,table.getEntry("ta0").getDouble(0.0)));
-    rightArea.add(deadify(.1, table.getEntry("ta1").getDouble(0.0)));
-
-    if(leftArea.size() > 3){ leftArea.remove(3); }
-    if(rightArea.size() > 3){ rightArea.remove(3); }
-
-    boolean leftSeen = leftArea.stream().allMatch(item -> item > 0);
-    boolean rightSeen = rightArea.stream().allMatch(item -> item > 0);
+    
 
     double forwardSpeed = 0;
     double strafeSpeed = 0;
     double rotateSpeed = 0;
 
-    if(leftSeen && rightSeen){
-      int[] directions = new int[]{0,0,0};
-      for(int idx = 0; idx < leftArea.size(); ++idx){
-        directions[idx] = (leftArea.get(idx) < rightArea.get(idx)) ? -1 : (leftArea.get(idx) > rightArea.get(idx)) ? 1 : 0;
-      }
-
-      if(directions[0] == directions[1] && directions[0] == directions[2]){
-        if(directions[0] < 0){
-          rotateSpeed = .25;
-        }
-        else if(directions[0] > 0){
-          rotateSpeed = -.25;
-        }
-      }
-    }
-    else if(leftSeen){
-      rotateSpeed = .25;
-    }
-    else if(rightSeen){
-      rotateSpeed = -.25;
-    }
-
-    // x = table.getEntry("tx").getDouble(0.0);
-    // y = table.getEntry("ty").getDouble(0.0);
+    x = table.getEntry("tx").getDouble(0.0);
+    y = table.getEntry("ty").getDouble(0.0);
     // areaLeft = averageLeftArea.getAverage();
     // areaRight = averageRightArea.getAverage();
     // yaw = threeDeeOut[4];
     // double a = table.getEntry("ta").getDouble(0.0);
 
-    // DashboardPublisher.instance().put("Limelight X", x);
-    // DashboardPublisher.instance().put("Limelight Distance", y);
+    if(x < -.37){
+      strafeSpeed = .3;
+    }
+    else if(x > .37){
+      strafeSpeed = -.3;
+    }
+
+    if(y < -.37){
+      forwardSpeed = -.3;
+    }else if(y > .37){
+      forwardSpeed = .3;
+    }
+
+    DashboardPublisher.instance().put("Limelight X", x);
+    DashboardPublisher.instance().put("Limelight Distance", y);
     // DashboardPublisher.instance().put("Limelight Yaw", yaw);
 
-    DriveSystem.instance().drive(forwardSpeed, strafeSpeed, rotateSpeed);
+    DriveSystem.instance().drive(forwardSpeed, strafeSpeed, 0);
 
 
     // DriveSystem.instance().drive(controller.forwardSpeed(),controller.strafeSpeed(), controller.rotationSpeed());
@@ -98,8 +82,8 @@ public class LimeAlign extends Command {
   @Override
   protected boolean isFinished() {
     // This is our standard default command so we're never going to be done
-    // return (x > -.37 && x < .37 && y > -.37 && y < .37);
-    return false;
+    return (x > -.37 && x < .37 && y > -.37 && y < .37);
+    // return false;
   }
 
   // Called once after isFinished returns true
