@@ -3,6 +3,7 @@ package com.irontigers.commands;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.irontigers.Robot;
 import com.irontigers.RollingAverage;
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
@@ -15,11 +16,13 @@ public class LimeAlign extends Command {
   private double x;
   private double y;
   private double yaw;
+  private boolean hasTargets;
   private double[] threeDeeOut;
   private double areaLeft;
   private double areaRight;
   private RollingAverage averageLeftArea = new RollingAverage(5);
   private RollingAverage averageRightArea = new RollingAverage(5);
+  NetworkTable limelight;
 
   public LimeAlign() {
     requires(DriveSystem.instance());
@@ -27,6 +30,11 @@ public class LimeAlign extends Command {
 
   @Override
   protected void initialize() {
+    limelight = NetworkTableInstance.getDefault().getTable("limelight");
+    limelight.getEntry("camMode").setNumber(0);
+    limelight.getEntry("ledMode").setNumber(0);
+    hasTargets = false;
+    Robot.instance().enableStandardControl();
   }
 
   private List<Double> leftArea = new ArrayList<Double>();
@@ -35,17 +43,19 @@ public class LimeAlign extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     // threeDeeOut = table.getEntry("camtran").getDoubleArray(new double[6]);
 
-    
+    if(limelight.getEntry("tv").getDouble(0.0) == 1){
+      hasTargets = true;
+    }
 
     double forwardSpeed = 0;
     double strafeSpeed = 0;
     double rotateSpeed = 0;
 
-    x = table.getEntry("tx").getDouble(0.0);
-    y = table.getEntry("ty").getDouble(0.0);
+    x = limelight.getEntry("tx").getDouble(0.0);
+    y = limelight.getEntry("ty").getDouble(0.0);
+
     // areaLeft = averageLeftArea.getAverage();
     // areaRight = averageRightArea.getAverage();
     // yaw = threeDeeOut[4];
@@ -63,6 +73,8 @@ public class LimeAlign extends Command {
     }else if(y > .37){
       forwardSpeed = .3;
     }
+
+    System.out.println("EXECUTING");
 
     DashboardPublisher.instance().put("Limelight X", x);
     DashboardPublisher.instance().put("Limelight Distance", y);
@@ -82,7 +94,8 @@ public class LimeAlign extends Command {
   @Override
   protected boolean isFinished() {
     // This is our standard default command so we're never going to be done
-    return (x > -.37 && x < .37 && y > -.37 && y < .37);
+    System.out.println(limelight.getEntry("camMode").getDouble(1.0));
+    return (x > -.37 && x < .37 && y > -.37 && y < .37 && hasTargets);
     // return false;
   }
 
@@ -90,6 +103,8 @@ public class LimeAlign extends Command {
   @Override
   protected void end() {
     DriveSystem.instance().stop();
+    limelight.getEntry("camMode").setNumber(1);
+    limelight.getEntry("ledMode").setNumber(1);
   }
 
   // Called when another command which requires one or more of the same
