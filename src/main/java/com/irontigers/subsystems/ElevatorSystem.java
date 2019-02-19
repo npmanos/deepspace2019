@@ -17,6 +17,7 @@ public class ElevatorSystem extends Subsystem {
   }
 
   private WPI_TalonSRX elevatorTalon;
+  private double offSet = 1499;
 
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("elevator_position", Duration.ofMillis(5), () -> {
@@ -78,6 +79,13 @@ public class ElevatorSystem extends Subsystem {
     }
     stop();
     zeroEncoder();
+  }
+
+  /**
+   * @return the offSet
+   */
+  public double getOffSet() {
+    return offSet;
   }
 
   @Override

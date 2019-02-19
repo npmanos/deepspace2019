@@ -17,10 +17,10 @@ public class ElevatorLevel2 extends Command {
   protected void execute() {
     double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
 
-    if (currentPosition > goalPosition * (1 + leeway)) {
-      ElevatorSystem.instance().move(-1);
-    } else if (currentPosition < goalPosition * (1 - leeway)) {
-      ElevatorSystem.instance().move(1);
+    if (currentPosition > (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 + leeway)) {
+      ElevatorSystem.instance().move(-.7);
+    } else if (currentPosition < (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 - leeway)) {
+      ElevatorSystem.instance().move(.7);
     } else {
       ElevatorSystem.instance().stop();
     }
@@ -29,7 +29,7 @@ public class ElevatorLevel2 extends Command {
   @Override
   protected boolean isFinished() {
     double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
-    return (currentPosition > goalPosition * (1 - leeway)) && (currentPosition < goalPosition * (1 + leeway));
+    return (currentPosition > (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 - leeway)) && (currentPosition < (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 + leeway));
   }
 
   // Called once after isFinished returns true
