@@ -11,6 +11,7 @@ import com.irontigers.subsystems.DriveSystem;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LimeAlign extends Command {
   private double x;
@@ -21,8 +22,9 @@ public class LimeAlign extends Command {
   private double areaRight;
   private RollingAverage averageLeftArea = new RollingAverage(5);
   private RollingAverage averageRightArea = new RollingAverage(5);
-  private double disP = -0.01;
-  private double rotP = 0.02;
+  private double disP = -0.02;
+  private double rotP = 0.037;
+  private double strfP = 0.05;
 
   public LimeAlign() {
     requires(DriveSystem.instance());
@@ -44,10 +46,29 @@ public class LimeAlign extends Command {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     // threeDeeOut = table.getEntry("camtran").getDoubleArray(new double[6]);
 
+    // double forwardSpeed = 0.0;
     double forwardSpeed = (18 - CameraSystem.instance().getDistance()) * disP;
-    DashboardPublisher.instance().put("Forward Speed", forwardSpeed);
     double strafeSpeed = 0.0;
+    // double rotateSpeed = 0.0;
+    // double strafeSpeed = strfP * table.getEntry("tx").getDouble(0.0);
     double rotateSpeed = rotP * table.getEntry("tx").getDouble(0.0);
+    SmartDashboard.putNumber("Rotate Speed", rotateSpeed);
+
+    if(forwardSpeed < .1){
+      forwardSpeed += .1;
+    }
+
+    if(rotateSpeed < .1 && rotateSpeed > 0){
+      rotateSpeed += .1;
+    }else if(rotateSpeed > -.1 && rotateSpeed < 0){
+      rotateSpeed -=.1;
+    }
+
+    if(strafeSpeed < .2 && strafeSpeed > 0){
+      strafeSpeed += .2;
+    }else if(strafeSpeed > -.2 && strafeSpeed < 0){
+      strafeSpeed -=.2;
+    }
 
     // x = table.getEntry("tx").getDouble(0.0);
     // y = table.getEntry("ty").getDouble(0.0);
@@ -74,8 +95,7 @@ public class LimeAlign extends Command {
   @Override
   protected boolean isFinished() {
     // This is our standard default command so we're never going to be done
-    // return (x > -.37 && x < .37 && y > -.37 && y < .37);
-    return false;
+    return (x > -.15 && x < .15 && CameraSystem.instance().getDistance() <= 18.15);
   }
 
   // Called once after isFinished returns true
