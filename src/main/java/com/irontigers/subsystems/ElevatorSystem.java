@@ -70,6 +70,10 @@ public class ElevatorSystem extends Subsystem {
     return elevatorTalon.getSensorCollection().isRevLimitSwitchClosed();
   }
 
+  public boolean isUpperLimitSwitch() { 
+    return elevatorTalon.getSensorCollection().isFwdLimitSwitchClosed();
+  }
+
   public void resetElevator(){
     /* This assumes the bottom limit switch is the reverse limit switch
     *  We need to test this assumption and adjust once wired
@@ -86,6 +90,14 @@ public class ElevatorSystem extends Subsystem {
    */
   public double getOffSet() {
     return offSet;
+  }
+
+  public boolean wrongWay(){
+    if(getRawPosition() > 1000){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   @Override

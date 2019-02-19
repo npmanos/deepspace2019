@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ElevatorLevel3 extends Command {
 
-  private int goalPosition = 65799;
+  private int goalPosition = 66799;
   private double leeway = .001;
 
   public ElevatorLevel3() {
@@ -29,7 +29,9 @@ public class ElevatorLevel3 extends Command {
   @Override
   protected boolean isFinished() {
     double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
-    return (currentPosition > (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 - leeway)) && (currentPosition < (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 + leeway));
+    double minPosition = (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 - leeway);
+    boolean inRange = currentPosition > minPosition;
+    return (inRange || ElevatorSystem.instance().isUpperLimitSwitch() || ElevatorSystem.instance().wrongWay());
   }
 
   // Called once after isFinished returns true

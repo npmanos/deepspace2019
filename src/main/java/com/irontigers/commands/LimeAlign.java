@@ -67,7 +67,7 @@ public class LimeAlign extends Command {
     else if(x > .37){
       strafeSpeed = -.3;
     }
-
+/*TODO: Ask manos to increase stop zone cuz of tch tch tch */
     if(y < -.37){
       forwardSpeed = -.3;
     }else if(y > .37){

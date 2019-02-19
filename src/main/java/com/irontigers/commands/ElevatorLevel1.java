@@ -31,7 +31,10 @@ public class ElevatorLevel1 extends Command {
   @Override
   protected boolean isFinished() {
     double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
-    return (currentPosition > (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 - leeway)) && (currentPosition < (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 + leeway));
+    double minPosition = (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 - leeway);
+    double maxPosition = (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 + leeway);
+    boolean inRange = (currentPosition > minPosition) && (currentPosition < maxPosition);
+    return (inRange || ElevatorSystem.instance().wrongWay());
   }
 
   // Called once after isFinished returns true

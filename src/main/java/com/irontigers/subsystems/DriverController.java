@@ -16,7 +16,9 @@ import com.irontigers.RollingAverage;
 import com.irontigers.commands.LimeAlign;
 import com.irontigers.commands.TeleopDrive;
 import com.irontigers.commands.ToggleControlState;
+import com.irontigers.commands.DecreaseScaleFactor;
 import com.irontigers.commands.EnableDrivingCamera;
+import com.irontigers.commands.IncreaseScaleFactor;
 import com.irontigers.commands.ResetRobotToDefaults;
 import com.irontigers.commands.ToggleDumpTruck;
 import com.irontigers.commands.ToggleInvertedControl;
@@ -26,6 +28,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Basic Joystick for the robot. While technically this is not a Subsystem of
@@ -54,6 +57,7 @@ public class DriverController extends Subsystem {
   private final double ROTATION_DEADZONE = .2;
   private final double SCALING_FACTOR_STANDARD = 1;
   private final int AVERAGING_WINDOW_SIZE = 5;
+  private int scalingFactorMode = 2;
   private RollingAverage forwardAverager = new RollingAverage(AVERAGING_WINDOW_SIZE);
   private RollingAverage strafeAverager = new RollingAverage(AVERAGING_WINDOW_SIZE);
   private RollingAverage leftRotationAverager = new RollingAverage(AVERAGING_WINDOW_SIZE);
@@ -73,6 +77,8 @@ public class DriverController extends Subsystem {
   private JoystickButton driverCameraButton;
   private JoystickButton visionAlignButton;
   private JoystickButton cancelVision;
+  private JoystickButton decreaseScaleButton;
+  private JoystickButton increaseScaleButton;
 
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("driver_controller", Duration.ofMillis(5), () -> {
@@ -89,6 +95,8 @@ public class DriverController extends Subsystem {
     // driverCameraButton = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
     visionAlignButton = new JoystickButton(controller, RobotMap.XBoxController.START);
     cancelVision = new JoystickButton(controller, RobotMap.XBoxController.BACK);
+    increaseScaleButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_BUMPER);
+    decreaseScaleButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_BUMPER);
 
     invertControlButton.whenReleased(new ToggleInvertedControl());
     //toggleDumptruckButton.whenReleased(new ToggleDumpTruck());
@@ -96,6 +104,8 @@ public class DriverController extends Subsystem {
     // driverCameraButton.whenReleased(new EnableDrivingCamera());
     visionAlignButton.whenPressed(new LimeAlign());
     cancelVision.whenPressed(new TeleopDrive());
+    increaseScaleButton.whenPressed(new IncreaseScaleFactor());
+    decreaseScaleButton.whenPressed(new DecreaseScaleFactor());
     
 
 
@@ -165,8 +175,29 @@ public class DriverController extends Subsystem {
     return averager.getAverage();
   }
 
+  public void increaseScalingFactor(){
+    if(scalingFactorMode < 3){
+      scalingFactorMode ++;
+    }
+  }
+
+  public void decreaseScalingFactor(){
+    if(scalingFactorMode > 1){
+      scalingFactorMode --;
+    }
+  }
+
   private double scalingFactor(){
-    return SCALING_FACTOR_STANDARD;
+    switch (scalingFactorMode){
+      case 1: SmartDashboard.putNumber("Scaling Factor", .5);
+              return .5;
+      case 2: SmartDashboard.putNumber("Scaling Factor", .75);
+              return .75;
+      case 3: SmartDashboard.putNumber("Scaling Factor", 1);
+              return 1;
+      default: SmartDashboard.putNumber("Scaling Factor", .75);
+               return .75;
+    }
   }
 
   @Override

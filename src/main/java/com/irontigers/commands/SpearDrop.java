@@ -28,10 +28,15 @@ public class SpearDrop extends Command {
 
   @Override
   protected boolean isFinished() {
-    if(Math.abs(ElevatorSystem.instance().getRawPosition()) > (startPos - dropAmount) * (1 + leeway)) {
+    double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
+    double endPosition = (startPos - dropAmount) * (1 + leeway);
+    if(ElevatorSystem.instance().isLowerLimitSwitch() || ElevatorSystem.instance().wrongWay()){
+        return true;
+    }
+    else if(currentPosition > endPosition){
         return false;
     }else{
-        return true;
+      return true;
     }
   }
 
