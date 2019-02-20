@@ -31,8 +31,7 @@ public class LimeAlign extends Command {
   @Override
   protected void initialize() {
     limelight = NetworkTableInstance.getDefault().getTable("limelight");
-    limelight.getEntry("camMode").setNumber(0);
-    limelight.getEntry("ledMode").setNumber(0);
+    limelight.getEntry("pipeline").setNumber(0);
     hasTargets = false;
     Robot.instance().enableStandardControl();
   }
@@ -77,7 +76,7 @@ public class LimeAlign extends Command {
       forwardSpeed = forwardSpeed * .35 * y;
     }
 
-    rotateSpeed = .007 * x;
+    rotateSpeed = .005 * x;
 
     System.out.println("EXECUTING");
 
@@ -100,7 +99,7 @@ public class LimeAlign extends Command {
   protected boolean isFinished() {
     // This is our standard default command so we're never going to be done
     System.out.println(limelight.getEntry("camMode").getDouble(1.0));
-    return (x > -.42 && x < .42 && y > -.42 && y < .42 && hasTargets);
+    return (x > -.4 && x < .4 && y > -.4 && y < .4 && hasTargets);
     // return false;
   }
 
@@ -108,8 +107,7 @@ public class LimeAlign extends Command {
   @Override
   protected void end() {
     DriveSystem.instance().stop();
-    limelight.getEntry("camMode").setNumber(1);
-    limelight.getEntry("ledMode").setNumber(1);
+    limelight.getEntry("pipeline").setNumber(0);
   }
 
   // Called when another command which requires one or more of the same

@@ -80,8 +80,8 @@ public class Robot extends TimedRobot {
     enableStandardControl();
 
     NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
-    limelight.getEntry("camMode").setNumber(1);
-    limelight.getEntry("ledMode").setNumber(1);
+    limelight.getEntry("camMode").setNumber(0);
+    limelight.getEntry("ledMode").setNumber(0);
 
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
@@ -181,9 +181,7 @@ public class Robot extends TimedRobot {
     NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
    
     // Comment prior to field calibration. Uncomment after.
-    limelight.getEntry("camMode").setNumber(1);
-    limelight.getEntry("ledMode").setNumber(1);
-
+    limelight.getEntry("pipeline").setNumber(0);
     // Uncomment prior to field calibration. Recomment after.
     // limelight.getEntry("camMode").setNumber(0);
     // limelight.getEntry("ledMode").setNumber(0);
