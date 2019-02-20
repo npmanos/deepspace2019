@@ -175,4 +175,17 @@ public class Robot extends TimedRobot {
     
     DashboardPublisher.instance().put("Control State", controlState.toString());
   }
+
+  @Override
+  public void disabledPeriodic(){
+    NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
+   
+    // Comment prior to field calibration. Uncomment after.
+    limelight.getEntry("camMode").setNumber(1);
+    limelight.getEntry("ledMode").setNumber(1);
+
+    // Uncomment prior to field calibration. Recomment after.
+    // limelight.getEntry("camMode").setNumber(0);
+    // limelight.getEntry("ledMode").setNumber(0);
+  }
 }
