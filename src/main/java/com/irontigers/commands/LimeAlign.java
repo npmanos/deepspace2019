@@ -62,17 +62,22 @@ public class LimeAlign extends Command {
     // double a = table.getEntry("ta").getDouble(0.0);
 
     if(x < -.37){
-      strafeSpeed = .3;
+      strafeSpeed = -.35;
     }
     else if(x > .37){
-      strafeSpeed = -.3;
+      strafeSpeed = .35;
     }
-/*TODO: Ask manos to increase stop zone cuz of tch tch tch */
     if(y < -.37){
-      forwardSpeed = -.3;
+      forwardSpeed = -.35;
     }else if(y > .37){
-      forwardSpeed = .3;
+      forwardSpeed = .35;
     }
+
+    if(y < 1.5){
+      forwardSpeed = forwardSpeed * .35 * y;
+    }
+
+    rotateSpeed = .007 * x;
 
     System.out.println("EXECUTING");
 
@@ -80,7 +85,7 @@ public class LimeAlign extends Command {
     DashboardPublisher.instance().put("Limelight Distance", y);
     // DashboardPublisher.instance().put("Limelight Yaw", yaw);
 
-    DriveSystem.instance().drive(forwardSpeed, strafeSpeed, 0);
+    DriveSystem.instance().drive(forwardSpeed, strafeSpeed, rotateSpeed);
 
 
     // DriveSystem.instance().drive(controller.forwardSpeed(),controller.strafeSpeed(), controller.rotationSpeed());
@@ -95,7 +100,7 @@ public class LimeAlign extends Command {
   protected boolean isFinished() {
     // This is our standard default command so we're never going to be done
     System.out.println(limelight.getEntry("camMode").getDouble(1.0));
-    return (x > -.37 && x < .37 && y > -.37 && y < .37 && hasTargets);
+    return (x > -.42 && x < .42 && y > -.42 && y < .42 && hasTargets);
     // return false;
   }
 
