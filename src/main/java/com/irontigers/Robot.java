@@ -25,6 +25,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -82,7 +83,7 @@ public class Robot extends TimedRobot {
     NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
     //limelight.getEntry("camMode").setNumber(1);
     //limelight.getEntry("ledMode").setNumber(1);
-
+    SmartDashboard.putNumber("P Value", 0);
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
   }

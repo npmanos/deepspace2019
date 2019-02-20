@@ -22,9 +22,9 @@ public class LimeAlign extends Command {
   private double areaRight;
   private RollingAverage averageLeftArea = new RollingAverage(5);
   private RollingAverage averageRightArea = new RollingAverage(5);
-  private double disP = -0.02;
-  private double rotP = 0.037;
-  private double strfP = 0.05;
+  private double disP;
+  private double rotP = 0.0;
+  private double strfP = 0.0;
 
   public LimeAlign() {
     requires(DriveSystem.instance());
@@ -44,31 +44,34 @@ public class LimeAlign extends Command {
   @Override
   protected void execute() {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    disP = getPValue();
     // threeDeeOut = table.getEntry("camtran").getDoubleArray(new double[6]);
 
     // double forwardSpeed = 0.0;
-    double forwardSpeed = (18 - CameraSystem.instance().getDistance()) * disP;
+    //Correct target distance 18;
+    SmartDashboard.putNumber("Distance", 44 - CameraSystem.instance().getDistance());
+    double forwardSpeed = (44 - CameraSystem.instance().getDistance()) * disP;
     double strafeSpeed = 0.0;
-    // double rotateSpeed = 0.0;
+    double rotateSpeed = 0.0;
     // double strafeSpeed = strfP * table.getEntry("tx").getDouble(0.0);
-    double rotateSpeed = rotP * table.getEntry("tx").getDouble(0.0);
+    //double rotateSpeed = rotP * table.getEntry("tx").getDouble(0.0);
     SmartDashboard.putNumber("Rotate Speed", rotateSpeed);
 
-    if(forwardSpeed < .1){
-      forwardSpeed += .1;
-    }
+    // if(forwardSpeed < .1){
+    //   forwardSpeed += .1;
+    // }
 
-    if(rotateSpeed < .1 && rotateSpeed > 0){
-      rotateSpeed += .1;
-    }else if(rotateSpeed > -.1 && rotateSpeed < 0){
-      rotateSpeed -=.1;
-    }
+    // if(rotateSpeed < .1 && rotateSpeed > 0){
+    //   rotateSpeed += .1;
+    // }else if(rotateSpeed > -.1 && rotateSpeed < 0){
+    //   rotateSpeed -=.1;
+    // }
 
-    if(strafeSpeed < .2 && strafeSpeed > 0){
-      strafeSpeed += .2;
-    }else if(strafeSpeed > -.2 && strafeSpeed < 0){
-      strafeSpeed -=.2;
-    }
+    // if(strafeSpeed < .2 && strafeSpeed > 0){
+    //   strafeSpeed += .2;
+    // }else if(strafeSpeed > -.2 && strafeSpeed < 0){
+    //   strafeSpeed -=.2;
+    // }
 
     // x = table.getEntry("tx").getDouble(0.0);
     // y = table.getEntry("ty").getDouble(0.0);
@@ -95,7 +98,8 @@ public class LimeAlign extends Command {
   @Override
   protected boolean isFinished() {
     // This is our standard default command so we're never going to be done
-    return (x > -.15 && x < .15 && CameraSystem.instance().getDistance() <= 18.15);
+    //return (x > -.15 && x < .15 && CameraSystem.instance().getDistance() <= 18.15);
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -109,6 +113,10 @@ public class LimeAlign extends Command {
   @Override
   protected void interrupted() {
     end();
+  }
+
+  public double getPValue(){
+    return SmartDashboard.getNumber("P Value", -.01);
   }
 
 }
