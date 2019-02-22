@@ -1,29 +1,33 @@
 package com.irontigers.commands;
 
+import com.irontigers.subsystems.ElevatorSystem;
+
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AutoAlign extends Command {
+public class BottomOutElevator extends Command {
 
-  public AutoAlign(){
-    // TODO: add all systems this command will use
-    // requires(ElevatorSystem.instance());
+  private int goalPosition = 0;
+  private double leeway = 300;
+
+  public BottomOutElevator(){
+    requires(ElevatorSystem.instance());
   }
 
   @Override
   protected void execute() {
-    // TODO: implement
+    ElevatorSystem.instance().move(-.5);
   }
 
   @Override
   protected boolean isFinished() {
-    // This should execute exactly once
-    return true;
+    return ElevatorSystem.instance().bottomedOut();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
     // TODO: if needs an end command, code it here
+    ElevatorSystem.instance().stop();
   }
 
   // Called when another command which requires one or more of the same

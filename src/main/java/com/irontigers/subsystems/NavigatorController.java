@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package com.irontigers.subsystems;
+
 import com.irontigers.commands.SpearStop;
 
 import java.time.Duration;
@@ -13,17 +14,20 @@ import java.time.Duration;
 import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
 import com.irontigers.RobotMap.XBoxController;
-import com.irontigers.commands.AutoAlign;
+import com.irontigers.commands.BottomOutElevator;
 import com.irontigers.commands.ElevatorDown;
 import com.irontigers.commands.EnableDrivingCamera;
-import com.irontigers.commands.ElevatorLevel1Dropoff;
-import com.irontigers.commands.ElevatorLevel1Pickup;
+import com.irontigers.commands.ElevatorLevel1;
 import com.irontigers.commands.ElevatorLevel2;
 import com.irontigers.commands.ElevatorLevel3;
 import com.irontigers.commands.ElevatorUp;
 import com.irontigers.commands.ResetElevatorToDefault;
+import com.irontigers.commands.ReturnNavigatorControl;
 import com.irontigers.commands.SpearIn;
 import com.irontigers.commands.SpearOut;
+import com.irontigers.commands.SpearOutAndDrop;
+import com.irontigers.commands.ZeroEncoders;
+import com.irontigers.commands.ToggleDumpTruck;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -54,17 +58,21 @@ public class NavigatorController extends Subsystem {
 
   private Joystick controller;
   private JoystickButton spearInButton;
-  private JoystickButton spearOutButton;
+  private JoystickButton spearOutAndDropButton;
   private JoystickButton elevatorDownButton;
   private JoystickButton elevatorUpButton;
-  private JoystickButton thing;
   private JoystickButton resetElevatorButton;
   private JoystickButton activateAutoAlignmentButton;
-  private JoystickButton elevatorLevel1PickupButton;
-  private JoystickButton elevatorLevel1DropoffButton;
+  private JoystickButton elevatorLevel1Button;
   private JoystickButton elevatorLevel2Button;
   private JoystickButton elevatorLevel3Button;
-  
+  private JoystickButton zeroEncoderButton;
+  private JoystickButton toggleDumpTruckButton;
+  private Double ELEVATOR_DEADZONE = .1;
+  private JoystickButton bottomOutElevator;
+  private double elevatorDown;
+  private double elevatorUp;
+  private JoystickButton cancelCommandsButton;
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("navigator_controller", Duration.ofMillis(5), () -> {
     readPeriodicControls();
@@ -73,30 +81,33 @@ public class NavigatorController extends Subsystem {
   private NavigatorController() {
     
     controller = new Joystick(RobotMap.XBoxController.NAVIGATOR_ID);
-    elevatorDownButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_BUMPER);
-    elevatorUpButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_BUMPER);
+    // elevatorDownButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_BUMPER);
+    // elevatorUpButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_BUMPER);
     resetElevatorButton = new JoystickButton(controller, RobotMap.XBoxController.START);
-    activateAutoAlignmentButton = new JoystickButton(controller, RobotMap.XBoxController.BACK);
-    elevatorLevel1PickupButton = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
-    elevatorLevel1DropoffButton = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
+    elevatorLevel1Button = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
     elevatorLevel2Button = new JoystickButton(controller, RobotMap.XBoxController.B_BUTTON);
     elevatorLevel3Button = new JoystickButton(controller, RobotMap.XBoxController.Y_BUTTON);
-    spearInButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_AXIS_BUTTON);
-    spearOutButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_AXIS_BUTTON);
-  
+    spearInButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_BUMPER);
+    spearOutAndDropButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_BUMPER);
+    zeroEncoderButton = new JoystickButton(controller, RobotMap.XBoxController.START);
+    toggleDumpTruckButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_AXIS_BUTTON);
+    bottomOutElevator = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
+    elevatorDown = deadify(ELEVATOR_DEADZONE, -controller.getRawAxis(RobotMap.XBoxController.LEFT_TRIGGER));
+    elevatorUp = deadify(ELEVATOR_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.RIGHT_TRIGGER));
+    cancelCommandsButton = new JoystickButton(controller, RobotMap.XBoxController.BACK);
     // While held down
-    elevatorDownButton.whileActive(new ElevatorDown());
-    elevatorUpButton.whileActive(new ElevatorUp());
-    spearInButton.whenReleased(new SpearIn());
-    spearOutButton.whenReleased(new SpearOut());
+    // elevatorDownButton.whileActive(new ElevatorDown());
+    // elevatorUpButton.whileActive(new ElevatorUp());
+    spearInButton.whenPressed(new SpearIn());
+    spearOutAndDropButton.whenPressed(new SpearOutAndDrop());
+    toggleDumpTruckButton.whenReleased(new ToggleDumpTruck());
+    bottomOutElevator.whenReleased(new BottomOutElevator());
     // Singular press
-    resetElevatorButton.whenReleased(new ResetElevatorToDefault());
-    activateAutoAlignmentButton.whenReleased(new AutoAlign());
-    elevatorLevel1PickupButton.whenReleased(new ElevatorLevel1Pickup());
-    elevatorLevel1DropoffButton.whenReleased(new ElevatorLevel1Dropoff());
+    elevatorLevel1Button.whenReleased(new ElevatorLevel1());
     elevatorLevel2Button.whenReleased(new ElevatorLevel2());
     elevatorLevel3Button.whenReleased(new ElevatorLevel3());
-
+    zeroEncoderButton.whenReleased(new ZeroEncoders());
+    cancelCommandsButton.whenPressed(new ReturnNavigatorControl());
     periodicExecutor.start();
   }
   
@@ -107,5 +118,11 @@ public class NavigatorController extends Subsystem {
   @Override
   protected void initDefaultCommand() {
     // Nothing
+  }
+  public double elevatorSpeed(){ 
+      return .6 * (deadify(ELEVATOR_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.RIGHT_TRIGGER)) + deadify(ELEVATOR_DEADZONE, -controller.getRawAxis(RobotMap.XBoxController.LEFT_TRIGGER)));
+  }
+  private double deadify(double zone, double input){
+    return Math.abs(input) < zone ? 0 : input;
   }
 }

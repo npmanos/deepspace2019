@@ -1,36 +1,25 @@
 package com.irontigers.commands;
 
+import com.irontigers.subsystems.HatchManipSystem;
+
 import edu.wpi.first.wpilibj.command.Command;
-import com.irontigers.subsystems.*;
-import javax.swing.Timer;
 
-public class SpearOut extends Command {
-  Timer timer;
-  public double i2;
+public class SpearStop extends Command {
 
-
-  public SpearOut(){
+  public SpearStop(){
     // TODO: add all systems this command will use
      requires(HatchManipSystem.instance());
-      
-  }
-  @Override
-  protected void initialize() {
-    super.setTimeout(.5);
   }
 
   @Override
   protected void execute() {
-    HatchManipSystem.instance().extend();
+    HatchManipSystem.instance().hatchSpark.setSpeed(0);
   }
 
   @Override
   protected boolean isFinished() {
-    if(super.isTimedOut()){
-      return true;
-    }else{
-      return false;
-    }
+    // This should execute exactly once
+    return true;
   }
 
   // Called once after isFinished returns true

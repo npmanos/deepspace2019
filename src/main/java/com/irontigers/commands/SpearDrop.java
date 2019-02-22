@@ -4,39 +4,45 @@ import com.irontigers.subsystems.ElevatorSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ElevatorLevel1Dropoff extends Command {
+public class SpearDrop extends Command {
+  public double i2;
 
-  private int goalPosition = 2500;
+  private int dropAmount = 2393;
+  private double leeway = .005;
+  double startPos;
 
-  public ElevatorLevel1Dropoff(){
+  public SpearDrop(){
     requires(ElevatorSystem.instance());
   }
 
   @Override
+  protected void initialize() {
+    startPos = Math.abs(ElevatorSystem.instance().getRawPosition());
+  }
+
+  @Override
   protected void execute() {
-    double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
+    ElevatorSystem.instance().move(-.5);
     
-    if(currentPosition > goalPosition * 1.05){
-      ElevatorSystem.instance().move(-.5);
-    }
-    else if(currentPosition < goalPosition * .95){
-      ElevatorSystem.instance().move(.5);
-    }
-    else{
-      ElevatorSystem.instance().stop();
-    }
   }
 
   @Override
   protected boolean isFinished() {
     double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
-    return (currentPosition > goalPosition * .95) && (currentPosition < goalPosition * 1.05);
+    double endPosition = (startPos - dropAmount) * (1 + leeway);
+    if(ElevatorSystem.instance().isLowerLimitSwitch() || ElevatorSystem.instance().wrongWay()){
+        return true;
+    }
+    else if(currentPosition > endPosition){
+        return false;
+    }else{
+      return true;
+    }
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    // TODO: if needs an end command, code it here
     ElevatorSystem.instance().stop();
   }
 

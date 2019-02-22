@@ -1,6 +1,7 @@
 package com.irontigers.commands;
 
 import com.irontigers.subsystems.ElevatorSystem;
+import com.irontigers.subsystems.HatchManipSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 

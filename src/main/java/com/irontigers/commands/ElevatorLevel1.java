@@ -4,35 +4,37 @@ import com.irontigers.subsystems.ElevatorSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ElevatorLevel1Pickup extends Command {
+public class ElevatorLevel1 extends Command {
 
-  private int goalPosition = 3500;
+  private int goalPosition = 1879;
+  private double leeway = .02;
 
-  public ElevatorLevel1Pickup() {
+  public ElevatorLevel1(){
     requires(ElevatorSystem.instance());
   }
 
   @Override
   protected void execute() {
     double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
-
-    if (currentPosition > goalPosition * 1.05) {
-      System.out.println("down");
-      ElevatorSystem.instance().move(-.5);
-    } else if (currentPosition < goalPosition * .95) {
-      System.out.println("up");
-      ElevatorSystem.instance().move(.5);
-    } else {
-      System.out.println("stop");
+    
+    if(currentPosition > (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 + leeway)){
+      ElevatorSystem.instance().move(-.7);
+    }
+    else if(currentPosition < (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 - leeway)){
+      ElevatorSystem.instance().move(.7);
+    }
+    else{
       ElevatorSystem.instance().stop();
     }
   }
 
   @Override
   protected boolean isFinished() {
-    System.out.println("finished");
     double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
-    return (currentPosition > goalPosition * .95) && (currentPosition < goalPosition * 1.05);
+    double minPosition = (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 - leeway);
+    double maxPosition = (goalPosition + ElevatorSystem.instance().getOffSet()) * (1 + leeway);
+    boolean inRange = (currentPosition > minPosition) && (currentPosition < maxPosition);
+    return (inRange || ElevatorSystem.instance().wrongWay());
   }
 
   // Called once after isFinished returns true

@@ -5,7 +5,6 @@ import com.irontigers.subsystems.HatchManipSystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class SpearIn extends Command {
-
   public SpearIn(){
     // TODO: add all systems this command will use
      requires(HatchManipSystem.instance());
@@ -18,8 +17,7 @@ public class SpearIn extends Command {
 
   @Override
   protected boolean isFinished() {
-    // This should execute exactly once
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

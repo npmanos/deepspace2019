@@ -8,6 +8,8 @@
 
 package com.irontigers;
 
+import com.irontigers.subsystems.CameraSystem;
+import com.irontigers.commands.SpearOut;
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
 import com.irontigers.subsystems.DriverController;
@@ -15,7 +17,12 @@ import com.irontigers.subsystems.DumpTruckSystem;
 import com.irontigers.subsystems.ElevatorSystem;
 import com.irontigers.subsystems.InvertibleSystem;
 import com.irontigers.subsystems.NavigatorController;
+import com.irontigers.subsystems.HatchManipSystem;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -37,7 +44,8 @@ public class Robot extends TimedRobot {
   // decides to invert the robot controls
   private ControlState controlState = ControlState.STANDARD;
   private static InvertibleSystem[] INVERTIBLE_SYSTEMS = new InvertibleSystem[]{
-    DriveSystem.instance()
+    DriveSystem.instance(),
+    CameraSystem.instance()
   };
 
   private static Robot instance;
@@ -56,6 +64,12 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     instance = this;
 
+
+    DriveSystem.instance();
+    CameraSystem.instance();
+
+    CameraSystem.instance().hatchCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
+    CameraSystem.instance().ballCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
     DashboardPublisher.instance();
     DriverController.instance();
     DriveSystem.instance();
@@ -64,6 +78,10 @@ public class Robot extends TimedRobot {
     NavigatorController.instance();
     
     enableStandardControl();
+
+    NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
+    limelight.getEntry("camMode").setNumber(0);
+    limelight.getEntry("ledMode").setNumber(0);
 
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
@@ -102,6 +120,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    teleopPeriodic();
 
   }
 
@@ -115,6 +134,7 @@ public class Robot extends TimedRobot {
     // DriveSystem.instance().drive(joystick.yScaledSpeed(),
     // joystick.xScaledSpeed(), joystick.zScaledRotation());
     // talon.set(0.2);
+    
   }
 
   /**
@@ -154,5 +174,16 @@ public class Robot extends TimedRobot {
 
     
     DashboardPublisher.instance().put("Control State", controlState.toString());
+  }
+
+  @Override
+  public void disabledPeriodic(){
+    NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
+   
+    // Comment prior to field calibration. Uncomment after.
+    limelight.getEntry("pipeline").setNumber(0);
+    // Uncomment prior to field calibration. Recomment after.
+    // limelight.getEntry("camMode").setNumber(0);
+    // limelight.getEntry("ledMode").setNumber(0);
   }
 }
