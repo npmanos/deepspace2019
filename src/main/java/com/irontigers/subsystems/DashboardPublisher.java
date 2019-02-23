@@ -32,6 +32,8 @@ public class DashboardPublisher extends Subsystem {
 
   public DashboardPublisher(){
     stringValues.clear();
+    numberValues.clear();
+    booleanValues.clear();
 
     periodicExecutor.start();
   }
