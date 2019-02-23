@@ -1,5 +1,6 @@
 package com.irontigers.commands;
 
+import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.ElevatorSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -40,6 +41,7 @@ public class ElevatorLevel2 extends Command {
   protected void end() {
     // TODO: if needs an end command, code it here
     ElevatorSystem.instance().stop();
+    DashboardPublisher.instance().putDriver("Elevator Level", 2);
   }
 
   // Called when another command which requires one or more of the same

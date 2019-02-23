@@ -80,8 +80,8 @@ public class LimeAlign extends Command {
 
     System.out.println("EXECUTING");
 
-    DashboardPublisher.instance().put("Limelight X", x);
-    DashboardPublisher.instance().put("Limelight Distance", y);
+    DashboardPublisher.instance().putDebug("Limelight X", x);
+    DashboardPublisher.instance().putDebug("Limelight Y", y);
     // DashboardPublisher.instance().put("Limelight Yaw", yaw);
 
     DriveSystem.instance().drive(forwardSpeed, strafeSpeed, rotateSpeed);

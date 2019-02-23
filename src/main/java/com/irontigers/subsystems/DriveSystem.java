@@ -71,9 +71,9 @@ public class DriveSystem extends Subsystem implements InvertibleSystem {
    */
   public void drive(double forwardSpeed, double strafeSpeed, double rotationSpeed){
 
-    DashboardPublisher.instance().put("Forward", forwardSpeed);
-    DashboardPublisher.instance().put("Strafe", strafeSpeed);
-    DashboardPublisher.instance().put("Rotation", rotationSpeed);
+    DashboardPublisher.instance().putDebug("Forward", forwardSpeed);
+    DashboardPublisher.instance().putDebug("Strafe", strafeSpeed);
+    DashboardPublisher.instance().putDebug("Rotation", rotationSpeed);
 
     driveMethod.drive(strafeSpeed, forwardSpeed, rotationSpeed);
   }

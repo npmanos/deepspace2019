@@ -9,6 +9,8 @@ import com.irontigers.RobotMap;
 import com.irontigers.commands.ElevatorManualControl;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 public class ElevatorSystem extends Subsystem {
 
   private static ElevatorSystem instance = new ElevatorSystem();
@@ -17,15 +19,19 @@ public class ElevatorSystem extends Subsystem {
   }
 
   private WPI_TalonSRX elevatorTalon;
-  private double offSet = 1499;
+  private double offSet = RobotMap.Elevator.OFFSET;
+  private int level;
 
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("elevator_position", Duration.ofMillis(5), () -> {
-    DashboardPublisher.instance().put("Elevator Position", getRawPosition());
+    DashboardPublisher.instance().putDebug("Elevator Encoder Position", getRawPosition());
+    DashboardPublisher.instance().putDriver("Driver Dashboard/Elevator Height", (getRawPosition() / -RobotMap.Elevator.MAX_HEIGHT) * 100);
   });
 
   private ElevatorSystem(){
     elevatorTalon = new WPI_TalonSRX(RobotMap.Manipulators.ELEVATOR);
+
+    level = 0;
 
     periodicExecutor.start();
   }
@@ -39,6 +45,7 @@ public class ElevatorSystem extends Subsystem {
     if(Math.abs(getRawPosition()) > 10000) { 
       DumpTruckSystem.instance().unDump();
     }
+
   }
 
   public void zeroEncoder(){
@@ -95,6 +102,9 @@ public class ElevatorSystem extends Subsystem {
 
   public boolean wrongWay(){
     if(getRawPosition() > 1000){
+      Shuffleboard.addEventMarker("Elevator underrun",
+                                  "The elevator has gone past the lower limit switch and has wound the wrong way.",
+                                  EventImportance.kCritical);
       return true;
     }else{
       return false;

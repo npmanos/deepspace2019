@@ -22,9 +22,13 @@ import com.irontigers.subsystems.HatchManipSystem;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -112,7 +116,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    
+    if(DriverStation.getInstance().getMatchType() == MatchType.Practice){
+      Shuffleboard.setRecordingFileNameFormat(RobotMap.Dashboard.PRACTICE_FORMAT);
+      Shuffleboard.startRecording();
+    }else if(DriverStation.getInstance().isFMSAttached()){
+      Shuffleboard.setRecordingFileNameFormat(RobotMap.Dashboard.MATCH_FORMAT);
+      Shuffleboard.startRecording();
+    }
+    Shuffleboard.addEventMarker("Match Start", EventImportance.kNormal);
   }
 
   /**
@@ -122,6 +133,11 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     teleopPeriodic();
 
+  }
+
+  @Override
+  public void teleopInit() {
+    Shuffleboard.addEventMarker("Teleop Start", EventImportance.kNormal);
   }
 
   /**
@@ -163,7 +179,7 @@ public class Robot extends TimedRobot {
       system.enableStandardControl();
     }
 
-    DashboardPublisher.instance().put("Control State", controlState.toString());
+    DashboardPublisher.instance().putDriver("Control State", controlState.toString());
   }
 
   public void enableInvertedControl(){
@@ -173,9 +189,15 @@ public class Robot extends TimedRobot {
     }
 
     
-    DashboardPublisher.instance().put("Control State", controlState.toString());
+    DashboardPublisher.instance().putDriver("Control State", controlState.toString());
   }
 
+  @Override
+  public void disabledInit() {
+    Shuffleboard.addEventMarker("Match End", EventImportance.kNormal);
+    Shuffleboard.stopRecording();
+  }
+  
   @Override
   public void disabledPeriodic(){
     NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");

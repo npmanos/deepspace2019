@@ -10,6 +10,7 @@ package com.irontigers;
 import edu.wpi.cscore.VideoSource;
 import edu.wpi.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 //import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
@@ -104,5 +105,35 @@ public class RobotMap {
   }
   public static class DumpTruck {
      public static int Spark = 0;
+  }
+
+  public static class Elevator{
+    public static int LEVEL_1 = 1879;
+    public static int LEVEL_2 = 37175;
+    public static int MAX_HEIGHT = 66799;
+
+    public static int OFFSET = 1499;
+  }
+
+  public static class Dashboard{
+    public static String DRIVER_PREFIX = "Driver Dashboard/";
+    public static String DEBUG_PREFIX = "debug/";
+
+    public static String PRACTICE_FORMAT = "PRACTICE-${date}-${time}";
+    public static String MATCH_FORMAT = matchFormat();
+  
+    private static String matchFormat(){
+      StringBuffer sb = new StringBuffer();
+
+      sb.append(DriverStation.getInstance().getEventName());
+      sb.append("-");
+      sb.append(DriverStation.getInstance().getMatchType().toString());
+      sb.append("-");
+      sb.append(DriverStation.getInstance().getMatchNumber());
+      sb.append("-");
+      sb.append("${time}");
+
+      return sb.toString();
+    }
   }
 }
