@@ -45,7 +45,19 @@ public class ElevatorSystem extends Subsystem {
     if(Math.abs(getRawPosition()) > 10000) { 
       DumpTruckSystem.instance().unDump();
     }
-
+    if(wrongWay()){
+      DashboardPublisher.instance().putDriver("Elevator Level", "WARNING: BELOW BOTTOM");
+    }else if(isLowerLimitSwitch()){
+      DashboardPublisher.instance().putDriver("Elevator Level", "Bottom");
+    }else if(atLevel(RobotMap.Elevator.LEVEL_1, .02)){
+      DashboardPublisher.instance().putDriver("Elevator Level", "Level 1");
+    }else if(atLevel(RobotMap.Elevator.LEVEL_2, .01)){
+      DashboardPublisher.instance().putDriver("Elevator Level", "Level 2");
+    }else if(isUpperLimitSwitch()){
+      DashboardPublisher.instance().putDriver("Elevator Level", "Top");
+    }else{
+      DashboardPublisher.instance().putDriver("Elevator Level", "Between Levels");
+    }
   }
 
   public void zeroEncoder(){
@@ -100,7 +112,7 @@ public class ElevatorSystem extends Subsystem {
     return offSet;
   }
 
-  public boolean wrongWay(){
+  public Boolean wrongWay(){
     if(getRawPosition() > 1000){
       Shuffleboard.addEventMarker("Elevator underrun",
                                   "The elevator has gone past the lower limit switch and has wound the wrong way.",
@@ -109,6 +121,14 @@ public class ElevatorSystem extends Subsystem {
     }else{
       return false;
     }
+  }
+
+  public Boolean atLevel(double goalPosition, double leeway){
+    double currentPosition = Math.abs(getRawPosition());
+    double minPosition = (goalPosition + getOffSet()) * (1 - leeway);
+    double maxPosition = (goalPosition + getOffSet()) * (1 + leeway);
+    boolean inRange = (currentPosition > minPosition) && (currentPosition < maxPosition);
+    return inRange;
   }
 
   @Override

@@ -41,7 +41,6 @@ public class ElevatorLevel3 extends Command {
   protected void end() {
     // TODO: if needs an end command, code it here
     ElevatorSystem.instance().stop();
-    DashboardPublisher.instance().putDriver("Elevator Level", 3);
   }
 
   // Called when another command which requires one or more of the same

@@ -26,7 +26,6 @@ public class ElevatorDown extends Command {
   @Override
   protected void end() {
     ElevatorSystem.instance().stop();
-    DashboardPublisher.instance().putDriver("Elevator Level", 0);
   }
 
   // Called when another command which requires one or more of the same
