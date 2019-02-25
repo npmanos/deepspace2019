@@ -1,9 +1,11 @@
 package com.irontigers.commands;
 
+import com.irontigers.RobotMap;
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.HatchManipSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 public class SpearIn extends Command {
   public SpearIn(){
@@ -25,6 +27,7 @@ public class SpearIn extends Command {
   @Override
   protected void end() {
     DashboardPublisher.instance().putDriver("Extended", false);
+    Shuffleboard.addEventMarker("Spear retracted", RobotMap.Dashboard.TRIVIAL);
     // TODO: if needs an end command, code it here
   }
 

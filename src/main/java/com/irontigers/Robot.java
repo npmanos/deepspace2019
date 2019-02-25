@@ -120,7 +120,7 @@ public class Robot extends TimedRobot {
       Shuffleboard.setRecordingFileNameFormat(RobotMap.Dashboard.MATCH_FORMAT);
       Shuffleboard.startRecording();
     }
-    Shuffleboard.addEventMarker("Match Start", EventImportance.kNormal);
+    Shuffleboard.addEventMarker("Match Start", RobotMap.Dashboard.NORMAL);
   }
 
   /**
@@ -134,7 +134,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    Shuffleboard.addEventMarker("Teleop Start", EventImportance.kNormal);
+    Shuffleboard.addEventMarker("Teleop Start", RobotMap.Dashboard.NORMAL);
   }
 
   /**
@@ -191,7 +191,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    Shuffleboard.addEventMarker("Match End", EventImportance.kNormal);
+    Shuffleboard.addEventMarker("Match End", RobotMap.Dashboard.NORMAL);
     Shuffleboard.stopRecording();
   }
   

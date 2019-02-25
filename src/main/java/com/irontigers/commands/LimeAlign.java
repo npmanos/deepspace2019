@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.irontigers.Robot;
+import com.irontigers.RobotMap;
 import com.irontigers.RollingAverage;
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
@@ -31,7 +32,7 @@ public class LimeAlign extends Command {
     stillHasTargets = false;
     Robot.instance().enableStandardControl();
     DashboardPublisher.instance().putDriver("Driving with Vision", true);
-    Shuffleboard.addEventMarker("Vision Alignment Enabled", EventImportance.kLow);
+    Shuffleboard.addEventMarker("Vision Alignment Started", RobotMap.Dashboard.LOW);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -94,14 +95,14 @@ public class LimeAlign extends Command {
   protected void end() {
     DriveSystem.instance().stop();
     DashboardPublisher.instance().putDriver("Driving with Vision", false);
-    Shuffleboard.addEventMarker("Vision Alignment Completed", EventImportance.kLow);
+    Shuffleboard.addEventMarker("Vision Alignment Ended", RobotMap.Dashboard.LOW);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Shuffleboard.addEventMarker("Vision Alignment Interrupted", EventImportance.kHigh);
+    Shuffleboard.addEventMarker("Vision Alignment Interrupted", RobotMap.Dashboard.HIGH);
     end();
   }
 

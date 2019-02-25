@@ -65,7 +65,7 @@ public class ElevatorSystem extends Subsystem {
   }
 
   public void zeroEncoder(){
-    Shuffleboard.addEventMarker("Encoder zeroed", EventImportance.kCritical);
+    Shuffleboard.addEventMarker("Encoder zeroed", RobotMap.Dashboard.CRITICAL);
     while(!elevatorTalon.getSensorCollection().isRevLimitSwitchClosed()){
       move(-.5);
     }
@@ -130,7 +130,7 @@ public class ElevatorSystem extends Subsystem {
     if(getRawPosition() > 1000){
       Shuffleboard.addEventMarker("Elevator underrun",
                                   "The elevator has gone past the lower limit switch and has wound the wrong way.",
-                                  EventImportance.kCritical);
+                                  RobotMap.Dashboard.CRITICAL);
       return true;
     }else{
       return false;
