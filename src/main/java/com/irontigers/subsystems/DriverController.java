@@ -15,19 +15,13 @@ import com.irontigers.RobotMap.XBoxController;
 import com.irontigers.RollingAverage;
 import com.irontigers.commands.LimeAlign;
 import com.irontigers.commands.TeleopDrive;
-import com.irontigers.commands.ToggleControlState;
 import com.irontigers.commands.DecreaseScaleFactor;
 import com.irontigers.commands.IncreaseScaleFactor;
-import com.irontigers.commands.ResetRobotToDefaults;
-import com.irontigers.commands.ToggleDumpTruck;
 import com.irontigers.commands.ToggleInvertedControl;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Basic Joystick for the robot. While technically this is not a Subsystem of

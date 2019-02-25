@@ -7,8 +7,6 @@
 
 package com.irontigers.subsystems;
 
-import com.irontigers.commands.SpearStop;
-
 import java.time.Duration;
 
 import com.irontigers.PeriodicExecutor;
@@ -18,11 +16,8 @@ import com.irontigers.commands.BottomOutElevator;
 import com.irontigers.commands.ElevatorLevel1;
 import com.irontigers.commands.ElevatorLevel2;
 import com.irontigers.commands.ElevatorLevel3;
-import com.irontigers.commands.ElevatorUp;
-import com.irontigers.commands.ResetElevatorToDefault;
 import com.irontigers.commands.ReturnNavigatorControl;
 import com.irontigers.commands.SpearIn;
-import com.irontigers.commands.SpearOut;
 import com.irontigers.commands.SpearOutAndDrop;
 import com.irontigers.commands.ZeroEncoders;
 import com.irontigers.commands.ToggleDumpTruck;
@@ -30,7 +25,6 @@ import com.irontigers.commands.ToggleDumpTruck;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.buttons.Button;
 
 /**
  * Basic Joystick for the robot. While technically this is not a Subsystem of
