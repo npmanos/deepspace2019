@@ -61,6 +61,7 @@ public class ElevatorSystem extends Subsystem {
   }
 
   public void zeroEncoder(){
+    Shuffleboard.addEventMarker("Encoder zeroed", EventImportance.kCritical);
     while(!elevatorTalon.getSensorCollection().isRevLimitSwitchClosed()){
       move(-.5);
     }
@@ -70,7 +71,6 @@ public class ElevatorSystem extends Subsystem {
       elevatorTalon.setSelectedSensorPosition(0);
       Thread.sleep(10);
       elevatorTalon.setSelectedSensorPosition(0);
-      System.out.println("Zeroed");
     }
     catch(Throwable e){
       System.out.println(e);

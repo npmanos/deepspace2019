@@ -47,10 +47,12 @@ public class CameraSystem extends Subsystem implements InvertibleSystem {
   @Override
   public void enableStandardControl(){
     server.setSource(hatchCam);
+    DashboardPublisher.instance().putDriver("Camera", "Hatch Camera");
   }
 
   @Override
   public void enableInvertedControl(){
     server.setSource(ballCam);
+    DashboardPublisher.instance().putDriver("Camera", "Ball Camera");
   }
 }

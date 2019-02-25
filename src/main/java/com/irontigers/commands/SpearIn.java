@@ -1,5 +1,6 @@
 package com.irontigers.commands;
 
+import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.HatchManipSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,6 +24,7 @@ public class SpearIn extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    DashboardPublisher.instance().putDriver("Extended", false);
     // TODO: if needs an end command, code it here
   }
 

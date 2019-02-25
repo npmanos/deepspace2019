@@ -8,6 +8,8 @@
 package com.irontigers.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
+import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.ElevatorSystem;
 import com.irontigers.subsystems.NavigatorController;
 
@@ -21,6 +23,7 @@ public class ElevatorManualControl extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    DashboardPublisher.instance().putDriver("Moving to position", false);
   }
 
   // Called repeatedly when this Command is scheduled to run

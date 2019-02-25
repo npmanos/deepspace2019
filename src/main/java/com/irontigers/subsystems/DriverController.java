@@ -17,7 +17,6 @@ import com.irontigers.commands.LimeAlign;
 import com.irontigers.commands.TeleopDrive;
 import com.irontigers.commands.ToggleControlState;
 import com.irontigers.commands.DecreaseScaleFactor;
-import com.irontigers.commands.EnableDrivingCamera;
 import com.irontigers.commands.IncreaseScaleFactor;
 import com.irontigers.commands.ResetRobotToDefaults;
 import com.irontigers.commands.ToggleDumpTruck;
@@ -189,13 +188,13 @@ public class DriverController extends Subsystem {
 
   private double scalingFactor(){
     switch (scalingFactorMode){
-      case 1: SmartDashboard.putNumber("Scaling Factor", .5);
+      case 1: DashboardPublisher.instance().putDriver("Scaling Factor", .5);
               return .5;
-      case 2: SmartDashboard.putNumber("Scaling Factor", .75);
+      case 2: DashboardPublisher.instance().putDriver("Scaling Factor", .75);
               return .75;
-      case 3: SmartDashboard.putNumber("Scaling Factor", 1);
+      case 3: DashboardPublisher.instance().putDriver("Scaling Factor", 1);
               return 1;
-      default: SmartDashboard.putNumber("Scaling Factor", .75);
+      default: DashboardPublisher.instance().putDriver("Scaling Factor", .75);
                return .75;
     }
   }

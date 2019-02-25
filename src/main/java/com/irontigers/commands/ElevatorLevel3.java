@@ -16,6 +16,11 @@ public class ElevatorLevel3 extends Command {
   }
 
   @Override
+  protected void initialize() {
+    DashboardPublisher.instance().putDriver("Moving to position", true);
+  }
+
+  @Override
   protected void execute() {
     double currentPosition = Math.abs(ElevatorSystem.instance().getRawPosition());
 
@@ -41,6 +46,7 @@ public class ElevatorLevel3 extends Command {
   protected void end() {
     // TODO: if needs an end command, code it here
     ElevatorSystem.instance().stop();
+    DashboardPublisher.instance().putDriver("Moving to position", false);
   }
 
   // Called when another command which requires one or more of the same

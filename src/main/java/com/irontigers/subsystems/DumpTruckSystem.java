@@ -39,10 +39,12 @@ public class DumpTruckSystem extends Subsystem {
   public void dump(){   
       dumpTruck.setSpeed(.5);
       isDumped = true;
+      DashboardPublisher.instance().putDriver("Dumped", isDumped);
   }
 
   public void unDump(){
       dumpTruck.setSpeed(-.5);
       isDumped = false;
+      DashboardPublisher.instance().putDriver("Dumped", isDumped);
   }
 }

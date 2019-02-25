@@ -29,7 +29,6 @@ public class BottomOutElevator extends Command {
   protected void end() {
     // TODO: if needs an end command, code it here
     ElevatorSystem.instance().stop();
-    DashboardPublisher.instance().putDriver("Elevator Level", 0);
   }
 
   // Called when another command which requires one or more of the same

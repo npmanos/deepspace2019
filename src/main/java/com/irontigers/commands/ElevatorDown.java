@@ -12,6 +12,11 @@ public class ElevatorDown extends Command {
   }
 
   @Override
+  protected void initialize() {
+    DashboardPublisher.instance().putDriver("Moving to position", true);
+  }
+
+  @Override
   protected void execute() {
     ElevatorSystem.instance().move(-.65);
   }
@@ -26,6 +31,7 @@ public class ElevatorDown extends Command {
   @Override
   protected void end() {
     ElevatorSystem.instance().stop();
+    DashboardPublisher.instance().putDriver("Moving to position", false);
   }
 
   // Called when another command which requires one or more of the same

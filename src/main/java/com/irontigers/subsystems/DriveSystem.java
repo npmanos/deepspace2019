@@ -88,11 +88,15 @@ public class DriveSystem extends Subsystem implements InvertibleSystem {
   @Override
   public void enableStandardControl() {
     driveMethod = (strafeSpeed, forwardSpeed, rotationSpeed) -> drive.driveCartesian(strafeSpeed, forwardSpeed, rotationSpeed);  
+  
+    DashboardPublisher.instance().putDriver("Robot Front", "Hatch");
   }
 
   @Override
   public void enableInvertedControl() {
     driveMethod = (strafeSpeed, forwardSpeed, rotationSpeed) -> drive.driveCartesian(-strafeSpeed, -forwardSpeed, rotationSpeed);
+  
+    DashboardPublisher.instance().putDriver("Robot Front", "Ball");
   }
 
 }

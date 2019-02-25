@@ -179,7 +179,7 @@ public class Robot extends TimedRobot {
       system.enableStandardControl();
     }
 
-    DashboardPublisher.instance().putDriver("Control State", controlState.toString());
+    DashboardPublisher.instance().putDebug("Control State", controlState.toString());
   }
 
   public void enableInvertedControl(){
@@ -189,7 +189,7 @@ public class Robot extends TimedRobot {
     }
 
     
-    DashboardPublisher.instance().putDriver("Control State", controlState.toString());
+    DashboardPublisher.instance().putDebug("Control State", controlState.toString());
   }
 
   @Override

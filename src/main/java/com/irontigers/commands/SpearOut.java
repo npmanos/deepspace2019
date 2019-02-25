@@ -36,6 +36,7 @@ public class SpearOut extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    DashboardPublisher.instance().putDriver("Extended", true);
     // TODO: if needs an end command, code it here
   }
 

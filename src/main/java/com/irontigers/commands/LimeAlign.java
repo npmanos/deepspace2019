@@ -11,6 +11,8 @@ import com.irontigers.subsystems.DriveSystem;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 public class LimeAlign extends Command {
   private double x;
@@ -34,6 +36,8 @@ public class LimeAlign extends Command {
     limelight.getEntry("pipeline").setNumber(0);
     hasTargets = false;
     Robot.instance().enableStandardControl();
+    DashboardPublisher.instance().putDriver("Driving with Vision", true);
+    Shuffleboard.addEventMarker("Vision Alignment Enabled", EventImportance.kLow);
   }
 
   private List<Double> leftArea = new ArrayList<Double>();
@@ -108,12 +112,15 @@ public class LimeAlign extends Command {
   protected void end() {
     DriveSystem.instance().stop();
     limelight.getEntry("pipeline").setNumber(0);
+    DashboardPublisher.instance().putDriver("Driving with Vision", false);
+    Shuffleboard.addEventMarker("Vision Alignment Completed", EventImportance.kLow);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Shuffleboard.addEventMarker("Vision Alignment Interrupted", EventImportance.kHigh);
     end();
   }
 

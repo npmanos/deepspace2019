@@ -1,5 +1,6 @@
 package com.irontigers.commands;
 
+import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.ElevatorSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,6 +18,7 @@ public class SpearDrop extends Command {
 
   @Override
   protected void initialize() {
+    DashboardPublisher.instance().putDriver("Moving to position", true);
     startPos = Math.abs(ElevatorSystem.instance().getRawPosition());
   }
 
@@ -44,6 +46,7 @@ public class SpearDrop extends Command {
   @Override
   protected void end() {
     ElevatorSystem.instance().stop();
+    DashboardPublisher.instance().putDriver("Moving to position", false);
   }
 
   // Called when another command which requires one or more of the same
