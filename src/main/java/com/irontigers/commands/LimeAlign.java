@@ -1,18 +1,12 @@
 package com.irontigers.commands;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.irontigers.Robot;
 import com.irontigers.RobotMap;
-import com.irontigers.RollingAverage;
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
 
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 public class LimeAlign extends Command {
@@ -75,13 +69,6 @@ public class LimeAlign extends Command {
     DashboardPublisher.instance().putDebug("Limelight has target", stillHasTargets);
 
     DriveSystem.instance().drive(forwardSpeed, strafeSpeed, rotateSpeed);
-
-
-    // DriveSystem.instance().drive(controller.forwardSpeed(),controller.strafeSpeed(), controller.rotationSpeed());
-  }
-
-  private double deadify(double zone, double input){
-    return Math.abs(input) < zone ? 0 : input;
   }
 
   // Make this return true when this Command no longer needs to run execute()

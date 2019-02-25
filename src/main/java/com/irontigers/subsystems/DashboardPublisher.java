@@ -2,7 +2,6 @@ package com.irontigers.subsystems;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +22,6 @@ public class DashboardPublisher extends Subsystem {
   private Map<String, String> stringValues = new HashMap<String, String>();
   private Map<String, Double> numberValues = new HashMap<String, Double>();
   private Map<String, Boolean> booleanValues = new HashMap<String, Boolean>();
-  private static final DecimalFormat df = new DecimalFormat("#.###");
 
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("dashboard_publisher", Duration.ofMillis(50), () -> {

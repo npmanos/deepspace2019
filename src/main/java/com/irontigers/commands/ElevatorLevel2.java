@@ -47,7 +47,6 @@ public class ElevatorLevel2 extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    // TODO: if needs an end command, code it here
     ElevatorSystem.instance().stop();
     DashboardPublisher.instance().putDriver("Moving to position", false);
     Shuffleboard.addEventMarker("ElevatorLevel2 ended", RobotMap.Dashboard.LOW);

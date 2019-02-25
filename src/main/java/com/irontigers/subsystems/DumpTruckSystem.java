@@ -1,8 +1,7 @@
 package com.irontigers.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.irontigers.RobotMap;
-import com.irontigers.commands.TeleopDrive;
+
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 

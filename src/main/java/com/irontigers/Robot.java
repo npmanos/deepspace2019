@@ -9,7 +9,6 @@
 package com.irontigers;
 
 import com.irontigers.subsystems.CameraSystem;
-import com.irontigers.commands.SpearOut;
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
 import com.irontigers.subsystems.DriverController;
@@ -17,17 +16,11 @@ import com.irontigers.subsystems.DumpTruckSystem;
 import com.irontigers.subsystems.ElevatorSystem;
 import com.irontigers.subsystems.InvertibleSystem;
 import com.irontigers.subsystems.NavigatorController;
-import com.irontigers.subsystems.HatchManipSystem;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 /**

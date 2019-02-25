@@ -2,14 +2,12 @@ package com.irontigers.subsystems;
 
 import java.time.Duration;
 
-import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
 import com.irontigers.commands.ElevatorManualControl;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 public class ElevatorSystem extends Subsystem {
 
@@ -20,7 +18,6 @@ public class ElevatorSystem extends Subsystem {
 
   private WPI_TalonSRX elevatorTalon;
   private double offSet = RobotMap.Elevator.OFFSET;
-  private int level;
 
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("elevator_position", Duration.ofMillis(5), () -> {
@@ -30,8 +27,6 @@ public class ElevatorSystem extends Subsystem {
 
   private ElevatorSystem(){
     elevatorTalon = new WPI_TalonSRX(RobotMap.Manipulators.ELEVATOR);
-
-    level = 0;
 
     periodicExecutor.start();
   }

@@ -48,7 +48,6 @@ public class DriverController extends Subsystem {
   private final double FORWARD_DEADZONE = .2;
   private final double STRAFE_DEADZONE = .2;
   private final double ROTATION_DEADZONE = .2;
-  private final double SCALING_FACTOR_STANDARD = 1;
   private final int AVERAGING_WINDOW_SIZE = 5;
   private int scalingFactorMode = 2;
   private RollingAverage forwardAverager = new RollingAverage(AVERAGING_WINDOW_SIZE);
@@ -64,10 +63,6 @@ public class DriverController extends Subsystem {
 
   private Joystick controller;
   private JoystickButton invertControlButton;
-  private JoystickButton toggleDumptruckButton;
-  private JoystickButton resetRobotToDefaultsButton;
-  private JoystickButton rumbleButton;
-  private JoystickButton driverCameraButton;
   private JoystickButton visionAlignButton;
   private JoystickButton cancelVision;
   private JoystickButton decreaseScaleButton;

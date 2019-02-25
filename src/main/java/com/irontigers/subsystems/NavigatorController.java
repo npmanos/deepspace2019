@@ -51,10 +51,6 @@ public class NavigatorController extends Subsystem {
   private Joystick controller;
   private JoystickButton spearInButton;
   private JoystickButton spearOutAndDropButton;
-  private JoystickButton elevatorDownButton;
-  private JoystickButton elevatorUpButton;
-  private JoystickButton resetElevatorButton;
-  private JoystickButton activateAutoAlignmentButton;
   private JoystickButton elevatorLevel1Button;
   private JoystickButton elevatorLevel2Button;
   private JoystickButton elevatorLevel3Button;
@@ -62,8 +58,6 @@ public class NavigatorController extends Subsystem {
   private JoystickButton toggleDumpTruckButton;
   private Double ELEVATOR_DEADZONE = .1;
   private JoystickButton bottomOutElevator;
-  private double elevatorDown;
-  private double elevatorUp;
   private JoystickButton cancelCommandsButton;
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("navigator_controller", Duration.ofMillis(5), () -> {
@@ -73,9 +67,6 @@ public class NavigatorController extends Subsystem {
   private NavigatorController() {
     
     controller = new Joystick(RobotMap.XBoxController.NAVIGATOR_ID);
-    // elevatorDownButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_BUMPER);
-    // elevatorUpButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_BUMPER);
-    resetElevatorButton = new JoystickButton(controller, RobotMap.XBoxController.START);
     elevatorLevel1Button = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
     elevatorLevel2Button = new JoystickButton(controller, RobotMap.XBoxController.B_BUTTON);
     elevatorLevel3Button = new JoystickButton(controller, RobotMap.XBoxController.Y_BUTTON);
@@ -84,12 +75,8 @@ public class NavigatorController extends Subsystem {
     zeroEncoderButton = new JoystickButton(controller, RobotMap.XBoxController.START);
     toggleDumpTruckButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_AXIS_BUTTON);
     bottomOutElevator = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
-    elevatorDown = deadify(ELEVATOR_DEADZONE, -controller.getRawAxis(RobotMap.XBoxController.LEFT_TRIGGER));
-    elevatorUp = deadify(ELEVATOR_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.RIGHT_TRIGGER));
     cancelCommandsButton = new JoystickButton(controller, RobotMap.XBoxController.BACK);
     // While held down
-    // elevatorDownButton.whileActive(new ElevatorDown());
-    // elevatorUpButton.whileActive(new ElevatorUp());
     spearInButton.whenPressed(new SpearIn());
     spearOutAndDropButton.whenPressed(new SpearOutAndDrop());
     toggleDumpTruckButton.whenReleased(new ToggleDumpTruck());

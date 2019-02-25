@@ -13,7 +13,6 @@ public class SpearOut extends Command {
 
 
   public SpearOut(){
-    // TODO: add all systems this command will use
      requires(HatchManipSystem.instance());
       
   }
@@ -37,7 +36,6 @@ public class SpearOut extends Command {
   @Override
   protected void end() {
     DashboardPublisher.instance().putDriver("Extended", true);
-    // TODO: if needs an end command, code it here
   }
 
   // Called when another command which requires one or more of the same
