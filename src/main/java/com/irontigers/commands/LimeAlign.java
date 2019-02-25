@@ -27,8 +27,6 @@ public class LimeAlign extends Command {
 
   @Override
   protected void initialize() {
-    limelight = NetworkTableInstance.getDefault().getTable("limelight");
-    limelight.getEntry("pipeline").setNumber(0);
     hasTargets = false;
     stillHasTargets = false;
     Robot.instance().enableStandardControl();
@@ -95,7 +93,6 @@ public class LimeAlign extends Command {
   @Override
   protected void end() {
     DriveSystem.instance().stop();
-    limelight.getEntry("pipeline").setNumber(0);
     DashboardPublisher.instance().putDriver("Driving with Vision", false);
     Shuffleboard.addEventMarker("Vision Alignment Completed", EventImportance.kLow);
   }
