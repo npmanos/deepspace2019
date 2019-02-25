@@ -58,6 +58,10 @@ public class ElevatorSystem extends Subsystem {
     }else{
       DashboardPublisher.instance().putDriver("Elevator Level", "Between Levels");
     }
+
+    if(!isUpperLimitSwitch() && !isLowerLimitSwitch()){
+      DashboardPublisher.instance().putDebug("Limit Swtich Tripped", "Top limit switch");
+    }
   }
 
   public void zeroEncoder(){
@@ -87,11 +91,21 @@ public class ElevatorSystem extends Subsystem {
     move(0);
   }
   public boolean isLowerLimitSwitch() { 
-    return elevatorTalon.getSensorCollection().isRevLimitSwitchClosed();
+    if(elevatorTalon.getSensorCollection().isRevLimitSwitchClosed()){  
+      DashboardPublisher.instance().putDebug("Limit switch triggered", "Bottom limit switch");
+      return true;
+    }else{
+      return false;
+    }
   }
 
-  public boolean isUpperLimitSwitch() { 
-    return elevatorTalon.getSensorCollection().isFwdLimitSwitchClosed();
+  public boolean isUpperLimitSwitch() {
+    if(elevatorTalon.getSensorCollection().isFwdLimitSwitchClosed()){  
+      DashboardPublisher.instance().putDebug("Limit switch triggered", "Top limit switch");
+      return true;
+    }else{
+      return false;
+    }
   }
 
   public void resetElevator(){

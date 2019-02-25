@@ -101,6 +101,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    DashboardPublisher.instance().putDebug("Camera Source", CameraSystem.instance().getCurrentSource());
   }
 
   /**

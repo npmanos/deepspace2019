@@ -44,6 +44,10 @@ public class CameraSystem extends Subsystem implements InvertibleSystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  public String getCurrentSource(){
+    return server.getSource().getName();
+  }
+
   @Override
   public void enableStandardControl(){
     server.setSource(hatchCam);

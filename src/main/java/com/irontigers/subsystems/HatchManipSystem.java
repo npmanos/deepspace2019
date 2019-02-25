@@ -31,6 +31,6 @@ public class HatchManipSystem extends Subsystem {
       publisher(false);
   }
   private void publisher(boolean extended){
-      DashboardPublisher.instance().putDriver("Hatch Manipulator", extended);
+      DashboardPublisher.instance().putDebug("Hatch Manipulator", extended);
   }
 }
