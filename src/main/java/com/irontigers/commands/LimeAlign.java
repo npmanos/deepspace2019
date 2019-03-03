@@ -6,6 +6,7 @@ import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
 
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
@@ -17,8 +18,6 @@ public class LimeAlign extends Command {
   private double[] threeDeeOut;
   private double areaLeft;
   private double areaRight;
-  private RollingAverage averageLeftArea = new RollingAverage(5);
-  private RollingAverage averageRightArea = new RollingAverage(5);
   NetworkTable limelight;
 
   public LimeAlign() {
@@ -27,49 +26,53 @@ public class LimeAlign extends Command {
 
   @Override
   protected void initialize() {
+    limelight = NetworkTableInstance.getDefault().getTable("limelight");
     hasTargets = false;
     Robot.instance().enableStandardControl();
     DashboardPublisher.instance().putDriver("Driving with Vision", true);
     Shuffleboard.addEventMarker("Vision Alignment Started", RobotMap.Dashboard.LOW);
   }
 
-  private List<Double> leftArea = new ArrayList<Double>();
-  private List<Double> rightArea = new ArrayList<Double>();
-
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     // threeDeeOut = table.getEntry("camtran").getDoubleArray(new double[6]);
 
-    if(limelight.getEntry("tv").getDouble(0.0) == 1){
-      hasTargets = true;
+    try {
+      if (limelight.getEntry("tv").getDouble(0.0) == 1) {
+        hasTargets = true;
+      }
+    } catch (NullPointerException e) {
+      e.printStackTrace();
     }
 
     double forwardSpeed = 0;
     double strafeSpeed = 0;
     double rotateSpeed = 0;
-
-    x = limelight.getEntry("tx").getDouble(0.0);
-    y = limelight.getEntry("ty").getDouble(0.0);
+    try {
+      x = limelight.getEntry("tx").getDouble(0.0);
+      y = limelight.getEntry("ty").getDouble(0.0);
+    } catch (NullPointerException e) {
+      e.printStackTrace();
+    }
 
     // areaLeft = averageLeftArea.getAverage();
     // areaRight = averageRightArea.getAverage();
     // yaw = threeDeeOut[4];
     // double a = table.getEntry("ta").getDouble(0.0);
 
-    if(x < -.37){
+    if (x < -.37) {
       strafeSpeed = -.35;
-    }
-    else if(x > .37){
+    } else if (x > .37) {
       strafeSpeed = .35;
     }
-    if(y < -.37){
+    if (y < -.37) {
       forwardSpeed = -.35;
-    }else if(y > .37){
+    } else if (y > .37) {
       forwardSpeed = .35;
     }
 
-    if(y < 1.5){
+    if (y < 1.5) {
       forwardSpeed = forwardSpeed * .35 * y;
     }
 
@@ -88,7 +91,12 @@ public class LimeAlign extends Command {
   @Override
   protected boolean isFinished() {
     // This is our standard default command so we're never going to be done
-    System.out.println(limelight.getEntry("camMode").getDouble(1.0));
+    try{
+      System.out.println(limelight.getEntry("camMode").getDouble(1.0));
+    }catch(NullPointerException e){
+      e.printStackTrace();
+    }
+    
     return (x > -.4 && x < .4 && y > -.4 && y < .4 && hasTargets);
     // return false;
   }
