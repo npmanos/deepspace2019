@@ -19,7 +19,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Add your docs here.
  */
 public class CameraSystem extends Subsystem implements InvertibleSystem {
-  public HttpCamera hatchCam = CameraServer.getInstance().addAxisCamera("Hatch Camera", RobotMap.Cameras.LIMELIGHT_URL);
+  public HttpCamera limelight = CameraServer.getInstance().addAxisCamera("Vision Tracking Camera", RobotMap.Cameras.LIMELIGHT_URL);
+  public UsbCamera hatchCam = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
   public UsbCamera ballCam = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 0);
   private VideoSink server = CameraServer.getInstance().addSwitchedCamera("Camera Stream");
 

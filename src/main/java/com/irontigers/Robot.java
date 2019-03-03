@@ -67,6 +67,7 @@ public class Robot extends TimedRobot {
 
     CameraSystem.instance().hatchCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
     CameraSystem.instance().ballCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
+    CameraSystem.instance().limelight.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
     DashboardPublisher.instance();
     DriverController.instance();
     DriveSystem.instance();
