@@ -7,14 +7,11 @@
 
 package com.irontigers.subsystems;
 
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
+import com.irontigers.RobotMap;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.HttpCamera;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
-import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -22,7 +19,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Add your docs here.
  */
 public class CameraSystem extends Subsystem implements InvertibleSystem {
-  public UsbCamera hatchCam = CameraServer.getInstance().startAutomaticCapture("Hatch Camera", 1);
+  public HttpCamera hatchCam = CameraServer.getInstance().addAxisCamera("Hatch Camera", RobotMap.Cameras.LIMELIGHT_URL);
   public UsbCamera ballCam = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 0);
   private VideoSink server = CameraServer.getInstance().addSwitchedCamera("Camera Stream");
 
@@ -50,23 +47,9 @@ public class CameraSystem extends Subsystem implements InvertibleSystem {
     return server.getSource().getName();
   }
 
-  private VideoSource getHatchCam(){
-    CvSink inputStream = CameraServer.getInstance().getVideo(hatchCam);
-    Mat input = new Mat();
-    Mat output = new Mat();
-
-    inputStream.grabFrame(input);
-    Core.rotate(input, output, 180);
-
-    CvSource outputStream = CameraServer.getInstance().putVideo("Hatch Camera", 1280, 720);
-    outputStream.putFrame(output);
-
-    return outputStream;
-  }
-
   @Override
   public void enableStandardControl(){
-    server.setSource(getHatchCam());
+    server.setSource(hatchCam);
     DashboardPublisher.instance().putDriver("Camera", "Hatch Camera");
   }
 
