@@ -22,7 +22,6 @@ public class ElevatorSystem extends Subsystem {
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("elevator_position", Duration.ofMillis(5), () -> {
     DashboardPublisher.instance().putDebug("Elevator Encoder Position", getRawPosition());
-    DashboardPublisher.instance().putDriver("Driver Dashboard/Elevator Height", (getRawPosition() / -RobotMap.Elevator.MAX_HEIGHT) * 100);
   });
 
   private ElevatorSystem(){
@@ -57,6 +56,8 @@ public class ElevatorSystem extends Subsystem {
     if(!isUpperLimitSwitch() && !isLowerLimitSwitch()){
       DashboardPublisher.instance().putDebug("Limit Swtich Tripped", "Top limit switch");
     }
+
+    DashboardPublisher.instance().putDriver("Elevator Height", (getRawPosition() / -RobotMap.Elevator.MAX_HEIGHT) * 100);
   }
 
   public void zeroEncoder(){
