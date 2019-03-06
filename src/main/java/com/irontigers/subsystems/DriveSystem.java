@@ -85,6 +85,10 @@ public class DriveSystem extends Subsystem implements InvertibleSystem {
     drive(0,0,0);
   }
 
+  public void disableWatchdog(){
+    drive.setSafetyEnabled(false);
+  }
+
   @Override
   public void enableStandardControl() {
     driveMethod = (strafeSpeed, forwardSpeed, rotationSpeed) -> drive.driveCartesian(strafeSpeed, forwardSpeed, rotationSpeed);  

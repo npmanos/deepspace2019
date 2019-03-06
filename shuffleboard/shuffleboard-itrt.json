@@ -147,25 +147,6 @@
               "Visuals/Show text": true
             }
           },
-          "3,0": {
-            "size": [
-              4,
-              4
-            ],
-            "content": {
-              "_type": "Camera Stream",
-              "_source0": "camera_server://Camera Stream",
-              "_title": "Camera Stream",
-              "Crosshair/Show crosshair": false,
-              "Crosshair/Crosshair color": "#FFFFFFFF",
-              "Controls/Show controls": false,
-              "Controls/Rotation": "NONE",
-              "compression": -1.0,
-              "fps": -1,
-              "imageWidth": -1,
-              "imageHeight": -1
-            }
-          },
           "9,0": {
             "size": [
               1,
@@ -365,6 +346,124 @@
               "_source0": "network_table:///SmartDashboard/debug/Limit Swtich Tripped",
               "_title": "debug/Limit Swtich Tripped"
             }
+          },
+          "3,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Elevator Height",
+              "_title": "Driver Dashboard/Elevator Height"
+            }
+          },
+          "4,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Dumped",
+              "_title": "Driver Dashboard/Dumped",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/debug/Limelight X",
+              "_title": "debug/Limelight X"
+            }
+          },
+          "6,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/debug/Limelight Y",
+              "_title": "debug/Limelight Y"
+            }
+          },
+          "3,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Driving with Vision",
+              "_title": "Driver Dashboard/Driving with Vision",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "4,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/debug/Hatch Manipulator",
+              "_title": "debug/Hatch Manipulator",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Extended",
+              "_title": "Driver Dashboard/Extended",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "6,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/debug/Limit switch tripped",
+              "_title": "debug/Limit switch tripped"
+            }
+          },
+          "3,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/debug/Limit Swtich tripped",
+              "_title": "debug/Limit Swtich tripped"
+            }
+          },
+          "4,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/debug/Match Type",
+              "_title": "debug/Match Type"
+            }
           }
         }
       }
@@ -469,82 +568,6 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "tiles": {
-          "0,0": {
-            "size": [
-              3,
-              4
-            ],
-            "content": {
-              "_type": "Grid Layout",
-              "_title": "Driver",
-              "Layout/Number of columns": 3,
-              "Layout/Number of rows": 3,
-              "Layout/Label position": "BOTTOM",
-              "_children": {
-                "0,0": {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Robot Front",
-                  "_title": "Robot Front"
-                },
-                "1,0": {
-                  "_type": "Number Bar",
-                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Scaling Factor",
-                  "_title": "Scaling Factor",
-                  "Range/Min": -1.0,
-                  "Range/Max": 1.0,
-                  "Range/Center": 0.0,
-                  "Visuals/Num tick marks": 5.0,
-                  "Visuals/Show text": true
-                }
-              }
-            }
-          },
-          "8,0": {
-            "size": [
-              3,
-              4
-            ],
-            "content": {
-              "_type": "Grid Layout",
-              "_title": "Co-Pilot",
-              "Layout/Number of columns": 3,
-              "Layout/Number of rows": 3,
-              "Layout/Label position": "BOTTOM",
-              "_children": {
-                "1,0": {
-                  "_type": "Boolean Box",
-                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Moving to position",
-                  "_title": "Moving",
-                  "Colors/Color when true": "#7CFC00FF",
-                  "Colors/Color when false": "#8B0000FF"
-                },
-                "0,1": {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Elevator Level",
-                  "_title": "Elevator Level"
-                },
-                "1,1": {
-                  "_type": "Boolean Box",
-                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Extended",
-                  "_title": "Extended",
-                  "Colors/Color when true": "#7CFC00FF",
-                  "Colors/Color when false": "#8B0000FF"
-                },
-                "1,2": {
-                  "_type": "Boolean Box",
-                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Dumped",
-                  "_title": "Dumped",
-                  "Colors/Color when true": "#7CFC00FF",
-                  "Colors/Color when false": "#8B0000FF"
-                },
-                "0,0": {
-                  "_type": "Text View",
-                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Elevator Height",
-                  "_title": "Elevator Height"
-                }
-              }
-            }
-          },
           "3,0": {
             "size": [
               5,
@@ -564,7 +587,7 @@
               "imageHeight": 0
             }
           },
-          "3,4": {
+          "0,0": {
             "size": [
               1,
               1
@@ -573,6 +596,76 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Driver Dashboard/Camera",
               "_title": "Camera"
+            }
+          },
+          "1,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Robot Front",
+              "_title": "Robot Front"
+            }
+          },
+          "2,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Scaling Factor",
+              "_title": "Scaling Factor"
+            }
+          },
+          "8,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Elevator Level",
+              "_title": "Elevator Level"
+            }
+          },
+          "9,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Elevator Height",
+              "_title": "Elevator Height"
+            }
+          },
+          "0,1": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Moving to position",
+              "_title": "Moving to position",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "8,1": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Dumped",
+              "_title": "Dumped",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
             }
           }
         }
@@ -707,6 +800,39 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/debug/Limelight Y",
               "_title": "Limelight Y"
+            }
+          },
+          "1,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/debug/Limit switch tripped",
+              "_title": "Limit switch tripped"
+            }
+          },
+          "2,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/debug/Limit Swtich tripped",
+              "_title": "Limit Swtich tripped"
+            }
+          },
+          "3,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/debug/Match Type",
+              "_title": "Match Type"
             }
           }
         }

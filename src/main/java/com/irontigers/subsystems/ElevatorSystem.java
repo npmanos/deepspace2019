@@ -37,7 +37,7 @@ public class ElevatorSystem extends Subsystem {
   public void move(double speed){
     elevatorTalon.set(speed);
     if(Math.abs(getRawPosition()) > 10000) { 
-      DumpTruckSystem.instance().unDump();
+      DumpTruckSystem.instance().dump();
     }
     if(wrongWay()){
       DashboardPublisher.instance().putDriver("Elevator Level", "WARNING: BELOW BOTTOM");
@@ -54,10 +54,10 @@ public class ElevatorSystem extends Subsystem {
     }
 
     if(!isUpperLimitSwitch() && !isLowerLimitSwitch()){
-      DashboardPublisher.instance().putDebug("Limit Swtich Tripped", "Top limit switch");
+      DashboardPublisher.instance().putDebug("Limit Swtich tripped", "None");
     }
 
-    DashboardPublisher.instance().putDriver("Elevator Height", (getRawPosition() / -RobotMap.Elevator.MAX_HEIGHT) * 100);
+    DashboardPublisher.instance().putDriver("Elevator Height", ((double) getRawPosition() / (double) -RobotMap.Elevator.MAX_HEIGHT) * 100);
   }
 
   public void zeroEncoder(){
@@ -88,7 +88,7 @@ public class ElevatorSystem extends Subsystem {
   }
   public boolean isLowerLimitSwitch() { 
     if(elevatorTalon.getSensorCollection().isRevLimitSwitchClosed()){  
-      DashboardPublisher.instance().putDebug("Limit switch triggered", "Bottom limit switch");
+      DashboardPublisher.instance().putDebug("Limit switch tripped", "Bottom limit switch");
       return true;
     }else{
       return false;
@@ -97,7 +97,7 @@ public class ElevatorSystem extends Subsystem {
 
   public boolean isUpperLimitSwitch() {
     if(elevatorTalon.getSensorCollection().isFwdLimitSwitchClosed()){  
-      DashboardPublisher.instance().putDebug("Limit switch triggered", "Top limit switch");
+      DashboardPublisher.instance().putDebug("Limit switch tripped", "Top limit switch");
       return true;
     }else{
       return false;

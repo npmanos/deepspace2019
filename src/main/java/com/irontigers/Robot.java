@@ -74,6 +74,8 @@ public class Robot extends TimedRobot {
     DumpTruckSystem.instance();
     ElevatorSystem.instance();
     NavigatorController.instance();
+
+    DriveSystem.instance().disableWatchdog();
     
     enableStandardControl();
 
@@ -107,6 +109,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    DashboardPublisher.instance().putDebug("Match Type", DriverStation.getInstance().getMatchType().toString());
     if(DriverStation.getInstance().getMatchType() == MatchType.Practice){
       Shuffleboard.setRecordingFileNameFormat(RobotMap.Dashboard.PRACTICE_FORMAT);
       Shuffleboard.startRecording();
@@ -187,6 +190,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     Shuffleboard.addEventMarker("Match End", RobotMap.Dashboard.NORMAL);
     Shuffleboard.stopRecording();
+    Scheduler.getInstance().removeAll();
   }
   
   @Override
