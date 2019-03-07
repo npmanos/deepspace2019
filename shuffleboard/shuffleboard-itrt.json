@@ -576,7 +576,7 @@
             "content": {
               "_type": "Camera Stream",
               "_source0": "camera_server://Camera Stream",
-              "_title": "Camera Stream",
+              "_title": "network_table:///SmartDashboard/Driver Dashboard/Camera",
               "Crosshair/Show crosshair": false,
               "Crosshair/Crosshair color": "#FFFFFFFF",
               "Controls/Show controls": false,

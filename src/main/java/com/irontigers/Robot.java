@@ -18,7 +18,6 @@ import com.irontigers.subsystems.InvertibleSystem;
 import com.irontigers.subsystems.NavigatorController;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -110,7 +109,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     DashboardPublisher.instance().putDebug("Match Type", DriverStation.getInstance().getMatchType().toString());
-    if(DriverStation.getInstance().getMatchType() == MatchType.Practice){
+    if(DriverStation.getInstance().getGameSpecificMessage() == "practicing"){
       Shuffleboard.setRecordingFileNameFormat(RobotMap.Dashboard.PRACTICE_FORMAT);
       Shuffleboard.startRecording();
     }else if(DriverStation.getInstance().isFMSAttached()){
