@@ -7,7 +7,6 @@
 
 package com.irontigers.commands;
 
-import com.irontigers.subsystems.DriveSystem;
 import com.irontigers.subsystems.DriverController;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;

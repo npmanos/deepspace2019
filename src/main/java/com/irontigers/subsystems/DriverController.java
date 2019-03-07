@@ -15,20 +15,13 @@ import com.irontigers.RobotMap.XBoxController;
 import com.irontigers.RollingAverage;
 import com.irontigers.commands.LimeAlign;
 import com.irontigers.commands.TeleopDrive;
-import com.irontigers.commands.ToggleControlState;
 import com.irontigers.commands.DecreaseScaleFactor;
-import com.irontigers.commands.EnableDrivingCamera;
 import com.irontigers.commands.IncreaseScaleFactor;
-import com.irontigers.commands.ResetRobotToDefaults;
-import com.irontigers.commands.ToggleDumpTruck;
 import com.irontigers.commands.ToggleInvertedControl;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Basic Joystick for the robot. While technically this is not a Subsystem of
@@ -55,7 +48,6 @@ public class DriverController extends Subsystem {
   private final double FORWARD_DEADZONE = .2;
   private final double STRAFE_DEADZONE = .2;
   private final double ROTATION_DEADZONE = .2;
-  private final double SCALING_FACTOR_STANDARD = 1;
   private final int AVERAGING_WINDOW_SIZE = 5;
   private int scalingFactorMode = 2;
   private RollingAverage forwardAverager = new RollingAverage(AVERAGING_WINDOW_SIZE);
@@ -71,10 +63,6 @@ public class DriverController extends Subsystem {
 
   private Joystick controller;
   private JoystickButton invertControlButton;
-  private JoystickButton toggleDumptruckButton;
-  private JoystickButton resetRobotToDefaultsButton;
-  private JoystickButton rumbleButton;
-  private JoystickButton driverCameraButton;
   private JoystickButton visionAlignButton;
   private JoystickButton cancelVision;
   private JoystickButton decreaseScaleButton;
@@ -189,13 +177,13 @@ public class DriverController extends Subsystem {
 
   private double scalingFactor(){
     switch (scalingFactorMode){
-      case 1: SmartDashboard.putNumber("Scaling Factor", .5);
+      case 1: DashboardPublisher.instance().putDriver("Scaling Factor", .5);
               return .5;
-      case 2: SmartDashboard.putNumber("Scaling Factor", .75);
+      case 2: DashboardPublisher.instance().putDriver("Scaling Factor", .75);
               return .75;
-      case 3: SmartDashboard.putNumber("Scaling Factor", 1);
+      case 3: DashboardPublisher.instance().putDriver("Scaling Factor", 1);
               return 1;
-      default: SmartDashboard.putNumber("Scaling Factor", .75);
+      default: DashboardPublisher.instance().putDriver("Scaling Factor", .75);
                return .75;
     }
   }

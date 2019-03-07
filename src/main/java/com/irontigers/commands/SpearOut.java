@@ -1,6 +1,9 @@
 package com.irontigers.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+
+import com.irontigers.RobotMap;
 import com.irontigers.subsystems.*;
 import javax.swing.Timer;
 
@@ -10,13 +13,13 @@ public class SpearOut extends Command {
 
 
   public SpearOut(){
-    // TODO: add all systems this command will use
      requires(HatchManipSystem.instance());
       
   }
   @Override
   protected void initialize() {
     super.setTimeout(.5);
+    Shuffleboard.addEventMarker("Spear out and drop started", RobotMap.Dashboard.TRIVIAL);
   }
 
   @Override
@@ -26,17 +29,13 @@ public class SpearOut extends Command {
 
   @Override
   protected boolean isFinished() {
-    if(super.isTimedOut()){
-      return true;
-    }else{
-      return false;
-    }
+    return super.isTimedOut();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    // TODO: if needs an end command, code it here
+    DashboardPublisher.instance().putDriver("Extended", true);
   }
 
   // Called when another command which requires one or more of the same

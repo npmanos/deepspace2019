@@ -1,13 +1,22 @@
 package com.irontigers.commands;
 
+import com.irontigers.RobotMap;
+import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.ElevatorSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 public class ElevatorDown extends Command {
 
   public ElevatorDown(){
     requires(ElevatorSystem.instance());
+  }
+
+  @Override
+  protected void initialize() {
+    Shuffleboard.addEventMarker("ElevatorDown started", RobotMap.Dashboard.LOW);
+    DashboardPublisher.instance().putDriver("Moving to position", true);
   }
 
   @Override
@@ -25,6 +34,8 @@ public class ElevatorDown extends Command {
   @Override
   protected void end() {
     ElevatorSystem.instance().stop();
+    DashboardPublisher.instance().putDriver("Moving to position", false);
+    Shuffleboard.addEventMarker("ElevatorDown ended", RobotMap.Dashboard.LOW);
   }
 
   // Called when another command which requires one or more of the same

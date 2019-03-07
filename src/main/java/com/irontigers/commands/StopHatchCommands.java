@@ -7,9 +7,11 @@
 
 package com.irontigers.commands;
 
+import com.irontigers.RobotMap;
 import com.irontigers.subsystems.HatchManipSystem;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 /**
  * Add your docs here.
@@ -27,6 +29,7 @@ public class StopHatchCommands extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
+    Shuffleboard.addEventMarker("Navigator retook control manually", RobotMap.Dashboard.CRITICAL);
   }
 
 }

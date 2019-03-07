@@ -10,7 +10,6 @@ package com.irontigers.subsystems;
 import com.irontigers.RobotMap;
 
 import edu.wpi.cscore.HttpCamera;
-import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -20,7 +19,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Add your docs here.
  */
 public class CameraSystem extends Subsystem implements InvertibleSystem {
-  public HttpCamera hatchCam = CameraServer.getInstance().addAxisCamera("Hatch Camera", RobotMap.Cameras.LIMELIGHT_URL);
+  public HttpCamera limelight = CameraServer.getInstance().addAxisCamera("Vision Tracking Camera", RobotMap.Cameras.LIMELIGHT_URL);
+  public UsbCamera hatchCam = CameraServer.getInstance().startAutomaticCapture("Hatch Camera", 1);
   public UsbCamera ballCam = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 0);
   private VideoSink server = CameraServer.getInstance().addSwitchedCamera("Camera Stream");
 
@@ -44,13 +44,19 @@ public class CameraSystem extends Subsystem implements InvertibleSystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  public String getCurrentSource(){
+    return server.getSource().getName();
+  }
+
   @Override
   public void enableStandardControl(){
     server.setSource(hatchCam);
+    DashboardPublisher.instance().putDriver("Camera", "Hatch Camera");
   }
 
   @Override
   public void enableInvertedControl(){
     server.setSource(ballCam);
+    DashboardPublisher.instance().putDriver("Camera", "Ball Camera");
   }
 }

@@ -9,10 +9,8 @@ package com.irontigers;
 
 import edu.wpi.cscore.VideoSource;
 import edu.wpi.cscore.VideoSource.ConnectionStrategy;
-import edu.wpi.first.cameraserver.CameraServer;
-//import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 
 /**
 / * RobotMap statically declares the ports / channels used by various pieces of
@@ -73,7 +71,7 @@ public class RobotMap {
   }
 
   public static class Cameras{
-    public static int USB_CAMERA = 0;
+    public static int BALL_CAMERA = 0;
     public static String LIMELIGHT_URL = "limelight.local:5800";
 
     public static ConnectionStrategy KEEP_OPEN = VideoSource.ConnectionStrategy.kKeepOpen;
@@ -104,5 +102,72 @@ public class RobotMap {
   }
   public static class DumpTruck {
      public static int Spark = 0;
+  }
+
+  public static class Elevator{
+    public static int LEVEL_1 = 1879;
+    public static int LEVEL_2 = 37175;
+    public static int MAX_HEIGHT = 66799;
+
+    public static int OFFSET = 1499;
+  }
+
+  public static class Dashboard{
+    public static String DRIVER_PREFIX = "Driver Dashboard/";
+    public static String DEBUG_PREFIX = "debug/";
+
+    public static String PRACTICE_FORMAT = "PRACTICE-${date}-${time}";
+    public static String MATCH_FORMAT = matchFormat();
+
+    /**
+     * Critical importance. 
+     * 
+     * Use for when things go wrong in a bigly way (e.g. The elevator has wound backwards)
+     */
+    public static EventImportance CRITICAL = EventImportance.kCritical;
+
+    /**
+     * High importance. 
+     * 
+     * Use for when a command that generally should not have to be interreputed was
+     */
+    public static EventImportance HIGH = EventImportance.kHigh;
+
+    /**
+     * Normal importance. 
+     * 
+     * Use for when a routine thing occurs that would be useful to note in a recording 
+     * 
+     * e.g. Match changes mode
+     */
+    public static EventImportance NORMAL = EventImportance.kNormal;
+
+    /**
+     * Low importance. 
+     * 
+     * Use for when an important command begins or ends
+     */
+    public static EventImportance LOW = EventImportance.kLow;
+
+    /**
+     * Trivial importance
+     * 
+     * Use for when something common and unlikely to be useful for debugging occurs
+     */
+    public static EventImportance TRIVIAL = EventImportance.kTrivial;
+  
+    private static String matchFormat(){
+      StringBuffer sb = new StringBuffer();
+
+      sb.append(DriverStation.getInstance().getEventName());
+      sb.append("-");
+      sb.append(DriverStation.getInstance().getMatchType().toString());
+      sb.append("-");
+      sb.append(DriverStation.getInstance().getMatchNumber());
+      sb.append("-");
+      sb.append("${time}");
+
+      return sb.toString();
+    }
   }
 }

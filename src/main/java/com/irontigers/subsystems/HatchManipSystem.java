@@ -31,6 +31,6 @@ public class HatchManipSystem extends Subsystem {
       publisher(false);
   }
   private void publisher(boolean extended){
-      DashboardPublisher.instance().put("Demigorgon Extended?", extended);
+      DashboardPublisher.instance().putDebug("Hatch Manipulator", extended);
   }
 }

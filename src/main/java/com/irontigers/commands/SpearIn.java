@@ -1,12 +1,14 @@
 package com.irontigers.commands;
 
+import com.irontigers.RobotMap;
+import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.HatchManipSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 public class SpearIn extends Command {
   public SpearIn(){
-    // TODO: add all systems this command will use
      requires(HatchManipSystem.instance());
   }
 
@@ -23,7 +25,8 @@ public class SpearIn extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    // TODO: if needs an end command, code it here
+    DashboardPublisher.instance().putDriver("Extended", false);
+    Shuffleboard.addEventMarker("Spear retracted", RobotMap.Dashboard.TRIVIAL);
   }
 
   // Called when another command which requires one or more of the same

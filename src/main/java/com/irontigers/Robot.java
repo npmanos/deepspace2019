@@ -9,7 +9,6 @@
 package com.irontigers;
 
 import com.irontigers.subsystems.CameraSystem;
-import com.irontigers.commands.SpearOut;
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
 import com.irontigers.subsystems.DriverController;
@@ -17,14 +16,11 @@ import com.irontigers.subsystems.DumpTruckSystem;
 import com.irontigers.subsystems.ElevatorSystem;
 import com.irontigers.subsystems.InvertibleSystem;
 import com.irontigers.subsystems.NavigatorController;
-import com.irontigers.subsystems.HatchManipSystem;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -70,18 +66,17 @@ public class Robot extends TimedRobot {
 
     CameraSystem.instance().hatchCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
     CameraSystem.instance().ballCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
+    CameraSystem.instance().limelight.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
     DashboardPublisher.instance();
     DriverController.instance();
     DriveSystem.instance();
     DumpTruckSystem.instance();
     ElevatorSystem.instance();
     NavigatorController.instance();
+
+    DriveSystem.instance().disableWatchdog();
     
     enableStandardControl();
-
-    NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
-    limelight.getEntry("camMode").setNumber(0);
-    limelight.getEntry("ledMode").setNumber(0);
 
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
@@ -97,6 +92,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    DashboardPublisher.instance().putDebug("Camera Source", CameraSystem.instance().getCurrentSource());
   }
 
   /**
@@ -112,7 +108,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    
+    DashboardPublisher.instance().putDebug("Match Type", DriverStation.getInstance().getMatchType().toString());
+    if(DriverStation.getInstance().getGameSpecificMessage() == "practicing"){
+      Shuffleboard.setRecordingFileNameFormat(RobotMap.Dashboard.PRACTICE_FORMAT);
+      Shuffleboard.startRecording();
+    }else if(DriverStation.getInstance().isFMSAttached()){
+      Shuffleboard.setRecordingFileNameFormat(RobotMap.Dashboard.MATCH_FORMAT);
+      Shuffleboard.startRecording();
+    }
+    Shuffleboard.addEventMarker("Match Start", RobotMap.Dashboard.NORMAL);
   }
 
   /**
@@ -122,6 +126,11 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     teleopPeriodic();
 
+  }
+
+  @Override
+  public void teleopInit() {
+    Shuffleboard.addEventMarker("Teleop Start", RobotMap.Dashboard.NORMAL);
   }
 
   /**
@@ -163,7 +172,7 @@ public class Robot extends TimedRobot {
       system.enableStandardControl();
     }
 
-    DashboardPublisher.instance().put("Control State", controlState.toString());
+    DashboardPublisher.instance().putDebug("Control State", controlState.toString());
   }
 
   public void enableInvertedControl(){
@@ -173,17 +182,18 @@ public class Robot extends TimedRobot {
     }
 
     
-    DashboardPublisher.instance().put("Control State", controlState.toString());
+    DashboardPublisher.instance().putDebug("Control State", controlState.toString());
   }
 
   @Override
+  public void disabledInit() {
+    Shuffleboard.addEventMarker("Match End", RobotMap.Dashboard.NORMAL);
+    Shuffleboard.stopRecording();
+    Scheduler.getInstance().removeAll();
+  }
+  
+  @Override
   public void disabledPeriodic(){
-    NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
-   
-    // Comment prior to field calibration. Uncomment after.
-    limelight.getEntry("pipeline").setNumber(0);
-    // Uncomment prior to field calibration. Recomment after.
-    // limelight.getEntry("camMode").setNumber(0);
-    // limelight.getEntry("ledMode").setNumber(0);
+
   }
 }

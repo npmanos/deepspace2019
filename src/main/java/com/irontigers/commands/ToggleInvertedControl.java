@@ -1,7 +1,6 @@
 package com.irontigers.commands;
 
 import com.irontigers.Robot;
-import com.irontigers.subsystems.InvertibleSystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 

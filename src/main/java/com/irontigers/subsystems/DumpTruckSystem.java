@@ -1,8 +1,7 @@
 package com.irontigers.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.irontigers.RobotMap;
-import com.irontigers.commands.TeleopDrive;
+
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -37,12 +36,14 @@ public class DumpTruckSystem extends Subsystem {
   }
 
   public void dump(){   
-      dumpTruck.setSpeed(.5);
+      dumpTruck.setSpeed(-.5);
       isDumped = true;
+      DashboardPublisher.instance().putDriver("Dumped", isDumped);
   }
 
   public void unDump(){
-      dumpTruck.setSpeed(-.5);
+      dumpTruck.setSpeed(.5);
       isDumped = false;
+      DashboardPublisher.instance().putDriver("Dumped", isDumped);
   }
 }
