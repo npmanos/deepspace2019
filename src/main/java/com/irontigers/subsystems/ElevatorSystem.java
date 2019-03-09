@@ -38,6 +38,9 @@ public class ElevatorSystem extends Subsystem {
     elevatorTalon.set(speed);
     if(Math.abs(getRawPosition()) > 10000) { 
       DumpTruckSystem.instance().dump();
+      DashboardPublisher.instance().putDriver("Can Dump", false);
+    }else{
+      DashboardPublisher.instance().putDriver("Can Dump", true);
     }
     if(wrongWay()){
       DashboardPublisher.instance().putDriver("Elevator Level", "WARNING: BELOW BOTTOM");
