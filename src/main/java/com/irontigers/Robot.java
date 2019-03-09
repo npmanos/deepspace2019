@@ -44,6 +44,8 @@ public class Robot extends TimedRobot {
     CameraSystem.instance()
   };
 
+  private Boolean teleopRun = false;
+
   private static Robot instance;
   public static Robot instance(){
     return instance;
@@ -131,6 +133,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     Shuffleboard.addEventMarker("Teleop Start", RobotMap.Dashboard.NORMAL);
+    teleopRun = true;
   }
 
   /**
@@ -187,8 +190,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    Shuffleboard.addEventMarker("Match End", RobotMap.Dashboard.NORMAL);
-    Shuffleboard.stopRecording();
+    if(teleopRun){
+      Shuffleboard.addEventMarker("Match End", RobotMap.Dashboard.NORMAL);
+      Shuffleboard.stopRecording();
+    }
     Scheduler.getInstance().removeAll();
   }
   
