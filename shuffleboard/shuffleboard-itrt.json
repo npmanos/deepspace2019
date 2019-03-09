@@ -1,564 +1,6 @@
 {
   "tabPane": [
     {
-      "title": "SmartDashboard",
-      "autoPopulate": true,
-      "autoPopulatePrefix": "SmartDashboard/",
-      "widgetPane": {
-        "gridSize": 128.0,
-        "showGrid": true,
-        "hgap": 16.0,
-        "vgap": 16.0,
-        "tiles": {
-          "0,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Limelight_PipelineName",
-              "_title": "Limelight_PipelineName"
-            }
-          },
-          "2,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Limelight_Interface",
-              "_title": "Limelight_Interface"
-            }
-          },
-          "1,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Forward",
-              "_title": "Forward"
-            }
-          },
-          "8,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Elevator Position",
-              "_title": "Elevator Position"
-            }
-          },
-          "1,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Control State",
-              "_title": "Control State"
-            }
-          },
-          "2,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Limelight_Stream",
-              "_title": "Limelight_Stream"
-            }
-          },
-          "0,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Strafe",
-              "_title": "Strafe"
-            }
-          },
-          "0,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Rotation",
-              "_title": "Rotation"
-            }
-          },
-          "7,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Demigorgon Extended?",
-              "_title": "Demigorgon Extended?"
-            }
-          },
-          "2,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Limelight X",
-              "_title": "Limelight X"
-            }
-          },
-          "0,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Limelight Distance",
-              "_title": "Limelight Distance"
-            }
-          },
-          "1,0": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Number Bar",
-              "_source0": "network_table:///SmartDashboard/Scaling Factor",
-              "_title": "Scaling Factor",
-              "Range/Min": -1.0,
-              "Range/Max": 1.0,
-              "Range/Center": 0.0,
-              "Visuals/Num tick marks": 5.0,
-              "Visuals/Show text": true
-            }
-          },
-          "9,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Distance",
-              "_title": "Distance"
-            }
-          },
-          "7,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Rotate Speed",
-              "_title": "Rotate Speed"
-            }
-          },
-          "8,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/P Value",
-              "_title": "P Value"
-            }
-          },
-          "8,2": {
-            "size": [
-              2,
-              2
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///limelight/ty",
-              "_title": "limelight/ty"
-            }
-          },
-          "9,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Camera",
-              "_title": "Driver Dashboard/Camera"
-            }
-          },
-          "7,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Robot Front",
-              "_title": "Driver Dashboard/Robot Front"
-            }
-          },
-          "1,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Control State",
-              "_title": "debug/Control State"
-            }
-          },
-          "7,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Driver Dashboard/Elevator Height",
-              "_title": "Driver Dashboard/Driver Dashboard/Elevator Height"
-            }
-          },
-          "0,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Elevator Encoder Position",
-              "_title": "debug/Elevator Encoder Position"
-            }
-          },
-          "1,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Scaling Factor",
-              "_title": "Driver Dashboard/Scaling Factor"
-            }
-          },
-          "2,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Camera Source",
-              "_title": "debug/Camera Source"
-            }
-          },
-          "3,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Strafe",
-              "_title": "debug/Strafe"
-            }
-          },
-          "4,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Rotation",
-              "_title": "debug/Rotation"
-            }
-          },
-          "5,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Forward",
-              "_title": "debug/Forward"
-            }
-          },
-          "6,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Limit switch triggered",
-              "_title": "debug/Limit switch triggered"
-            }
-          },
-          "7,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Elevator Level",
-              "_title": "Driver Dashboard/Elevator Level"
-            }
-          },
-          "8,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Moving to position",
-              "_title": "Driver Dashboard/Moving to position",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
-          },
-          "9,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Limit Swtich Tripped",
-              "_title": "debug/Limit Swtich Tripped"
-            }
-          },
-          "3,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Elevator Height",
-              "_title": "Driver Dashboard/Elevator Height"
-            }
-          },
-          "4,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Dumped",
-              "_title": "Driver Dashboard/Dumped",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
-          },
-          "5,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Limelight X",
-              "_title": "debug/Limelight X"
-            }
-          },
-          "6,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Limelight Y",
-              "_title": "debug/Limelight Y"
-            }
-          },
-          "3,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Driving with Vision",
-              "_title": "Driver Dashboard/Driving with Vision",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
-          },
-          "4,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/debug/Hatch Manipulator",
-              "_title": "debug/Hatch Manipulator",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
-          },
-          "5,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Extended",
-              "_title": "Driver Dashboard/Extended",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
-          },
-          "6,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Limit switch tripped",
-              "_title": "debug/Limit switch tripped"
-            }
-          },
-          "3,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Limit Swtich tripped",
-              "_title": "debug/Limit Swtich tripped"
-            }
-          },
-          "4,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Match Type",
-              "_title": "debug/Match Type"
-            }
-          }
-        }
-      }
-    },
-    {
-      "title": "LiveWindow",
-      "autoPopulate": true,
-      "autoPopulatePrefix": "LiveWindow/",
-      "widgetPane": {
-        "gridSize": 128.0,
-        "showGrid": true,
-        "hgap": 16.0,
-        "vgap": 16.0,
-        "tiles": {
-          "0,0": {
-            "size": [
-              2,
-              4
-            ],
-            "content": {
-              "_type": "Subsystem Layout",
-              "_source0": "network_table:///LiveWindow/DriveSystem",
-              "_title": "DriveSystem",
-              "Layout/Label position": "BOTTOM",
-              "_children": []
-            }
-          },
-          "2,0": {
-            "size": [
-              2,
-              4
-            ],
-            "content": {
-              "_type": "Subsystem Layout",
-              "_source0": "network_table:///LiveWindow/DashboardPublisher",
-              "_title": "DashboardPublisher",
-              "Layout/Label position": "BOTTOM",
-              "_children": []
-            }
-          },
-          "4,0": {
-            "size": [
-              2,
-              4
-            ],
-            "content": {
-              "_type": "Subsystem Layout",
-              "_source0": "network_table:///LiveWindow/HatchManipSystem",
-              "_title": "HatchManipSystem",
-              "Layout/Label position": "BOTTOM",
-              "_children": []
-            }
-          },
-          "6,0": {
-            "size": [
-              2,
-              4
-            ],
-            "content": {
-              "_type": "Subsystem Layout",
-              "_source0": "network_table:///LiveWindow/ElevatorSystem",
-              "_title": "ElevatorSystem",
-              "Layout/Label position": "BOTTOM",
-              "_children": []
-            }
-          },
-          "8,0": {
-            "size": [
-              2,
-              4
-            ],
-            "content": {
-              "_type": "Subsystem Layout",
-              "_source0": "network_table:///LiveWindow/NavigatorController",
-              "_title": "NavigatorController",
-              "Layout/Label position": "BOTTOM",
-              "_children": []
-            }
-          },
-          "0,4": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Speed Controller",
-              "_source0": "network_table:///LiveWindow/Ungrouped/Talon SRX [5]",
-              "_title": "Ungrouped/Talon SRX [5]",
-              "Visuals/Orientation": "HORIZONTAL"
-            }
-          }
-        }
-      }
-    },
-    {
       "title": "Driver Dashboard",
       "autoPopulate": true,
       "autoPopulatePrefix": "SmartDashboard/Driver Dashboard/",
@@ -576,7 +18,7 @@
             "content": {
               "_type": "Camera Stream",
               "_source0": "camera_server://Camera Stream",
-              "_title": "network_table:///SmartDashboard/Driver Dashboard/Camera",
+              "_title": "Camera Stream",
               "Crosshair/Show crosshair": false,
               "Crosshair/Crosshair color": "#FFFFFFFF",
               "Controls/Show controls": false,
@@ -587,85 +29,91 @@
               "imageHeight": 0
             }
           },
-          "0,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Camera",
-              "_title": "Camera"
-            }
-          },
-          "1,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Robot Front",
-              "_title": "Robot Front"
-            }
-          },
-          "2,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Scaling Factor",
-              "_title": "Scaling Factor"
-            }
-          },
           "8,0": {
             "size": [
-              1,
-              1
+              3,
+              4
             ],
             "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Elevator Level",
-              "_title": "Elevator Level"
+              "_type": "List Layout",
+              "_title": "Co-Pilot",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Elevator Level",
+                  "_title": "Elevator Level"
+                },
+                {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Elevator Height",
+                  "_title": "Elevator Height",
+                  "Range/Min": 0.0,
+                  "Range/Max": 100.0,
+                  "Visuals/Show value": true
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Moving to position",
+                  "_title": "Moving to position",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Extended",
+                  "_title": "Extended",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Dumped",
+                  "_title": "Dumped",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                }
+              ]
             }
           },
-          "9,0": {
+          "0,0": {
             "size": [
-              1,
-              1
+              3,
+              4
             ],
             "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Elevator Height",
-              "_title": "Elevator Height"
-            }
-          },
-          "0,1": {
-            "size": [
-              2,
-              2
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Moving to position",
-              "_title": "Moving to position",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
-          },
-          "8,1": {
-            "size": [
-              2,
-              2
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/Driver Dashboard/Dumped",
-              "_title": "Dumped",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
+              "_type": "List Layout",
+              "_title": "Driver",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Number Bar",
+                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Scaling Factor",
+                  "_title": "Scaling Factor",
+                  "Range/Min": -1.0,
+                  "Range/Max": 1.0,
+                  "Range/Center": 0.0,
+                  "Visuals/Num tick marks": 5.0,
+                  "Visuals/Show text": true
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Robot Front",
+                  "_title": "Robot Front"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Driving with Vision",
+                  "_title": "Driving with Vision",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Driver Dashboard/Camera",
+                  "_title": "Camera"
+                }
+              ]
             }
           }
         }
@@ -683,126 +131,125 @@
         "tiles": {
           "0,0": {
             "size": [
-              1,
-              1
+              2,
+              4
             ],
             "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Control State",
-              "_title": "Control State"
-            }
-          },
-          "1,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Elevator Encoder Position",
-              "_title": "Elevator Encoder Position"
+              "_type": "List Layout",
+              "_title": "Robot",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/debug/Control State",
+                  "_title": "Control State"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/debug/Match Type",
+                  "_title": "Match Type"
+                }
+              ]
             }
           },
           "2,0": {
             "size": [
-              1,
-              1
+              2,
+              4
             ],
             "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Camera Source",
-              "_title": "Camera Source"
-            }
-          },
-          "3,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Strafe",
-              "_title": "Strafe"
+              "_type": "List Layout",
+              "_title": "Drive",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/debug/Forward",
+                  "_title": "Forward"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/debug/Strafe",
+                  "_title": "Strafe"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/debug/Rotation",
+                  "_title": "Rotation"
+                }
+              ]
             }
           },
           "4,0": {
             "size": [
-              1,
-              1
+              2,
+              4
             ],
             "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Rotation",
-              "_title": "Rotation"
-            }
-          },
-          "5,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Forward",
-              "_title": "Forward"
-            }
-          },
-          "6,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Limit switch triggered",
-              "_title": "Limit switch triggered"
-            }
-          },
-          "7,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Limit Swtich Tripped",
-              "_title": "Limit Swtich Tripped"
+              "_type": "List Layout",
+              "_title": "Elevator",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/debug/Limit Swtich Tripped",
+                  "_title": "Limit Swtich Tripped"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/debug/Elevator Encoder Position",
+                  "_title": "Elevator Encoder Position"
+                }
+              ]
             }
           },
           "8,0": {
             "size": [
-              1,
-              1
+              2,
+              4
             ],
             "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Hatch Manipulator",
-              "_title": "Hatch Manipulator"
+              "_type": "List Layout",
+              "_title": "Vision System",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/debug/Camera Source",
+                  "_title": "Camera Source"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/debug/Limelight X",
+                  "_title": "Limelight X"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/debug/Limelight Y",
+                  "_title": "Limelight Y"
+                }
+              ]
             }
           },
-          "9,0": {
+          "6,0": {
             "size": [
-              1,
-              1
+              2,
+              4
             ],
             "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Limelight X",
-              "_title": "Limelight X"
+              "_type": "List Layout",
+              "_title": "Hatch Manipulator",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/debug/Hatch Manipulator",
+                  "_title": "Hatch Manipulator"
+                }
+              ]
             }
           },
-          "0,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Limelight Y",
-              "_title": "Limelight Y"
-            }
-          },
-          "1,1": {
+          "0,4": {
             "size": [
               1,
               1
@@ -813,7 +260,7 @@
               "_title": "Limit switch tripped"
             }
           },
-          "2,1": {
+          "1,4": {
             "size": [
               1,
               1
@@ -822,17 +269,6 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/debug/Limit Swtich tripped",
               "_title": "Limit Swtich tripped"
-            }
-          },
-          "3,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/debug/Match Type",
-              "_title": "Match Type"
             }
           }
         }
