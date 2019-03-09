@@ -55,21 +55,21 @@
                 {
                   "_type": "Boolean Box",
                   "_source0": "network_table:///SmartDashboard/Driver Dashboard/Moving to position",
-                  "_title": "Moving to position",
+                  "_title": "Elevator moving to position",
                   "Colors/Color when true": "#7CFC00FF",
                   "Colors/Color when false": "#8B0000FF"
                 },
                 {
                   "_type": "Boolean Box",
                   "_source0": "network_table:///SmartDashboard/Driver Dashboard/Extended",
-                  "_title": "Extended",
+                  "_title": "Hatch Manipulator Extended",
                   "Colors/Color when true": "#7CFC00FF",
                   "Colors/Color when false": "#8B0000FF"
                 },
                 {
                   "_type": "Boolean Box",
                   "_source0": "network_table:///SmartDashboard/Driver Dashboard/Dumped",
-                  "_title": "Dumped",
+                  "_title": "Dump Truck Dumped",
                   "Colors/Color when true": "#7CFC00FF",
                   "Colors/Color when false": "#8B0000FF"
                 }
