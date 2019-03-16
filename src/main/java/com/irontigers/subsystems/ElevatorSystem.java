@@ -26,9 +26,10 @@ public class ElevatorSystem extends PIDSubsystem {
   });
 
   private ElevatorSystem(){
-    super("Elevator System", 0, 0, 0, 0);
+    super("Elevator System", 0.00055, 0.0000875, 0.0002625, 0.0002625);
     setAbsoluteTolerance(370);
     getPIDController().setContinuous(false);
+    getPIDController().setOutputRange(-1, 1);
     elevatorTalon = new WPI_TalonSRX(RobotMap.Manipulators.ELEVATOR);
 
     periodicExecutor.start();
