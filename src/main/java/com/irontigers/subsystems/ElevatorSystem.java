@@ -38,6 +38,9 @@ public class ElevatorSystem extends Subsystem {
     elevatorTalon.set(speed);
     if(Math.abs(getRawPosition()) > 10000) { 
       DumpTruckSystem.instance().dump();
+      DashboardPublisher.instance().putDriver("Can Dump", false);
+    }else{
+      DashboardPublisher.instance().putDriver("Can Dump", true);
     }
     if(wrongWay()){
       DashboardPublisher.instance().putDriver("Elevator Level", "WARNING: BELOW BOTTOM");
@@ -123,7 +126,7 @@ public class ElevatorSystem extends Subsystem {
   }
 
   public Boolean wrongWay(){
-    if(getRawPosition() > 1000){
+    if(getRawPosition() > 500){
       Shuffleboard.addEventMarker("Elevator underrun",
                                   "The elevator has gone past the lower limit switch and has wound the wrong way.",
                                   RobotMap.Dashboard.CRITICAL);

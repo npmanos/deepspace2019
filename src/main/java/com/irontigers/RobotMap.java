@@ -9,6 +9,8 @@ package com.irontigers;
 
 import edu.wpi.cscore.VideoSource;
 import edu.wpi.cscore.VideoSource.ConnectionStrategy;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
 
@@ -157,6 +159,7 @@ public class RobotMap {
     public static EventImportance TRIVIAL = EventImportance.kTrivial;
   
     private static String matchFormat(){
+      NetworkTable fmsInfo = NetworkTableInstance.getDefault().getTable("FMSInfo");
       StringBuffer sb = new StringBuffer();
 
       sb.append(DriverStation.getInstance().getEventName());
