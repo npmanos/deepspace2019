@@ -7,9 +7,10 @@ import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
 import com.irontigers.commands.ElevatorManualControl;
 
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-public class ElevatorSystem extends Subsystem {
+public class ElevatorSystem extends PIDSubsystem {
 
   private static ElevatorSystem instance = new ElevatorSystem();
   public static ElevatorSystem instance(){
@@ -25,6 +26,9 @@ public class ElevatorSystem extends Subsystem {
   });
 
   private ElevatorSystem(){
+    super("Elevator System", 0, 0, 0, 0);
+    setAbsoluteTolerance(370);
+    getPIDController().setContinuous(false);
     elevatorTalon = new WPI_TalonSRX(RobotMap.Manipulators.ELEVATOR);
 
     periodicExecutor.start();
@@ -142,6 +146,16 @@ public class ElevatorSystem extends Subsystem {
     double maxPosition = (goalPosition + getOffSet()) * (1 + leeway);
     boolean inRange = (currentPosition > minPosition) && (currentPosition < maxPosition);
     return inRange;
+  }
+
+  @Override
+  protected double returnPIDInput() {
+    return Math.abs(getRawPosition());
+  }
+
+  @Override
+  protected void usePIDOutput(double output) {
+    move(output);
   }
 
   @Override
