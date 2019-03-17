@@ -8,7 +8,6 @@ import com.irontigers.RobotMap;
 import com.irontigers.commands.ElevatorManualControl;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 public class ElevatorSystem extends PIDSubsystem {
 
@@ -18,7 +17,7 @@ public class ElevatorSystem extends PIDSubsystem {
   }
 
   private WPI_TalonSRX elevatorTalon;
-  private double offSet = RobotMap.Elevator.OFFSET;
+  private int offSet = RobotMap.Elevator.OFFSET;
 
   // Write elevator info every 5 milliseconds
   private PeriodicExecutor periodicExecutor = new PeriodicExecutor("elevator_position", Duration.ofMillis(5), () -> {
@@ -26,7 +25,7 @@ public class ElevatorSystem extends PIDSubsystem {
   });
 
   private ElevatorSystem(){
-    super("Elevator System", 0.00055, 0.0000875, 0.0002625, 0.0002625);
+    super("Elevator System", 0.00055, 0.0000875, 0.0002625);
     setAbsoluteTolerance(370);
     getPIDController().setContinuous(false);
     getPIDController().setOutputRange(-1, 1);
@@ -126,7 +125,7 @@ public class ElevatorSystem extends PIDSubsystem {
   /**
    * @return the offSet
    */
-  public double getOffSet() {
+  public int getOffSet() {
     return offSet;
   }
 
@@ -151,7 +150,7 @@ public class ElevatorSystem extends PIDSubsystem {
 
   @Override
   protected double returnPIDInput() {
-    return Math.abs(getRawPosition());
+    return getRawPosition();
   }
 
   @Override
