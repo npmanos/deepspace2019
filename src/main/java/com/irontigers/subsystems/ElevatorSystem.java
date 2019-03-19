@@ -26,6 +26,7 @@ public class ElevatorSystem extends PIDSubsystem {
 
   private ElevatorSystem(){
     super("Elevator System", 0.00055, 0.0000875, 0.0002625);
+    setInputRange(-66500, 200);
     setAbsoluteTolerance(370);
     getPIDController().setContinuous(false);
     getPIDController().setOutputRange(-1, 1);
@@ -148,6 +149,10 @@ public class ElevatorSystem extends PIDSubsystem {
     return inRange;
   }
 
+  public double getTalonSpeed(){
+    return elevatorTalon.get();
+  }
+
   @Override
   protected double returnPIDInput() {
     return getRawPosition();
@@ -155,7 +160,7 @@ public class ElevatorSystem extends PIDSubsystem {
 
   @Override
   protected void usePIDOutput(double output) {
-    move(output);
+    move(-output);
   }
 
   @Override

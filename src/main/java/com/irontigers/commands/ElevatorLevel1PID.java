@@ -21,6 +21,7 @@ public class ElevatorLevel1PID extends Command {
   protected void initialize() {
     DashboardPublisher.instance().putDriver("Moving to position", true);
     Shuffleboard.addEventMarker("ElevatorLevel1 started", RobotMap.Dashboard.LOW);
+    ElevatorSystem.instance().getPIDController().setPID(0.0002, 0.00001335, 0.0000181);
     ElevatorSystem.instance().setPercentTolerance(leeway);
     ElevatorSystem.instance().setSetpoint(goalPosition - offset);
     ElevatorSystem.instance().enable();
