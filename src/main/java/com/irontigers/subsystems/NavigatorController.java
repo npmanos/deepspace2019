@@ -13,9 +13,11 @@ import com.irontigers.PeriodicExecutor;
 import com.irontigers.RobotMap;
 import com.irontigers.RobotMap.XBoxController;
 import com.irontigers.commands.BottomOutElevator;
-import com.irontigers.commands.ElevatorLevel1;
-import com.irontigers.commands.ElevatorLevel2;
+import com.irontigers.commands.ElevatorDownPID;
+import com.irontigers.commands.ElevatorLevel1PID;
+import com.irontigers.commands.ElevatorLevel2PID;
 import com.irontigers.commands.ElevatorLevel3;
+import com.irontigers.commands.ElevatorLevel3PID;
 import com.irontigers.commands.ReturnNavigatorControl;
 import com.irontigers.commands.SpearIn;
 import com.irontigers.commands.SpearOutAndDrop;
@@ -82,8 +84,8 @@ public class NavigatorController extends Subsystem {
     toggleDumpTruckButton.whenReleased(new ToggleDumpTruck());
     bottomOutElevator.whenReleased(new BottomOutElevator());
     // Singular press
-    elevatorLevel1Button.whenReleased(new ElevatorLevel1());
-    elevatorLevel2Button.whenReleased(new ElevatorLevel2());
+    elevatorLevel1Button.whenReleased(new ElevatorLevel1PID());
+    elevatorLevel2Button.whenReleased(new ElevatorLevel2PID());
     elevatorLevel3Button.whenReleased(new ElevatorLevel3());
     zeroEncoderButton.whenReleased(new ZeroEncoders());
     cancelCommandsButton.whenPressed(new ReturnNavigatorControl());
