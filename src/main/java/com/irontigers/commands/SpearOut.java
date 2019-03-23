@@ -8,7 +8,6 @@ import com.irontigers.subsystems.*;
 import javax.swing.Timer;
 
 public class SpearOut extends Command {
-  Timer timer;
   public double i2;
 
 
@@ -16,6 +15,7 @@ public class SpearOut extends Command {
      requires(HatchManipSystem.instance());
       
   }
+
   @Override
   protected void initialize() {
     super.setTimeout(.5);
@@ -35,6 +35,7 @@ public class SpearOut extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    HatchManipSystem.instance().stop();
     DashboardPublisher.instance().putDriver("Extended", true);
   }
 

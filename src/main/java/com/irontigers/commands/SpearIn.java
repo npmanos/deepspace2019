@@ -13,18 +13,25 @@ public class SpearIn extends Command {
   }
 
   @Override
+  protected void initialize() {
+    super.setTimeout(.5);
+    Shuffleboard.addEventMarker("Spear in started", RobotMap.Dashboard.TRIVIAL);
+  }
+
+  @Override
   protected void execute() {
     HatchManipSystem.instance().retract();
   }
 
   @Override
   protected boolean isFinished() {
-    return true;
+    return super.isTimedOut();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    HatchManipSystem.instance().stop();
     DashboardPublisher.instance().putDriver("Extended", false);
     Shuffleboard.addEventMarker("Spear retracted", RobotMap.Dashboard.TRIVIAL);
   }

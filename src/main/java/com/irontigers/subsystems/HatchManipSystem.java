@@ -23,6 +23,7 @@ public class HatchManipSystem extends Subsystem {
 
   public void extend(){
       hatchSpark.setSpeed(.75);
+
       publisher(true);
   }
 
@@ -30,6 +31,11 @@ public class HatchManipSystem extends Subsystem {
       hatchSpark.setSpeed(-.75);
       publisher(false);
   }
+
+  public void stop(){
+    hatchSpark.setSpeed(0.0);
+  }
+  
   private void publisher(boolean extended){
       DashboardPublisher.instance().putDebug("Hatch Manipulator", extended);
   }
