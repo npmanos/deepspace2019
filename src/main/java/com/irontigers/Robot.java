@@ -142,6 +142,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    DashboardPublisher.instance().putDebug("Elevator Talon Current", ElevatorSystem.instance().getElevatorCurrent());
     // DriverJoystick joystick = DriverJoystick.instance();
     // DriveSystem.instance().drive(joystick.yScaledSpeed(),
     // joystick.xScaledSpeed(), joystick.zScaledRotation());

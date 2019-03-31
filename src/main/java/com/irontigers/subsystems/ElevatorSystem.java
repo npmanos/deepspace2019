@@ -32,6 +32,9 @@ public class ElevatorSystem extends PIDSubsystem {
     getPIDController().setOutputRange(-1, 1);
     elevatorTalon = new WPI_TalonSRX(RobotMap.Manipulators.ELEVATOR);
 
+    //elevatorTalon.configPeakCurrentLimit(30, 20);
+    elevatorTalon.enableCurrentLimit(false);
+
     periodicExecutor.start();
   }
 
@@ -104,7 +107,7 @@ public class ElevatorSystem extends PIDSubsystem {
   }
 
   public boolean isUpperLimitSwitch() {
-    if(elevatorTalon.getSensorCollection().isFwdLimitSwitchClosed()){  
+    if(elevatorTalon.getSensorCollection().isFwdLimitSwitchClosed() || getElevatorCurrent() >= 30){  
       DashboardPublisher.instance().putDebug("Limit switch tripped", "Top limit switch");
       return true;
     }else{
@@ -152,6 +155,12 @@ public class ElevatorSystem extends PIDSubsystem {
   public double getTalonSpeed(){
     return elevatorTalon.get();
   }
+
+  public double getElevatorCurrent(){
+    return elevatorTalon.getOutputCurrent();
+  }
+
+
 
   @Override
   protected double returnPIDInput() {
