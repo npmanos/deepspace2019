@@ -183,8 +183,8 @@ public class DriverController extends Subsystem {
               return .75;
       case 3: DashboardPublisher.instance().putDriver("Scaling Factor", 1);
               return 1;
-      default: DashboardPublisher.instance().putDriver("Scaling Factor", .75);
-               return .75;
+      default: DashboardPublisher.instance().putDriver("Scaling Factor", 1);
+               return 1;
     }
   }
 

@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
 
     DriveSystem.instance().disableWatchdog();
     
-    enableStandardControl();
+    enableInvertedControl();
 
     // We do not need to provide an option to select the TeleopDrive because it
     // is the default command for DriveSystem
