@@ -154,6 +154,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    DashboardPublisher.instance().putDebug("Elevator Talon Speed", ElevatorSystem.instance().getTalonSpeed());
     
   }
 
