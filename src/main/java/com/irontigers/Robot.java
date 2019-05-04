@@ -8,6 +8,7 @@
 
 package com.irontigers;
 
+import com.irontigers.itlib.ITRobot;
 import com.irontigers.subsystems.CameraSystem;
 import com.irontigers.subsystems.DashboardPublisher;
 import com.irontigers.subsystems.DriveSystem;
@@ -18,7 +19,6 @@ import com.irontigers.subsystems.InvertibleSystem;
 import com.irontigers.subsystems.NavigatorController;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
@@ -29,25 +29,12 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
-
-  public enum ControlState {
-    STANDARD,
-    INVERTED
-  }
-
-  // Add to here any subsystems that should be inverted when the driver
-  // decides to invert the robot controls
-  private ControlState controlState = ControlState.STANDARD;
-  private static InvertibleSystem[] INVERTIBLE_SYSTEMS = new InvertibleSystem[]{
-    DriveSystem.instance(),
-    CameraSystem.instance()
-  };
+public class Robot extends ITRobot {
 
   private Boolean teleopRun = false;
 
-  private static Robot instance;
-  public static Robot instance(){
+  private static Robot instance = new Robot();
+  public static Robot getInstance(){
     return instance;
   }
 
@@ -60,23 +47,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    instance = this;
-
-
-    DriveSystem.instance();
+    DriveSystem.getInstance();
     CameraSystem.instance();
 
     CameraSystem.instance().hatchCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
     CameraSystem.instance().ballCam.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
     CameraSystem.instance().limelight.setConnectionStrategy(RobotMap.Cameras.KEEP_OPEN);
     DashboardPublisher.instance();
-    DriverController.instance();
-    DriveSystem.instance();
+    DriverController.getInstance();
+    DriveSystem.getInstance();
     DumpTruckSystem.instance();
     ElevatorSystem.instance();
     NavigatorController.instance();
-
-    DriveSystem.instance().disableWatchdog();
     
     enableStandardControl();
 
@@ -156,37 +138,6 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     DashboardPublisher.instance().putDebug("Elevator Talon Speed", ElevatorSystem.instance().getTalonSpeed());
     
-  }
-
-  public void toggleControlState(){
-    switch(controlState){
-      case STANDARD:
-        enableInvertedControl();
-        break;
-      case INVERTED:
-      default:
-        enableStandardControl();
-        break;
-    }
-  }
-
-  public void enableStandardControl(){
-    controlState = ControlState.STANDARD;
-    for(InvertibleSystem system : INVERTIBLE_SYSTEMS){
-      system.enableStandardControl();
-    }
-
-    DashboardPublisher.instance().putDebug("Control State", controlState.toString());
-  }
-
-  public void enableInvertedControl(){
-    controlState = ControlState.INVERTED;
-    for(InvertibleSystem system : INVERTIBLE_SYSTEMS){
-      system.enableInvertedControl();
-    }
-
-    
-    DashboardPublisher.instance().putDebug("Control State", controlState.toString());
   }
 
   @Override
