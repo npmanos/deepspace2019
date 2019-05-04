@@ -26,7 +26,7 @@ public class IncreaseScaleFactor extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    DriverController.instance().increaseScalingFactor();
+    DriverController.getInstance().increaseScalingFactor();
   }
 
 }

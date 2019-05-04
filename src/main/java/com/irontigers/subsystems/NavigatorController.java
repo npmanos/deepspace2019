@@ -38,7 +38,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * only a single instance of this Subsystem exists during the lifetime of the
  * Robot program. The instance will be created statically (the first time this
  * class is used) and can be accessed via the static
- * {@link XBoxController#instance()} method from anywhere in the program. The
+ * {@link XBoxController#getInstance()} method from anywhere in the program. The
  * use of this coding pattern is useful in keeping the class self-contained and
  * easy to use.
  */
