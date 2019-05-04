@@ -21,7 +21,7 @@ public class LimeAlign extends Command {
   NetworkTable limelight;
 
   public LimeAlign() {
-    requires(DriveSystem.instance());
+    requires(DriveSystem.getInstance());
   }
 
   @Override
@@ -84,7 +84,7 @@ public class LimeAlign extends Command {
     DashboardPublisher.instance().putDebug("Limelight Y", y);
     // DashboardPublisher.instance().put("Limelight Yaw", yaw);
 
-    DriveSystem.instance().drive(forwardSpeed, strafeSpeed, rotateSpeed);
+    DriveSystem.getInstance().drive(forwardSpeed, strafeSpeed, rotateSpeed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -104,7 +104,7 @@ public class LimeAlign extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    DriveSystem.instance().stop();
+    DriveSystem.getInstance().stop();
     DashboardPublisher.instance().putDriver("Driving with Vision", false);
     Shuffleboard.addEventMarker("Vision Alignment Ended", RobotMap.Dashboard.LOW);
   }
