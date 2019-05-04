@@ -28,7 +28,7 @@ public class LimeAlign extends Command {
   protected void initialize() {
     limelight = NetworkTableInstance.getDefault().getTable("limelight");
     hasTargets = false;
-    Robot.instance().enableStandardControl();
+    Robot.getInstance().enableStandardControl();
     DashboardPublisher.instance().putDriver("Driving with Vision", true);
     Shuffleboard.addEventMarker("Vision Alignment Started", RobotMap.Dashboard.LOW);
   }

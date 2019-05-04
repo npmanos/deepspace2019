@@ -7,7 +7,9 @@
 
 package com.irontigers.subsystems;
 
+import com.irontigers.Robot;
 import com.irontigers.RobotMap;
+import com.irontigers.itlib.subsystems.InvertibleSystem;
 
 import edu.wpi.cscore.HttpCamera;
 import edu.wpi.cscore.UsbCamera;
@@ -30,6 +32,10 @@ public class CameraSystem extends Subsystem implements InvertibleSystem {
     // ballCam[0] = "http://roboRIO-4176-FRC.local:1181/?action=stream";
     // ballCam[1] = "http://10.41.76.2:1181/?action=stream";
     return instance;
+  }
+
+  private CameraSystem(){
+    Robot.getInstance().setSubsystemInvertible(instance());
   }
 
   // private static String[] hatchCam = new String[1];

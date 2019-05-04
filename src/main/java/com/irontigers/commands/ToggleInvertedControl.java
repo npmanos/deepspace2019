@@ -9,7 +9,7 @@ public class ToggleInvertedControl extends Command {
   @Override
   protected void execute() {
     // Call invert on all invertible systems
-    Robot.instance().toggleControlState();
+    Robot.getInstance().toggleControlState();
   }
 
   @Override
