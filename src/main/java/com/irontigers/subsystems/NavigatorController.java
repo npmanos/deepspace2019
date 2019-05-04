@@ -22,6 +22,9 @@ import com.irontigers.commands.ReturnNavigatorControl;
 import com.irontigers.commands.SpearIn;
 import com.irontigers.commands.SpearOutAndDrop;
 import com.irontigers.commands.ZeroEncoders;
+import com.irontigers.itlib.controllers.XboxAxis;
+import com.irontigers.itlib.controllers.XboxButton;
+import com.irontigers.itlib.controllers.XboxController;
 import com.irontigers.commands.ToggleDumpTruck;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -43,7 +46,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * easy to use.
  */
 
-public class NavigatorController extends Subsystem {
+public class NavigatorController extends XboxController {
 
   private static NavigatorController instance = new NavigatorController();
   public static NavigatorController instance(){
@@ -61,23 +64,18 @@ public class NavigatorController extends Subsystem {
   private Double ELEVATOR_DEADZONE = .1;
   private JoystickButton bottomOutElevator;
   private JoystickButton cancelCommandsButton;
-  // Write elevator info every 5 milliseconds
-  private PeriodicExecutor periodicExecutor = new PeriodicExecutor("navigator_controller", Duration.ofMillis(5), () -> {
-    readPeriodicControls();
-  });
   
   private NavigatorController() {
-    
-    controller = new Joystick(RobotMap.XBoxController.NAVIGATOR_ID);
-    elevatorLevel1Button = new JoystickButton(controller, RobotMap.XBoxController.A_BUTTON);
-    elevatorLevel2Button = new JoystickButton(controller, RobotMap.XBoxController.B_BUTTON);
-    elevatorLevel3Button = new JoystickButton(controller, RobotMap.XBoxController.Y_BUTTON);
-    spearInButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_BUMPER);
-    spearOutAndDropButton = new JoystickButton(controller, RobotMap.XBoxController.RIGHT_BUMPER);
-    zeroEncoderButton = new JoystickButton(controller, RobotMap.XBoxController.START);
-    toggleDumpTruckButton = new JoystickButton(controller, RobotMap.XBoxController.LEFT_AXIS_BUTTON);
-    bottomOutElevator = new JoystickButton(controller, RobotMap.XBoxController.X_BUTTON);
-    cancelCommandsButton = new JoystickButton(controller, RobotMap.XBoxController.BACK);
+    super(RobotMap.XBoxController.NAVIGATOR_ID);
+
+    elevatorLevel1Button = getButton(XboxButton.A);
+    elevatorLevel2Button = getButton(XboxButton.B);
+    spearInButton = getButton(XboxButton.LEFT_BUMPER);
+    spearOutAndDropButton = getButton(XboxButton.RIGHT_BUMPER);
+    zeroEncoderButton = getButton(XboxButton.START);
+    toggleDumpTruckButton = getButton(XboxButton.LEFT_AXIS);
+    bottomOutElevator = getButton(XboxButton.X);
+    cancelCommandsButton = getButton(XboxButton.BACK);
     // While held down
     spearInButton.whenPressed(new SpearIn());
     spearOutAndDropButton.whenPressed(new SpearOutAndDrop());
@@ -89,21 +87,9 @@ public class NavigatorController extends Subsystem {
     elevatorLevel3Button.whenReleased(new ElevatorLevel3());
     zeroEncoderButton.whenReleased(new ZeroEncoders());
     cancelCommandsButton.whenPressed(new ReturnNavigatorControl());
-    periodicExecutor.start();
-  }
-  
-  protected void readPeriodicControls(){
-    // Nothing
   }
 
-  @Override
-  protected void initDefaultCommand() {
-    // Nothing
-  }
   public double elevatorSpeed(){ 
-      return .6 * (deadify(ELEVATOR_DEADZONE, controller.getRawAxis(RobotMap.XBoxController.RIGHT_TRIGGER)) + deadify(ELEVATOR_DEADZONE, -controller.getRawAxis(RobotMap.XBoxController.LEFT_TRIGGER)));
-  }
-  private double deadify(double zone, double input){
-    return Math.abs(input) < zone ? 0 : input;
+      return .6 * getAxis(XboxAxis.TRIGGERS);
   }
 }
